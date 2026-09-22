@@ -1,0 +1,116 @@
+[
+  {
+    "bridge_id": "BR_R_0001_0007",
+    "city_type": "research",
+    "source_building_id": "B_R_0001",
+    "target_building_id": "B_R_0007",
+    "bridge_strength": 0.4063,
+    "bridge_type": "structural",
+    "components": {
+      "profile_similarity": 0.1553,
+      "semantic_similarity": 0.2176,
+      "cross_edge_strength": 0.7522,
+      "vertex_overlap": 0.0,
+      "activation_similarity": 1.0,
+      "llm_confidence": 0.5
+    },
+    "evidence": [
+      "cross_edges: 77",
+      "shared_label: Natural Language Processing Techniques",
+      "shared_label: Topic Modeling"
+    ],
+    "summary": null,
+    "activation_score": 0.55
+  },
+  {
+    "bridge_id": "BR_R_0001_0008",
+    "city_type": "research",
+    "source_building_id": "B_R_0001",
+    "target_building_id": "B_R_0008",
+    "bridge_strength": 0.6229,
+    "bridge_type": "semantic_structural",
+    "components": {
+      "profile_similarity": 0.3161,
+      "semantic_similarity": 0.6754,
+      "cross_edge_strength": 1.0,
+      "vertex_overlap": 0.0,
+      "activation_similarity": 1.0,
+      "llm_confidence": 0.5
+    },
+    "evidence": [
+      "cross_edges: 129",
+      "shared_label: Advanced Graph Neural Networks",
+      "shared_label: Natural Language Processing Techniques",
+      "shared_label: Semantic Web and Ontologies"
+    ],
+    "summary": null,
+    "activation_score": 0.55
+  },
+  {
+    "bridge_id": "BR_R_0002_0003",
+    "city_type": "research",
+    "source_building_id": "B_R_0002",
+    "target_building_id": "B_R_0003",
+    "bridge_strength": 0.4365,
+    "bridge_type": "structural",
+    "components": {
+      "profile_similarity": 0.0978,
+      "semantic_similarity": 0.1481,
+      "cross_edge_strength": 1.0,
+      "vertex_overlap": 0.0,
+      "activation_similarity": 1.0,
+      "llm_confidence": 0.5
+    },
+    "evidence": [
+      "cross_edges: 154",
+      "shared_label: Genomics and Phylogenetic Studies"
+    ],
+    "summary": null,
+    "activation_score": 0.55
+  },
+  {
+    "bridge_id": "BR_R_0002_0009",
+    "city_type": "research",
+    "source_building_id": "B_R_0002",
+    "target_building_id": "B_R_0009",
+    "bridge_strength": 0.4955,
+    "bridge_type": "structural",
+    "components": {
+      "profile_similarity": 0.1121,
+      "semantic_similarity": 0.4099,
+      "cross_edge_strength": 1.0,
+      "vertex_overlap": 0.0,
+      "activation_similarity": 0.9003,
+      "llm_confidence": 0.5
+    },
+    "evidence": [
+      "cross_edges: 109",
+      "shared_label: Bioinformatics and Genomic Networks",
+      "shared_label: Gene expression and cancer classification",
+      "shared_label: Genomics and Phylogenetic Studies"
+    ],
+    "summary": null,
+    "activation_score": 0.5001
+  },
+  {
+    "bridge_id": "BR_R_0002_0010",
+    "city_type": "research",
+    "source_building_id": "B_R_0002",
+    "target_building_id": "B_R_0010",
+    "bridge_strength": 0.366,
+    "bridge_type": "structural",
+    "components": {
+      "profile_similarity": 0.125,
+      "semantic_similarity": 0.0517,
+      "cross_edge_strength": 0.7872,
+      "vertex_overlap": 0.0,
+      "activation_similarity": 1.0,
+      "llm_confidence": 0.5
+    },
+    "evidence": [
+      "cross_edges: 71"
+    ],
+    "summary": null,
+    "activation_score": 0.55
+  }
+]

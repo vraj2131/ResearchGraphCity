@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Research Graph City Progress Report</title>
+    <style>
+      @page {
+        margin: 0.75in;
+      }
+
+      body {
+        color: #111827;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-size: 11pt;
+        line-height: 1.45;
+        margin: 0;
+      }
+
+      h1 {
+        font-size: 24pt;
+        margin: 0 0 6pt;
+      }
+
+      h2 {
+        border-bottom: 1px solid #cbd5e1;
+        font-size: 15pt;
+        margin: 22pt 0 8pt;
+        padding-bottom: 3pt;
+      }
+
+      h3 {
+        font-size: 12pt;
+        margin: 14pt 0 4pt;
+      }
+
+      p {
+        margin: 0 0 8pt;
+      }
+
+      ul {
+        margin: 4pt 0 10pt 18pt;
+        padding: 0;
+      }
+
+      li {
+        margin: 3pt 0;
+      }
+
+      table {
+        border-collapse: collapse;
+        margin: 8pt 0 12pt;
+        width: 100%;
+      }
+
+      th,
+      td {
+        border: 1px solid #cbd5e1;
+        padding: 6pt;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      th {
+        background: #f1f5f9;
+        font-weight: 700;
+      }
+
+      .subtitle {
+        color: #475569;
+        font-size: 12pt;
+        margin-bottom: 18pt;
+      }
+
+      .callout {
+        background: #f8fafc;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        margin: 10pt 0;
+        padding: 9pt;
+      }
+
+      .metric {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Research Graph City Progress Report</h1>
+    <p class="subtitle">Project progress summary and future roadmap, July to September 2026</p>
+
+    <h2>Executive Summary</h2>
+    <p>
+      Over the last project phase, Research Graph City moved from a visual reference idea into a working full-stack prototype. The system now ingests
+      OpenAlex research-paper data, constructs a paper graph, transforms research clusters into a 3D city, and exposes interactive inspection tools for
+      buildings, floors, bridges, streets, communities, papers, labels, and graph edges.
+    </p>
+    <p>
+      The implementation lives in a separate sibling app, <span class="metric">ResearchGraphCity/</span>. The original
+      <span class="metric">Graph_City_Web</span> directory was used only as visual inspiration and was not modified.
+    </p>
+
+    <h2>Current Data</h2>
+    <p>The current system supports two city modes.</p>
+    <table>
+      <thead>
+        <tr>
+          <th>City</th>
+          <th>Source</th>
+          <th>Current Scale</th>
+          <th>Purpose</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Research city</td>
+          <td>OpenAlex queries: graph visualization, GraphRAG, education income mobility</td>
+          <td>1000 papers, 6457 graph edges, 13 buildings, 65 floors, 5 bridges, 12 streets, 8 communities</td>
+          <td>Default broad research landscape for development and demos</td>
+        </tr>
+        <tr>
+          <td>Seeded city</td>
+          <td>User-entered paper titles, DOIs, or OpenAlex URLs, expanded with related OpenAlex papers</td>
+          <td>991 papers, 7668 graph edges, 12 buildings, 32 floors, 7 bridges, 11 streets, 8 communities</td>
+          <td>User-contextual graph city centered around supplied papers</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      Each paper stores available metadata such as title, DOI, OpenAlex ID, abstract text, publication year, venue, topics, keywords, authors,
+      institutions, references, citation count, open-access status, code signal, data signal, and seed provenance when applicable.
+    </p>
+
+    <h2>Backend Work Completed</h2>
+    <ul>
+      <li>Created a FastAPI backend with typed Pydantic schemas for vertices, edges, buildings, floors, bridges, streets, communities, and summaries.</li>
+      <li>Implemented OpenAlex ingestion using the current <span class="metric">https://api.openalex.org</span> endpoint and API key support.</li>
+      <li>Added deduplication by DOI/OpenAlex ID and scaled the research city generation to 1000 papers.</li>
+      <li>Built graph edges from citation links, topic overlap, venue overlap, author/institution overlap, method/dataset overlap, text similarity, and time proximity.</li>
+      <li>Generated buildings from graph communities, with isolated or too-small groups preserved as outskirts instead of forcing noisy buildings.</li>
+      <li>Generated floors from graph core-number bands, including visible floor splits when core values are uniform.</li>
+      <li>Generated bridges from strong cross-building relationships and streets from weaker but nonzero research relationships.</li>
+      <li>Removed trivial zero-score fallback streets, so visible streets now have research relevance.</li>
+      <li>Added APIs for building papers, internal building edges, bridge cross edges, and city navigation.</li>
+      <li>Added Groq-backed structured JSON generation for summaries and city navigation, with graceful unavailable responses when the model cannot be reached.</li>
+    </ul>
+
+    <h2>Frontend Work Completed</h2>
+    <ul>
+      <li>Created a Vite, React, TypeScript, React Three Fiber frontend with Zustand state management.</li>
+      <li>Built a first-screen 3D city view with buildings, floors, labels, bridges, streets, grid navigation, zoom controls, and layer toggles.</li>
+      <li>Added clickable buildings, bridges, streets, and paper nodes with inspector panels.</li>
+      <li>Added building interior mode, where papers inside a building are shown as nodes organized by floor rings.</li>
+      <li>Added paper-title display for internal and cross-building edges so users no longer need to interpret raw IDs first.</li>
+      <li>Added original-label inspection for each building and paper-label inspection inside the building details.</li>
+      <li>Added summary-word label highlighting: selectable summary words highlight matching original labels.</li>
+      <li>Added selected-item visual feedback with amber rings and label outlines.</li>
+      <li>Added simple seeded-city input: one paper title, DOI, or OpenAlex URL per line, plus a one-click sample.</li>
+      <li>Added a city navigator panel where users can ask the LLM which buildings or bridges to inspect.</li>
+    </ul>
+
+    <h2>Visual Semantics</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Visual Element</th>
+          <th>Meaning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Building</td>
+          <td>A cluster of related research papers.</td>
+        </tr>
+        <tr>
+          <td>Building footprint</td>
+          <td>Mapped to paper count. Larger footprint means more papers.</td>
+        </tr>
+        <tr>
+          <td>Building height</td>
+          <td>Mapped to graph structure and paper count through generated city layout.</td>
+        </tr>
+        <tr>
+          <td>Floor</td>
+          <td>A band of papers inside a building, based on core-number ranges.</td>
+        </tr>
+        <tr>
+          <td>Base color family</td>
+          <td>Broad semantic domain, such as graph/AI, health/biomedicine, economics/policy, climate/energy, education/society, or physical sciences.</td>
+        </tr>
+        <tr>
+          <td>Shade variation</td>
+          <td>Separate communities within the same semantic domain use related but distinct color variants.</td>
+        </tr>
+        <tr>
+          <td>Floor shade</td>
+          <td>Higher floor activation renders darker/richer; lower floor activation renders lighter.</td>
+        </tr>
+        <tr>
+          <td>Glow</td>
+          <td>Whole-building activation from recency and citation signal.</td>
+        </tr>
+        <tr>
+          <td>Bridge</td>
+          <td>Strong cross-building research relationship.</td>
+        </tr>
+        <tr>
+          <td>Street</td>
+          <td>Weaker but nonzero research relationship used as navigable connective structure.</td>
+        </tr>
+        <tr>
+          <td>Amber outline/ring</td>
+          <td>Currently selected building, bridge, street, or paper.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Metric Definitions</h2>
+    <ul>
+      <li><span class="metric">activation_score = 0.55 * recency + 0.45 * citation_signal</span>.</li>
+      <li><span class="metric">recency = exp(-max(0, 2026 - latest_publication_year) / 5)</span>.</li>
+      <li><span class="metric">citation_signal = min(1, average_citation_count / 100)</span>.</li>
+      <li><span class="metric">profile_similarity = 0.30 J(topics) + 0.20 J(methods) + 0.15 J(datasets) + 0.10 J(venues) + 0.10 J(institutions)</span>.</li>
+      <li><span class="metric">semantic_similarity = 0.5 J(top_labels) + 0.5 J(profile topics + keywords)</span>.</li>
+      <li><span class="metric">cross_edge_strength = min(1, cross_building_edge_count / sqrt(source_node_count * target_node_count))</span>.</li>
+      <li><span class="metric">activation_similarity = 1 - abs(source_activation - target_activation)</span>.</li>
+      <li><span class="metric">vertex_overlap</span> is currently zero because generated buildings are disjoint paper sets.</li>
+      <li><span class="metric">llm_confidence</span> is a reserved bridge-summary prior, currently fixed until per-bridge LLM scoring is introduced.</li>
+    </ul>
+
+    <h2>LLM Integration</h2>
+    <p>
+      Groq is used through an OpenAI-compatible endpoint with structured JSON output. The backend sends compact evidence packets, not the raw full graph.
+      For city navigation, the LLM receives a compact city index containing building IDs, labels, domain metadata, metrics, bridge evidence, street
+      evidence, and community summaries. It returns an answer, route steps, focus building IDs, focus bridge IDs, confidence, and model availability.
+    </p>
+    <div class="callout">
+      The live Groq-backed navigator was tested successfully with the seeded city. It returned focused building and bridge IDs for a graph neural network
+      navigation question.
+    </div>
+
+    <h2>Quality And Verification</h2>
+    <ul>
+      <li>Backend tests currently cover ingestion normalization, edge formulas, building/floor generation, bridge thresholds, streets, communities, seeded city behavior, and LLM JSON parsing.</li>
+      <li>Frontend tests currently cover city loading, layer toggles, seeded-city input, paper and edge inspection, interior mode, color mapping, selected-state rendering, and city navigation UI.</li>
+      <li>Latest verification: 40 backend tests passed, 32 frontend tests passed, and the frontend production build passed.</li>
+    </ul>
+
+    <h2>Key Design Decisions</h2>
+    <ul>
+      <li>Keep paper nodes out of the main city view; paper-level detail appears in building interior and inspector views.</li>
+      <li>Use color for semantic meaning, not random decoration.</li>
+      <li>Use activation for glow and floor shade, not for changing the domain identity of a building.</li>
+      <li>Use bridges only for stronger relationships and streets only for weaker nonzero research relationships.</li>
+      <li>Expose original evidence wherever possible so users can audit why the city looks the way it does.</li>
+    </ul>
+
+    <h2>What Could Be Done Next</h2>
+    <h3>Data And Graph Quality</h3>
+    <ul>
+      <li>Move from TF-IDF text similarity to stronger embeddings for abstracts, titles, and topics.</li>
+      <li>Add citation direction views so users can see influence flow, not just undirected similarity.</li>
+      <li>Add better seed expansion using citations, references, concepts, authors, and venues rather than only title/topic searches.</li>
+      <li>Cache OpenAlex responses with run metadata so city generation is reproducible.</li>
+    </ul>
+
+    <h3>Community And Layout</h3>
+    <ul>
+      <li>Use hierarchical communities: districts, neighborhoods, buildings, floors, and papers.</li>
+      <li>Separate semantic domains from graph communities in the UI so users can switch between domain-color and modularity-color views.</li>
+      <li>Add a street-layout optimization step inspired more directly by the original Graph City algorithm, with cleaner routing and fewer visual crossings.</li>
+      <li>Expose outskirts or small isolated clusters as parks, markers, or small structures instead of hiding them.</li>
+    </ul>
+
+    <h3>User Workflows</h3>
+    <ul>
+      <li>Add paper search and filters by year, venue, author, topic, citation count, and seed status.</li>
+      <li>Add saved tours generated by the city navigator, where users can step through buildings and bridges in order.</li>
+      <li>Add exportable evidence reports for selected buildings, bridges, or whole seeded cities.</li>
+      <li>Add a compact seed review stage that shows the 10 user seeds as a regular graph before expanding to the 1000-paper city.</li>
+    </ul>
+
+    <h3>LLM And Evaluation</h3>
+    <ul>
+      <li>Add retrieval over papers for deeper building-specific questions after the user enters a building.</li>
+      <li>Add confidence calibration based on available evidence instead of a fixed prior.</li>
+      <li>Add hallucination checks that reject route targets not present in the city index.</li>
+      <li>Add evaluator tests for navigation quality on known seed sets.</li>
+    </ul>
+
+    <h3>Production Readiness</h3>
+    <ul>
+      <li>Add background jobs for seeded-city builds so large OpenAlex requests do not block the API request lifecycle.</li>
+      <li>Add persistent storage for multiple user-generated seeded cities.</li>
+      <li>Add deployment configuration, monitoring, and rate-limit handling.</li>
+      <li>Split frontend bundles with dynamic imports for Three.js-heavy views.</li>
+    </ul>
+
+    <h2>Conclusion</h2>
+    <p>
+      Research Graph City now demonstrates the core idea: a research-paper graph can be transformed into a navigable 3D city with meaningful buildings,
+      floors, bridges, streets, colors, labels, and LLM-guided inspection. The next phase should focus on deeper retrieval, stronger graph semantics,
+      cleaner spatial layout, and user workflows for building and comparing multiple seeded cities.
+    </p>
+  </body>
+</html>

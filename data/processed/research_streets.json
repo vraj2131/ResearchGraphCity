@@ -1,0 +1,261 @@
+[
+  {
+    "street_id": "ST_R_0001_0002",
+    "city_type": "research",
+    "source_building_id": "B_R_0001",
+    "target_building_id": "B_R_0002",
+    "street_type": "research_backbone",
+    "distance": 672.8743,
+    "street_score": 0.134,
+    "components": {
+      "normalized_cross_edge_count": 0.2627,
+      "profile_similarity": 0.05,
+      "shared_label_similarity": 0.0,
+      "semantic_similarity": 0.0333
+    },
+    "evidence": [
+      "research_backbone",
+      "cross_edges: 44",
+      "profile_overlap",
+      "semantic_profile_overlap"
+    ]
+  },
+  {
+    "street_id": "ST_R_0002_0005",
+    "city_type": "research",
+    "source_building_id": "B_R_0002",
+    "target_building_id": "B_R_0005",
+    "street_type": "research_backbone",
+    "distance": 241.2126,
+    "street_score": 0.2896,
+    "components": {
+      "normalized_cross_edge_count": 0.4424,
+      "profile_similarity": 0.1729,
+      "shared_label_similarity": 0.1111,
+      "semantic_similarity": 0.2512
+    },
+    "evidence": [
+      "research_backbone",
+      "cross_edges: 47",
+      "shared_label: Bioinformatics and Genomic Networks",
+      "profile_overlap",
+      "semantic_profile_overlap"
+    ]
+  },
+  {
+    "street_id": "ST_R_0002_0006",
+    "city_type": "research",
+    "source_building_id": "B_R_0002",
+    "target_building_id": "B_R_0006",
+    "street_type": "research_backbone",
+    "distance": 857.2515,
+    "street_score": 0.2497,
+    "components": {
+      "normalized_cross_edge_count": 0.3851,
+      "profile_similarity": 0.3056,
+      "shared_label_similarity": 0.0,
+      "semantic_similarity": 0.0
+    },
+    "evidence": [
+      "research_backbone",
+      "cross_edges: 40",
+      "profile_overlap"
+    ]
+  },
+  {
+    "street_id": "ST_R_0002_0007",
+    "city_type": "research",
+    "source_building_id": "B_R_0002",
+    "target_building_id": "B_R_0007",
+    "street_type": "research_backbone",
+    "distance": 258.2745,
+    "street_score": 0.1537,
+    "components": {
+      "normalized_cross_edge_count": 0.2169,
+      "profile_similarity": 0.2111,
+      "shared_label_similarity": 0.0,
+      "semantic_similarity": 0.0333
+    },
+    "evidence": [
+      "research_backbone",
+      "cross_edges: 22",
+      "profile_overlap",
+      "semantic_profile_overlap"
+    ]
+  },
+  {
+    "street_id": "ST_R_0003_0004",
+    "city_type": "research",
+    "source_building_id": "B_R_0003",
+    "target_building_id": "B_R_0004",
+    "street_type": "research_backbone",
+    "distance": 607.9114,
+    "street_score": 0.2257,
+    "components": {
+      "normalized_cross_edge_count": 0.4179,
+      "profile_similarity": 0.1222,
+      "shared_label_similarity": 0.0,
+      "semantic_similarity": 0.0714
+    },
+    "evidence": [
+      "research_backbone",
+      "cross_edges: 41",
+      "profile_overlap",
+      "semantic_profile_overlap"
+    ]
+  },
+  {
+    "street_id": "ST_R_0003_0010",
+    "city_type": "research",
+    "source_building_id": "B_R_0003",
+    "target_building_id": "B_R_0010",
+    "street_type": "research_backbone",
+    "distance": 437.1409,
+    "street_score": 0.1856,
+    "components": {
+      "normalized_cross_edge_count": 0.3578,
+      "profile_similarity": 0.0778,
+      "shared_label_similarity": 0.0,
+      "semantic_similarity": 0.0517
+    },
+    "evidence": [
+      "research_backbone",
+      "cross_edges: 28",
+      "profile_overlap",
+      "semantic_profile_overlap"
+    ]
+  },
+  {
+    "street_id": "ST_R_0004_0006",
+    "city_type": "research",
+    "source_building_id": "B_R_0004",
+    "target_building_id": "B_R_0006",
+    "street_type": "research_backbone",
+    "distance": 259.6807,
+    "street_score": 0.2919,
+    "components": {
+      "normalized_cross_edge_count": 0.4099,
+      "profile_similarity": 0.2817,
+      "shared_label_similarity": 0.1111,
+      "semantic_similarity": 0.1481
+    },
+    "evidence": [
+      "research_backbone",
+      "cross_edges: 29",
+      "shared_label: Health disparities and outcomes",
+      "profile_overlap",
+      "semantic_profile_overlap"
+    ]
+  },
+  {
+    "street_id": "ST_R_0004_0011",
+    "city_type": "research",
+    "source_building_id": "B_R_0004",
+    "target_building_id": "B_R_0011",
+    "street_type": "research_backbone",
+    "distance": 969.1271,
+    "street_score": 0.1975,
+    "components": {
+      "normalized_cross_edge_count": 0.2849,
+      "profile_similarity": 0.12,
+      "shared_label_similarity": 0.1111,
+      "semantic_similarity": 0.1709
+    },
+    "evidence": [
+      "research_backbone",
+      "cross_edges: 15",
+      "shared_label: Gender, Labor, and Family Dynamics",
+      "profile_overlap",
+      "semantic_profile_overlap"
+    ]
+  },
+  {
+    "street_id": "ST_R_0005_0009",
+    "city_type": "research",
+    "source_building_id": "B_R_0005",
+    "target_building_id": "B_R_0009",
+    "street_type": "research_backbone",
+    "distance": 821.4193,
+    "street_score": 0.2937,
+    "components": {
+      "normalized_cross_edge_count": 0.5348,
+      "profile_similarity": 0.045,
+      "shared_label_similarity": 0.1111,
+      "semantic_similarity": 0.1956
+    },
+    "evidence": [
+      "research_backbone",
+      "cross_edges: 33",
+      "shared_label: Bioinformatics and Genomic Networks",
+      "profile_overlap",
+      "semantic_profile_overlap"
+    ]
+  },
+  {
+    "street_id": "ST_R_0006_0012",
+    "city_type": "research",
+    "source_building_id": "B_R_0006",
+    "target_building_id": "B_R_0012",
+    "street_type": "research_backbone",
+    "distance": 609.0891,
+    "street_score": 0.2171,
+    "components": {
+      "normalized_cross_edge_count": 0.3145,
+      "profile_similarity": 0.154,
+      "shared_label_similarity": 0.1111,
+      "semantic_similarity": 0.1481
+    },
+    "evidence": [
+      "research_backbone",
+      "cross_edges: 15",
+      "shared_label: Health Systems, Economic Evaluations, Quality of Life",
+      "profile_overlap",
+      "semantic_profile_overlap"
+    ]
+  },
+  {
+    "street_id": "ST_R_0006_0013",
+    "city_type": "research",
+    "source_building_id": "B_R_0006",
+    "target_building_id": "B_R_0013",
+    "street_type": "research_backbone",
+    "distance": 484.6524,
+    "street_score": 0.188,
+    "components": {
+      "normalized_cross_edge_count": 0.2717,
+      "profile_similarity": 0.1311,
+      "shared_label_similarity": 0.1111,
+      "semantic_similarity": 0.1073
+    },
+    "evidence": [
+      "research_backbone",
+      "cross_edges: 12",
+      "shared_label: Health Systems, Economic Evaluations, Quality of Life",
+      "profile_overlap",
+      "semantic_profile_overlap"
+    ]
+  },
+  {
+    "street_id": "ST_R_0007_0008",
+    "city_type": "research",
+    "source_building_id": "B_R_0007",
+    "target_building_id": "B_R_0008",
+    "street_type": "research_backbone",
+    "distance": 636.0889,
+    "street_score": 0.346,
+    "components": {
+      "normalized_cross_edge_count": 0.5411,
+      "profile_similarity": 0.1137,
+      "shared_label_similarity": 0.25,
+      "semantic_similarity": 0.2404
+    },
+    "evidence": [
+      "research_backbone",
+      "cross_edges: 33",
+      "shared_label: Natural Language Processing Techniques",
+      "shared_label: Topic Modeling",
+      "profile_overlap",
+      "semantic_profile_overlap"
+    ]
+  }
+]

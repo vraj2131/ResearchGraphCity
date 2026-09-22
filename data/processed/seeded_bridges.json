@@ -1,0 +1,199 @@
+[
+  {
+    "bridge_id": "BR_R_0001_0003",
+    "city_type": "research",
+    "source_building_id": "B_R_0001",
+    "target_building_id": "B_R_0003",
+    "bridge_strength": 0.4527,
+    "bridge_type": "structural",
+    "components": {
+      "profile_similarity": 0.1479,
+      "semantic_similarity": 0.1956,
+      "cross_edge_strength": 1.0,
+      "vertex_overlap": 0.0,
+      "activation_similarity": 0.9184,
+      "llm_confidence": 0.5
+    },
+    "evidence": [
+      "cross_edges: 159",
+      "shared_label: Topic Modeling"
+    ],
+    "summary": null,
+    "activation_score": 0.4095
+  },
+  {
+    "bridge_id": "BR_R_0001_0006",
+    "city_type": "research",
+    "source_building_id": "B_R_0001",
+    "target_building_id": "B_R_0006",
+    "bridge_strength": 0.3554,
+    "bridge_type": "structural",
+    "components": {
+      "profile_similarity": 0.0629,
+      "semantic_similarity": 0.0926,
+      "cross_edge_strength": 0.8253,
+      "vertex_overlap": 0.0,
+      "activation_similarity": 0.8515,
+      "llm_confidence": 0.5
+    },
+    "evidence": [
+      "cross_edges: 103"
+    ],
+    "summary": null,
+    "activation_score": 0.376
+  },
+  {
+    "bridge_id": "BR_R_0001_0007",
+    "city_type": "research",
+    "source_building_id": "B_R_0001",
+    "target_building_id": "B_R_0007",
+    "bridge_strength": 0.4138,
+    "bridge_type": "structural",
+    "components": {
+      "profile_similarity": 0.0915,
+      "semantic_similarity": 0.1481,
+      "cross_edge_strength": 0.9555,
+      "vertex_overlap": 0.0,
+      "activation_similarity": 0.9003,
+      "llm_confidence": 0.5
+    },
+    "evidence": [
+      "cross_edges: 105",
+      "shared_label: Topic Modeling"
+    ],
+    "summary": null,
+    "activation_score": 0.5001
+  },
+  {
+    "bridge_id": "BR_R_0001_0008",
+    "city_type": "research",
+    "source_building_id": "B_R_0001",
+    "target_building_id": "B_R_0008",
+    "bridge_strength": 0.3753,
+    "bridge_type": "structural",
+    "components": {
+      "profile_similarity": 0.0984,
+      "semantic_similarity": 0.1709,
+      "cross_edge_strength": 0.7646,
+      "vertex_overlap": 0.0,
+      "activation_similarity": 0.9184,
+      "llm_confidence": 0.5
+    },
+    "evidence": [
+      "cross_edges: 79",
+      "shared_label: Topic Modeling"
+    ],
+    "summary": null,
+    "activation_score": 0.4095
+  },
+  {
+    "bridge_id": "BR_R_0002_0004",
+    "city_type": "research",
+    "source_building_id": "B_R_0002",
+    "target_building_id": "B_R_0004",
+    "bridge_strength": 0.3571,
+    "bridge_type": "structural",
+    "components": {
+      "profile_similarity": 0.0667,
+      "semantic_similarity": 0.0714,
+      "cross_edge_strength": 0.7902,
+      "vertex_overlap": 0.0,
+      "activation_similarity": 1.0,
+      "llm_confidence": 0.5
+    },
+    "evidence": [
+      "cross_edges: 84"
+    ],
+    "summary": null,
+    "activation_score": 0.3018
+  },
+  {
+    "bridge_id": "BR_R_0002_0009",
+    "city_type": "research",
+    "source_building_id": "B_R_0002",
+    "target_building_id": "B_R_0009",
+    "bridge_strength": 0.4099,
+    "bridge_type": "structural",
+    "components": {
+      "profile_similarity": 0.0978,
+      "semantic_similarity": 0.1956,
+      "cross_edge_strength": 0.8461,
+      "vertex_overlap": 0.0,
+      "activation_similarity": 1.0,
+      "llm_confidence": 0.5
+    },
+    "evidence": [
+      "cross_edges: 61",
+      "shared_label: Gene expression and cancer classification"
+    ],
+    "summary": null,
+    "activation_score": 0.3018
+  },
+  {
+    "bridge_id": "BR_R_0003_0006",
+    "city_type": "research",
+    "source_building_id": "B_R_0003",
+    "target_building_id": "B_R_0006",
+    "bridge_strength": 0.523,
+    "bridge_type": "structural",
+    "components": {
+      "profile_similarity": 0.2664,
+      "semantic_similarity": 0.3523,
+      "cross_edge_strength": 1.0,
+      "vertex_overlap": 0.0,
+      "activation_similarity": 0.9331,
+      "llm_confidence": 0.5
+    },
+    "evidence": [
+      "cross_edges: 100",
+      "shared_label: Advanced Graph Neural Networks",
+      "shared_label: Complex Network Analysis Techniques"
+    ],
+    "summary": null,
+    "activation_score": 0.3353
+  },
+  {
+    "bridge_id": "BR_R_0003_0014",
+    "city_type": "research",
+    "source_building_id": "B_R_0003",
+    "target_building_id": "B_R_0014",
+    "bridge_strength": 0.4093,
+    "bridge_type": "structural",
+    "components": {
+      "profile_similarity": 0.1229,
+      "semantic_similarity": 0.265,
+      "cross_edge_strength": 0.7762,
+      "vertex_overlap": 0.0,
+      "activation_similarity": 0.9331,
+      "llm_confidence": 0.5
+    },
+    "evidence": [
+      "cross_edges: 35",
+      "shared_label: Advanced Graph Neural Networks",
+      "shared_label: Topic Modeling"
+    ],
+    "summary": null,
+    "activation_score": 0.3353
+  },
+  {
+    "bridge_id": "BR_R_0004_0005",
+    "city_type": "research",
+    "source_building_id": "B_R_0004",
+    "target_building_id": "B_R_0005",
+    "bridge_strength": 0.352,
+    "bridge_type": "structural",
+    "components": {
+      "profile_similarity": 0.2111,
+      "semantic_similarity": 0.0714,
+      "cross_edge_strength": 0.6255,
+      "vertex_overlap": 0.0,
+      "activation_similarity": 1.0,
+      "llm_confidence": 0.5
+    },
+    "evidence": [
+      "cross_edges: 60"
+    ],
+    "summary": null,
+    "activation_score": 0.3018
+  }
+]

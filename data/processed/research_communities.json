@@ -1,0 +1,231 @@
+[
+  {
+    "community_id": "C_R_0001",
+    "city_type": "research",
+    "name": "Fiscal Policy and Economic Growth, Labor market dynamics and wage inequality",
+    "building_ids": [
+      "B_R_0003",
+      "B_R_0004"
+    ],
+    "top_labels": [
+      "Fiscal Policy and Economic Growth",
+      "Labor market dynamics and wage inequality",
+      "Genomics and Phylogenetic Studies",
+      "Protein Structure and Dynamics"
+    ],
+    "semantic_domain": "economics_policy",
+    "semantic_domain_name": "Economics and Policy",
+    "metrics": {
+      "intra_cluster_similarity": 1.0,
+      "inter_cluster_separation": 1.0,
+      "attribute_coherence": 1.0,
+      "label_coherence": 0.0,
+      "cluster_stability": 1.0
+    },
+    "summary": null,
+    "color": "#fb923c"
+  },
+  {
+    "community_id": "C_R_0002",
+    "city_type": "research",
+    "name": "Topic Modeling, Advanced Graph Neural Networks",
+    "building_ids": [
+      "B_R_0001",
+      "B_R_0008"
+    ],
+    "top_labels": [
+      "Topic Modeling",
+      "Advanced Graph Neural Networks",
+      "Natural Language Processing Techniques",
+      "Semantic Web and Ontologies"
+    ],
+    "semantic_domain": "graph_ai",
+    "semantic_domain_name": "Graph, AI, and Computation",
+    "metrics": {
+      "intra_cluster_similarity": 0.6229,
+      "inter_cluster_separation": 1.0,
+      "attribute_coherence": 1.0,
+      "label_coherence": 0.6667,
+      "cluster_stability": 1.0
+    },
+    "summary": null,
+    "color": "#6ee7f9"
+  },
+  {
+    "community_id": "C_R_0003",
+    "city_type": "research",
+    "name": "Genomics and Phylogenetic Studies, Gene expression and cancer classification",
+    "building_ids": [
+      "B_R_0002"
+    ],
+    "top_labels": [
+      "Genomics and Phylogenetic Studies",
+      "Gene expression and cancer classification",
+      "Bioinformatics and Genomic Networks",
+      "Advanced Proteomics Techniques and Applications"
+    ],
+    "semantic_domain": "graph_ai",
+    "semantic_domain_name": "Graph, AI, and Computation",
+    "metrics": {
+      "intra_cluster_similarity": 1.0,
+      "inter_cluster_separation": 1.0,
+      "attribute_coherence": 1.0,
+      "label_coherence": 1.0,
+      "cluster_stability": 1.0
+    },
+    "summary": null,
+    "color": "#2edcf6"
+  },
+  {
+    "community_id": "C_R_0004",
+    "city_type": "research",
+    "name": "Complex Network Analysis Techniques, Functional Brain Connectivity Studies",
+    "building_ids": [
+      "B_R_0005"
+    ],
+    "top_labels": [
+      "Complex Network Analysis Techniques",
+      "Functional Brain Connectivity Studies",
+      "Bioinformatics and Genomic Networks",
+      "Neural dynamics and brain function"
+    ],
+    "semantic_domain": "graph_ai",
+    "semantic_domain_name": "Graph, AI, and Computation",
+    "metrics": {
+      "intra_cluster_similarity": 1.0,
+      "inter_cluster_separation": 1.0,
+      "attribute_coherence": 1.0,
+      "label_coherence": 1.0,
+      "cluster_stability": 1.0
+    },
+    "summary": null,
+    "color": "#a9ecf6"
+  },
+  {
+    "community_id": "C_R_0005",
+    "city_type": "research",
+    "name": "Health disparities and outcomes, Obesity, Physical Activity, Diet",
+    "building_ids": [
+      "B_R_0006"
+    ],
+    "top_labels": [
+      "Health disparities and outcomes",
+      "Obesity, Physical Activity, Diet",
+      "Health Systems, Economic Evaluations, Quality of Life",
+      "Healthcare Policy and Management"
+    ],
+    "semantic_domain": "graph_ai",
+    "semantic_domain_name": "Graph, AI, and Computation",
+    "metrics": {
+      "intra_cluster_similarity": 1.0,
+      "inter_cluster_separation": 1.0,
+      "attribute_coherence": 1.0,
+      "label_coherence": 1.0,
+      "cluster_stability": 1.0
+    },
+    "summary": null,
+    "color": "#0ad0ed"
+  },
+  {
+    "community_id": "C_R_0006",
+    "city_type": "research",
+    "name": "Topic Modeling, Artificial Intelligence in Healthcare and Education",
+    "building_ids": [
+      "B_R_0007"
+    ],
+    "top_labels": [
+      "Topic Modeling",
+      "Artificial Intelligence in Healthcare and Education",
+      "Natural Language Processing Techniques",
+      "Scientific Computing and Data Management"
+    ],
+    "semantic_domain": "graph_ai",
+    "semantic_domain_name": "Graph, AI, and Computation",
+    "metrics": {
+      "intra_cluster_similarity": 1.0,
+      "inter_cluster_separation": 1.0,
+      "attribute_coherence": 1.0,
+      "label_coherence": 1.0,
+      "cluster_stability": 1.0
+    },
+    "summary": null,
+    "color": "#c0eff6"
+  },
+  {
+    "community_id": "C_R_0007",
+    "city_type": "research",
+    "name": "Machine Learning in Materials Science, Model Reduction and Neural Networks",
+    "building_ids": [
+      "B_R_0010"
+    ],
+    "top_labels": [
+      "Machine Learning in Materials Science",
+      "Model Reduction and Neural Networks",
+      "Neural Networks and Applications",
+      "Generative Adversarial Networks and Image Synthesis"
+    ],
+    "semantic_domain": "graph_ai",
+    "semantic_domain_name": "Graph, AI, and Computation",
+    "metrics": {
+      "intra_cluster_similarity": 1.0,
+      "inter_cluster_separation": 1.0,
+      "attribute_coherence": 1.0,
+      "label_coherence": 1.0,
+      "cluster_stability": 1.0
+    },
+    "summary": null,
+    "color": "#51e2f8"
+  },
+  {
+    "community_id": "C_R_0008",
+    "city_type": "research",
+    "name": "Health Systems, Economic Evaluations, Quality of Life, Frailty in Older Adults",
+    "building_ids": [
+      "B_R_0013"
+    ],
+    "top_labels": [
+      "Health Systems, Economic Evaluations, Quality of Life",
+      "Frailty in Older Adults",
+      "Nutrition and Health in Aging",
+      "Artificial Intelligence in Healthcare and Education"
+    ],
+    "semantic_domain": "graph_ai",
+    "semantic_domain_name": "Graph, AI, and Computation",
+    "metrics": {
+      "intra_cluster_similarity": 1.0,
+      "inter_cluster_separation": 1.0,
+      "attribute_coherence": 1.0,
+      "label_coherence": 1.0,
+      "cluster_stability": 1.0
+    },
+    "summary": null,
+    "color": "#8eeaf7"
+  },
+  {
+    "community_id": "C_R_0009",
+    "city_type": "research",
+    "name": "Bioinformatics and Genomic Networks, Gene expression and cancer classification",
+    "building_ids": [
+      "B_R_0009",
+      "B_R_0011",
+      "B_R_0012"
+    ],
+    "top_labels": [
+      "Bioinformatics and Genomic Networks",
+      "Gene expression and cancer classification",
+      "Genomics and Phylogenetic Studies",
+      "Biomedical Text Mining and Ontologies"
+    ],
+    "semantic_domain": "health_biomedicine",
+    "semantic_domain_name": "Health and Biomedicine",
+    "metrics": {
+      "intra_cluster_similarity": 1.0,
+      "inter_cluster_separation": 1.0,
+      "attribute_coherence": 1.0,
+      "label_coherence": 0.0,
+      "cluster_stability": 1.0
+    },
+    "summary": null,
+    "color": "#34d399"
+  }
+]

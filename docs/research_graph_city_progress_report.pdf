@@ -1,0 +1,249 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [ 6 0 R 8 0 R 10 0 R 12 0 R 14 0 R ] /Count 5 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+5 0 obj
+<< /Length 3465 >>
+stream
+BT /F2 22 Tf 54 752 Td (Research Graph City Progress Report) Tj ET
+BT /F1 13 Tf 54 717 Td (Project progress summary and future roadmap, July to September 2026) Tj ET
+BT /F1 11 Tf 54 694 Td (This report summarizes the Research Graph City prototype built as a sibling app to the) Tj ET
+BT /F1 11 Tf 54 678 Td (original Graph-Cities project. The goal was to transform research-paper graphs into a) Tj ET
+BT /F1 11 Tf 54 662 Td (navigable 3D city where paper clusters become buildings, dense substructure becomes) Tj ET
+BT /F1 11 Tf 54 646 Td (floors, and cross-topic relationships become bridges or streets.) Tj ET
+BT /F2 16 Tf 54 615 Td (Executive Summary) Tj ET
+BT /F1 10 Tf 68 589 Td (- Created a new full-stack app in ResearchGraphCity without modifying Graph_City_Web.) Tj ET
+BT /F1 10 Tf 68 572 Td (- Implemented OpenAlex ingestion, graph construction, building/floor/bridge/street) Tj ET
+BT /F1 10 Tf 68 557 Td (  generation, FastAPI endpoints, and a React Three Fiber city renderer.) Tj ET
+BT /F1 10 Tf 68 540 Td (- Scaled the default research city from a 300-paper first slice to a 1000-paper dataset) Tj ET
+BT /F1 10 Tf 68 525 Td (  while keeping the existing inspector, summaries, and rendering behavior working.) Tj ET
+BT /F1 10 Tf 68 508 Td (- Added seeded-city generation so a user can paste a small list of papers and build a new) Tj ET
+BT /F1 10 Tf 68 493 Td (  city from related OpenAlex papers.) Tj ET
+BT /F1 10 Tf 68 476 Td (- Integrated Groq for structured JSON summaries and navigation answers, with graceful) Tj ET
+BT /F1 10 Tf 68 461 Td (  unavailable states when keys or network access are missing.) Tj ET
+BT /F2 16 Tf 54 431 Td (Current Data) Tj ET
+BT /F2 13 Tf 54 398 Td (Default Research City) Tj ET
+BT /F1 10 Tf 68 377 Td (- Seed queries: graph visualization, GraphRAG, and education income mobility.) Tj ET
+BT /F1 10 Tf 68 360 Td (- Current processed scale: 1000 papers, 6457 paper-level graph edges, 13 buildings, 65) Tj ET
+BT /F1 10 Tf 68 345 Td (  floors, 5 strong bridges, 12 streets, and 8 semantic communities.) Tj ET
+BT /F2 13 Tf 54 321 Td (Seeded City) Tj ET
+BT /F1 10 Tf 68 300 Td (- Input: simple textarea where each line is a paper title, DOI, or OpenAlex URL.) Tj ET
+BT /F1 10 Tf 68 283 Td (- Pipeline: resolve seed papers, expand through related OpenAlex works, dedupe, then run) Tj ET
+BT /F1 10 Tf 68 268 Td (  the same graph-city rules as the default city.) Tj ET
+BT /F1 10 Tf 68 251 Td (- Latest verified seeded run: 991 papers, 7668 graph edges, 12 buildings, 32 floors, 7) Tj ET
+BT /F1 10 Tf 68 236 Td (  bridges, 11 streets, and 8 communities.) Tj ET
+BT /F2 13 Tf 54 212 Td (Paper Metadata Used) Tj ET
+BT /F1 10 Tf 68 191 Td (- OpenAlex ID, DOI, title, abstract-derived inverted index, publication year, venue,) Tj ET
+BT /F1 10 Tf 68 176 Td (  topics, keywords, authors, institutions, references, citation count, open-access signal,) Tj ET
+BT /F1 10 Tf 68 161 Td (  code/data signal, and seed provenance.) Tj ET
+BT /F2 16 Tf 54 131 Td (Backend Work Completed) Tj ET
+BT /F1 10 Tf 68 105 Td (- Added FastAPI and Pydantic schemas for vertices, edges, buildings, floors, bridges,) Tj ET
+BT /F1 10 Tf 68 90 Td (  streets, communities, summaries, seeded-city requests, and navigation responses.) Tj ET
+BT /F1 10 Tf 68 73 Td (- Updated OpenAlex access to the current api.openalex.org API style, including API-key) Tj ET
+BT /F1 8 Tf 54 32 Td (Research Graph City Progress Report) Tj ET
+BT /F1 8 Tf 506 32 Td (Page 1 of 5) Tj ET
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 5 0 R >>
+endobj
+7 0 obj
+<< /Length 3908 >>
+stream
+BT /F1 10 Tf 68 759 Td (  support, per-page limits, seed lookup, deduplication by DOI and OpenAlex ID, and cache-) Tj ET
+BT /F1 10 Tf 68 744 Td (  friendly JSON output.) Tj ET
+BT /F1 10 Tf 68 727 Td (- Built paper-level edges from citations, topic overlap, venue overlap,) Tj ET
+BT /F1 10 Tf 68 712 Td (  author/institution overlap, method/dataset overlap, abstract/title text similarity, and) Tj ET
+BT /F1 10 Tf 68 697 Td (  temporal proximity.) Tj ET
+BT /F1 10 Tf 68 680 Td (- Generated buildings from NetworkX graph structure using community detection and core-) Tj ET
+BT /F1 10 Tf 68 665 Td (  number signals. Small or isolated groups are preserved as outskirts rather than being) Tj ET
+BT /F1 10 Tf 68 650 Td (  lost.) Tj ET
+BT /F1 10 Tf 68 633 Td (- Generated floors from core-number bands, with a fallback split so buildings with) Tj ET
+BT /F1 10 Tf 68 618 Td (  uniform core values still display visible floors.) Tj ET
+BT /F1 10 Tf 68 601 Td (- Generated bridges for strong cross-building relationships and streets for weaker but) Tj ET
+BT /F1 10 Tf 68 586 Td (  still nonzero research relationships. Zero-score layout fallback streets were removed) Tj ET
+BT /F1 10 Tf 68 571 Td (  from the inspectable data.) Tj ET
+BT /F1 10 Tf 68 554 Td (- Exposed APIs for city metadata, buildings, bridges, streets, communities, building) Tj ET
+BT /F1 10 Tf 68 539 Td (  details, paper nodes, internal edges, bridge cross edges, seeded-city generation, and LLM) Tj ET
+BT /F1 10 Tf 68 524 Td (  summaries/navigation.) Tj ET
+BT /F2 16 Tf 54 494 Td (Frontend Work Completed) Tj ET
+BT /F1 10 Tf 68 468 Td (- Built a Vite, React, TypeScript, React Three Fiber, Zustand, and Tailwind frontend.) Tj ET
+BT /F1 10 Tf 68 451 Td (- Rendered buildings as stacked cylindrical/frustum floors, with labels, grid navigation,) Tj ET
+BT /F1 10 Tf 68 436 Td (  zoom controls, camera interaction, bridges, streets, layer toggles, and selected-item) Tj ET
+BT /F1 10 Tf 68 421 Td (  highlighting.) Tj ET
+BT /F1 10 Tf 68 404 Td (- Added building, bridge, street, and paper-node inspectors with metrics, original) Tj ET
+BT /F1 10 Tf 68 389 Td (  labels, paper titles, internal edges, cross edges, floor filters, and relationship) Tj ET
+BT /F1 10 Tf 68 374 Td (  evidence.) Tj ET
+BT /F1 10 Tf 68 357 Td (- Added building interior mode so users can inspect paper nodes and edges inside a) Tj ET
+BT /F1 10 Tf 68 342 Td (  selected building without crowding the main city view.) Tj ET
+BT /F1 10 Tf 68 325 Td (- Changed internal and cross-edge displays from opaque R_000001 IDs to paper titles plus) Tj ET
+BT /F1 10 Tf 68 310 Td (  metadata, making the evidence readable during demos.) Tj ET
+BT /F1 10 Tf 68 293 Td (- Added summary-word selection so a word selected in a generated building summary) Tj ET
+BT /F1 10 Tf 68 278 Td (  highlights matching labels from the building's original data.) Tj ET
+BT /F1 10 Tf 68 261 Td (- Added a simple seeded-city panel with a sample button and clearer errors for) Tj ET
+BT /F1 10 Tf 68 246 Td (  OpenAlex/network/key failures.) Tj ET
+BT /F2 16 Tf 54 216 Td (Visual Semantics) Tj ET
+BT /F1 10 Tf 68 190 Td (- Building: a cluster/community of related papers.) Tj ET
+BT /F1 10 Tf 68 173 Td (- Footprint: number of papers in the building.) Tj ET
+BT /F1 10 Tf 68 156 Td (- Height: structural importance from core score plus paper count.) Tj ET
+BT /F1 10 Tf 68 139 Td (- Floor: a core-number band inside that building.) Tj ET
+BT /F1 10 Tf 68 122 Td (- Base color family: semantic domain, such as health, networks, economics, biology, or) Tj ET
+BT /F1 10 Tf 68 107 Td (  AI.) Tj ET
+BT /F1 10 Tf 68 90 Td (- Shade variation: separate communities within the same semantic domain get related but) Tj ET
+BT /F1 10 Tf 68 75 Td (  distinguishable colors, reducing repeated identical building domains.) Tj ET
+BT /F1 8 Tf 54 32 Td (Research Graph City Progress Report) Tj ET
+BT /F1 8 Tf 506 32 Td (Page 2 of 5) Tj ET
+endstream
+endobj
+8 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 7 0 R >>
+endobj
+9 0 obj
+<< /Length 3628 >>
+stream
+BT /F1 10 Tf 68 757 Td (- Floor shade: higher-activation floors appear stronger within the building color family.) Tj ET
+BT /F1 10 Tf 68 740 Td (- Glow: activation score only. It does not change semantic color or building size.) Tj ET
+BT /F1 10 Tf 68 723 Td (- Bridge: a strong cross-building research relationship.) Tj ET
+BT /F1 10 Tf 68 706 Td (- Street: a weaker, nonzero relationship that still helps explain city navigation.) Tj ET
+BT /F1 10 Tf 68 689 Td (- Amber ring and label outline: currently selected building, bridge, street, or paper) Tj ET
+BT /F1 10 Tf 68 674 Td (  node.) Tj ET
+BT /F2 16 Tf 54 644 Td (Metric Definitions) Tj ET
+BT /F1 10 Tf 62 617 Td (Profile similarity: 0.30 J\(topics\) + 0.20 J\(methods\) + 0.15 J\(datasets\) + 0.10 J\(venues\) +) Tj ET
+BT /F1 10 Tf 62 602 Td (0.10 J\(institutions\), where J is Jaccard similarity.) Tj ET
+BT /F1 10 Tf 62 584 Td (Semantic similarity: 0.50 J\(building labels\) + 0.50 J\(profile topics and keywords\).) Tj ET
+BT /F1 10 Tf 62 566 Td (Cross-edge strength: min\(1, cross_building_edge_count / sqrt\(source_node_count *) Tj ET
+BT /F1 10 Tf 62 551 Td (target_node_count\)\).) Tj ET
+BT /F1 10 Tf 62 533 Td (Vertex overlap: J\(vertices_A, vertices_B\). This is normally 0 because buildings are) Tj ET
+BT /F1 10 Tf 62 518 Td (disjoint paper sets.) Tj ET
+BT /F1 10 Tf 62 500 Td (Activation similarity: 1 - abs\(activation_A - activation_B\). Higher means the two buildings) Tj ET
+BT /F1 10 Tf 62 485 Td (have similar current activity.) Tj ET
+BT /F1 10 Tf 62 467 Td (Activation score: 0.55 * recency + 0.45 * citation_signal, where recency = exp\(-age/5\) and) Tj ET
+BT /F1 10 Tf 62 452 Td (citation_signal = min\(1, average_citations / 100\).) Tj ET
+BT /F1 10 Tf 62 434 Td (LLM confidence: A structured-output confidence field returned by Groq for summaries or) Tj ET
+BT /F1 10 Tf 62 419 Td (navigation. It is treated as a model self-assessment and should later be calibrated against) Tj ET
+BT /F1 10 Tf 62 404 Td (retrieval evidence.) Tj ET
+BT /F2 16 Tf 54 374 Td (LLM Integration) Tj ET
+BT /F1 10 Tf 68 348 Td (- Groq is called through its OpenAI-compatible API and asked to return structured JSON,) Tj ET
+BT /F1 10 Tf 68 333 Td (  not free-form text that the app has to guess how to parse.) Tj ET
+BT /F1 10 Tf 68 316 Td (- The LLM receives compact evidence packets: city index, selected building metrics,) Tj ET
+BT /F1 10 Tf 68 301 Td (  representative labels, representative papers, and bridge/street evidence. Raw full graph) Tj ET
+BT /F1 10 Tf 68 286 Td (  data is not sent.) Tj ET
+BT /F1 10 Tf 68 269 Td (- The city navigator can answer a research question and return focused building IDs,) Tj ET
+BT /F1 10 Tf 68 254 Td (  bridge IDs, route steps, confidence, and model availability.) Tj ET
+BT /F2 16 Tf 54 224 Td (Quality And Verification) Tj ET
+BT /F1 10 Tf 68 198 Td (- Backend tests cover OpenAlex normalization, deduplication, edge formulas,) Tj ET
+BT /F1 10 Tf 68 183 Td (  building/floor generation, bridge thresholds, street generation, seeded-city generation,) Tj ET
+BT /F1 10 Tf 68 168 Td (  and Groq JSON parsing.) Tj ET
+BT /F1 10 Tf 68 151 Td (- Frontend tests cover API loading, visual mappings, layer toggles, inspectors, labels,) Tj ET
+BT /F1 10 Tf 68 136 Td (  selection highlighting, seeded-city controls, and navigation behavior.) Tj ET
+BT /F1 10 Tf 68 119 Td (- Latest verification before this report: 40 backend tests passed, 32 frontend tests) Tj ET
+BT /F1 10 Tf 68 104 Td (  passed, and the frontend production build passed.) Tj ET
+BT /F1 8 Tf 54 32 Td (Research Graph City Progress Report) Tj ET
+BT /F1 8 Tf 506 32 Td (Page 3 of 5) Tj ET
+endstream
+endobj
+10 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 9 0 R >>
+endobj
+11 0 obj
+<< /Length 3417 >>
+stream
+BT /F2 16 Tf 54 744 Td (Key Design Decisions) Tj ET
+BT /F1 10 Tf 68 718 Td (- The main 3D scene stays at building level so the city remains readable at 1000 papers.) Tj ET
+BT /F1 10 Tf 68 703 Td (  Paper nodes appear only in focused interior or inspector views.) Tj ET
+BT /F1 10 Tf 68 686 Td (- Color represents semantic meaning. Activation is shown with glow and shade, not by) Tj ET
+BT /F1 10 Tf 68 671 Td (  changing domain identity.) Tj ET
+BT /F1 10 Tf 68 654 Td (- Bridges and streets are separated because they answer different questions: bridges show) Tj ET
+BT /F1 10 Tf 68 639 Td (  strong research relationships, while streets preserve weaker contextual routes.) Tj ET
+BT /F1 10 Tf 68 622 Td (- Inspectors expose original labels and paper titles so summaries and visual links are) Tj ET
+BT /F1 10 Tf 68 607 Td (  traceable back to data.) Tj ET
+BT /F2 16 Tf 54 577 Td (What Could Be Done Next) Tj ET
+BT /F2 13 Tf 54 544 Td (Data And Graph Quality) Tj ET
+BT /F1 10 Tf 68 523 Td (- Add embedding-based similarity for titles and abstracts to improve semantic edges) Tj ET
+BT /F1 10 Tf 68 508 Td (  beyond token overlap.) Tj ET
+BT /F1 10 Tf 68 491 Td (- Separate citation direction from similarity edges so influence and topical relatedness) Tj ET
+BT /F1 10 Tf 68 476 Td (  can be viewed independently.) Tj ET
+BT /F1 10 Tf 68 459 Td (- Improve seeded expansion with user-controlled breadth, depth, year range, and) Tj ET
+BT /F1 10 Tf 68 444 Td (  relatedness thresholds.) Tj ET
+BT /F1 10 Tf 68 427 Td (- Cache OpenAlex responses and store build provenance so every city can be reproduced.) Tj ET
+BT /F2 13 Tf 54 403 Td (Community And Layout) Tj ET
+BT /F1 10 Tf 68 382 Td (- Add hierarchical communities: districts, neighborhoods, buildings, floors, and paper) Tj ET
+BT /F1 10 Tf 68 367 Td (  nodes.) Tj ET
+BT /F1 10 Tf 68 350 Td (- Add a toggle between semantic-domain colors and modularity/community colors.) Tj ET
+BT /F1 10 Tf 68 333 Td (- Implement a more faithful Graph City street-layout pass using research relevance as the) Tj ET
+BT /F1 10 Tf 68 318 Td (  road weight, then compare it against the current bridges-and-streets representation.) Tj ET
+BT /F1 10 Tf 68 301 Td (- Improve placement so related buildings cluster into district-like groups and labels) Tj ET
+BT /F1 10 Tf 68 286 Td (  collide less.) Tj ET
+BT /F2 13 Tf 54 262 Td (User Workflows) Tj ET
+BT /F1 10 Tf 68 241 Td (- Add a small pre-city seed graph preview for the initial 10 papers before expanding to a) Tj ET
+BT /F1 10 Tf 68 226 Td (  1000-paper city.) Tj ET
+BT /F1 10 Tf 68 209 Td (- Add paper search, filters by year/topic/venue, and one-click jump from search results) Tj ET
+BT /F1 10 Tf 68 194 Td (  to the corresponding building.) Tj ET
+BT /F1 10 Tf 68 177 Td (- Add saved tours and exportable evidence reports for presentations.) Tj ET
+BT /F2 13 Tf 54 153 Td (LLM And Evaluation) Tj ET
+BT /F1 10 Tf 68 132 Td (- Add retrieval over paper abstracts for deeper answers inside a building or across a) Tj ET
+BT /F1 10 Tf 68 117 Td (  bridge.) Tj ET
+BT /F1 10 Tf 68 100 Td (- Calibrate LLM confidence against evidence coverage and require citations from selected) Tj ET
+BT /F1 10 Tf 68 85 Td (  paper titles.) Tj ET
+BT /F1 10 Tf 68 68 Td (- Add evaluator tests for navigation quality on known seed sets and known research) Tj ET
+BT /F1 8 Tf 54 32 Td (Research Graph City Progress Report) Tj ET
+BT /F1 8 Tf 506 32 Td (Page 4 of 5) Tj ET
+endstream
+endobj
+12 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 11 0 R >>
+endobj
+13 0 obj
+<< /Length 1188 >>
+stream
+BT /F1 10 Tf 68 759 Td (  questions.) Tj ET
+BT /F2 13 Tf 54 735 Td (Production Readiness) Tj ET
+BT /F1 10 Tf 68 714 Td (- Run seeded-city builds as background jobs rather than blocking an API request.) Tj ET
+BT /F1 10 Tf 68 697 Td (- Persist multiple user-generated cities with shareable IDs.) Tj ET
+BT /F1 10 Tf 68 680 Td (- Add deployment configuration, monitoring, retry logic, and rate-limit handling.) Tj ET
+BT /F1 10 Tf 68 663 Td (- Split frontend bundles so Three.js-heavy views load only when needed.) Tj ET
+BT /F2 16 Tf 54 633 Td (Conclusion) Tj ET
+BT /F1 11 Tf 54 605 Td (Research Graph City now demonstrates the core concept: a research-paper graph can) Tj ET
+BT /F1 11 Tf 54 589 Td (become a navigable 3D city with meaningful buildings, floors, bridges, streets,) Tj ET
+BT /F1 11 Tf 54 573 Td (colors, labels, and LLM-guided inspection. The next phase should focus on stronger) Tj ET
+BT /F1 11 Tf 54 557 Td (graph semantics, better spatial layout, deeper retrieval, and workflows for creating) Tj ET
+BT /F1 11 Tf 54 541 Td (and comparing multiple seeded cities.) Tj ET
+BT /F1 8 Tf 54 32 Td (Research Graph City Progress Report) Tj ET
+BT /F1 8 Tf 506 32 Td (Page 5 of 5) Tj ET
+endstream
+endobj
+14 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 13 0 R >>
+endobj
+xref
+0 15
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000150 00000 n 
+0000000220 00000 n 
+0000000295 00000 n 
+0000003811 00000 n 
+0000003947 00000 n 
+0000007906 00000 n 
+0000008042 00000 n 
+0000011721 00000 n 
+0000011858 00000 n 
+0000015327 00000 n 
+0000015465 00000 n 
+0000016705 00000 n 
+trailer
+<< /Size 15 /Root 1 0 R >>
+startxref
+16843
+%%EOF

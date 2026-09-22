@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Research Graph City 5-Minute Presentation</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.45;
+        color: #111827;
+      }
+      h1 {
+        font-size: 24px;
+        margin-bottom: 6px;
+      }
+      h2 {
+        font-size: 17px;
+        margin-top: 22px;
+        margin-bottom: 8px;
+      }
+      p {
+        margin: 8px 0;
+      }
+      ul, ol {
+        margin-top: 6px;
+      }
+      code {
+        font-family: Consolas, monospace;
+        background: #f1f5f9;
+        padding: 1px 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Research Graph City: 5-Minute Presentation Script</h1>
+
+    <h2>0:00-0:30 - Problem</h2>
+    <p>Research graphs are usually shown as node-link diagrams, but once there are hundreds of papers, those diagrams become hard to interpret. Our idea is to turn a research graph into a city. Papers become the underlying graph nodes, clusters of related papers become buildings, dense substructures become floors, and relationships between research areas become bridges or roads.</p>
+
+    <h2>0:30-1:10 - Current Data</h2>
+    <p>Right now we are using OpenAlex research paper data. We start small with three seed queries: <code>graph visualization</code>, <code>GraphRAG</code>, and <code>education income mobility</code>. For each query, we ingest up to 100 works, so the current processed graph has 300 papers.</p>
+    <p>The current city contains 300 paper vertices, 1,776 paper-to-paper edges, 9 buildings, 45 floors, 6 bridges, and 8 communities.</p>
+    <p>Each paper includes metadata like title, DOI/OpenAlex ID, abstract if available, year, venue, topics, keywords, authors, institutions, references, and citation count.</p>
+
+    <h2>1:10-2:00 - How The Graph City Is Built</h2>
+    <p>We create edges between papers using multiple signals: citation links, topic overlap, venue overlap, author or institution overlap, and text similarity from titles and abstracts. So two papers can be connected because they cite each other, discuss similar topics, appear in the same venue, share authors or institutions, or are semantically similar.</p>
+    <p>Then we use graph algorithms to form the city. Communities and connected clusters become buildings. Core number is used to understand how central or dense papers are inside a building. Floors represent bands of core strength. Bridges are created when two buildings have enough cross-building similarity or paper-level cross edges.</p>
+
+    <h2>2:00-3:30 - Live Demo Flow</h2>
+    <p>First, I will show the 3D city view. Each building is a research cluster. Bigger buildings represent more papers. Taller or more layered buildings reflect stronger internal structure. Colors represent semantic communities, not random colors.</p>
+    <ol>
+      <li>Show the full city.</li>
+      <li>Zoom in/out and rotate.</li>
+      <li>Toggle labels, floors, bridges, and activation glow.</li>
+      <li>Point out that buildings vary by paper count and structure.</li>
+    </ol>
+    <p>Now I will click a building. The inspector shows the number of papers, internal edges, density, average core, activation, and community ID.</p>
+    <p>Density means how tightly connected the papers inside the building are. Average core measures how central or structurally embedded the papers are. Activation is a visual emphasis score showing how important or active this building is in the current city.</p>
+    <ol>
+      <li>Click a building.</li>
+      <li>Show metrics.</li>
+      <li>Show generated summary.</li>
+      <li>Click words in the summary to highlight matching original labels.</li>
+      <li>Show original labels grouped by topic or keyword.</li>
+      <li>Click <code>Inspect paper labels</code>.</li>
+      <li>Show actual paper titles, year, venue, topics, and keywords.</li>
+    </ol>
+
+    <h2>3:30-4:25 - Edges And Bridges</h2>
+    <p>Next, I will show internal edges. These are paper-to-paper relationships inside a building. Earlier this showed only IDs like <code>R_000010</code>, but now it shows paper titles first, with IDs underneath only as debug references.</p>
+    <ol>
+      <li>Click <code>Internal Edges</code>.</li>
+      <li>Show title-to-title relationships.</li>
+      <li>Point out edge weight and evidence labels like topic similarity or semantic neighbor.</li>
+    </ol>
+    <p>Now I will click a bridge. Bridges connect buildings. The inspector shows which two buildings are connected, shared labels, cross edges, and component scores.</p>
+    <ol>
+      <li>Click a bridge or road.</li>
+      <li>Show cross edges.</li>
+      <li>Point out title-to-title paper relationships across buildings.</li>
+      <li>Explain: These cross edges are what justify the bridge. They contribute to cross-edge strength, which is part of the bridge strength score and also helps the generated bridge summary.</li>
+    </ol>
+
+    <h2>4:25-5:00 - What This Enables</h2>
+    <p>The main benefit is that instead of reading a flat graph, we can navigate research areas spatially. We can see large fields, dense subtopics, central papers, cross-domain bridges, and original evidence behind every visual object.</p>
+    <p>This is currently a first slice: small OpenAlex dataset, real graph construction, real 3D rendering, searchable inspectable buildings, floors, labels, internal edges, cross edges, and LLM-ready evidence packets. The next step is scaling the dataset and adding richer search and paper-level detail workflows.</p>
+
+    <h2>Quick Live Checklist</h2>
+    <ol>
+      <li>Full 3D city overview.</li>
+      <li>Zoom and rotate.</li>
+      <li>Toggle floors, labels, bridges, and activation.</li>
+      <li>Click building.</li>
+      <li>Explain papers, density, average core, and activation.</li>
+      <li>Show original labels.</li>
+      <li>Click summary word to highlight labels.</li>
+      <li>Click <code>Inspect paper labels</code>.</li>
+      <li>Click <code>Internal Edges</code>.</li>
+      <li>Click bridge and show <code>Cross Edges</code>.</li>
+    </ol>
+
+    <h2>One-Line Summary</h2>
+    <p>We turn a research paper graph from OpenAlex into an explorable 3D city where buildings are research clusters, floors show graph core structure, and bridges reveal cross-domain paper relationships.</p>
+  </body>
+</html>

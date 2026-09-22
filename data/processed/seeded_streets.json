@@ -1,0 +1,277 @@
+[
+  {
+    "street_id": "ST_R_0001_0002",
+    "city_type": "research",
+    "source_building_id": "B_R_0001",
+    "target_building_id": "B_R_0002",
+    "street_type": "research_backbone",
+    "distance": 659.6413,
+    "street_score": 0.3948,
+    "components": {
+      "normalized_cross_edge_count": 0.832,
+      "profile_similarity": 0.0611,
+      "shared_label_similarity": 0.0,
+      "semantic_similarity": 0.0517
+    },
+    "evidence": [
+      "research_backbone",
+      "cross_edges: 117",
+      "profile_overlap",
+      "semantic_profile_overlap"
+    ]
+  },
+  {
+    "street_id": "ST_R_0001_0004",
+    "city_type": "research",
+    "source_building_id": "B_R_0001",
+    "target_building_id": "B_R_0004",
+    "street_type": "research_backbone",
+    "distance": 574.1918,
+    "street_score": 0.3357,
+    "components": {
+      "normalized_cross_edge_count": 0.6728,
+      "profile_similarity": 0.1111,
+      "shared_label_similarity": 0.0,
+      "semantic_similarity": 0.0517
+    },
+    "evidence": [
+      "research_backbone",
+      "cross_edges: 89",
+      "profile_overlap",
+      "semantic_profile_overlap"
+    ]
+  },
+  {
+    "street_id": "ST_R_0001_0009",
+    "city_type": "research",
+    "source_building_id": "B_R_0001",
+    "target_building_id": "B_R_0009",
+    "street_type": "research_backbone",
+    "distance": 202.3897,
+    "street_score": 0.3493,
+    "components": {
+      "normalized_cross_edge_count": 0.7133,
+      "profile_similarity": 0.1,
+      "shared_label_similarity": 0.0,
+      "semantic_similarity": 0.0333
+    },
+    "evidence": [
+      "research_backbone",
+      "cross_edges: 64",
+      "profile_overlap",
+      "semantic_profile_overlap"
+    ]
+  },
+  {
+    "street_id": "ST_R_0001_0012",
+    "city_type": "research",
+    "source_building_id": "B_R_0001",
+    "target_building_id": "B_R_0012",
+    "street_type": "research_backbone",
+    "distance": 835.1859,
+    "street_score": 0.2944,
+    "components": {
+      "normalized_cross_edge_count": 0.593,
+      "profile_similarity": 0.054,
+      "shared_label_similarity": 0.0,
+      "semantic_similarity": 0.14
+    },
+    "evidence": [
+      "research_backbone",
+      "cross_edges: 40",
+      "profile_overlap",
+      "semantic_profile_overlap"
+    ]
+  },
+  {
+    "street_id": "ST_R_0002_0005",
+    "city_type": "research",
+    "source_building_id": "B_R_0002",
+    "target_building_id": "B_R_0005",
+    "street_type": "research_backbone",
+    "distance": 232.9314,
+    "street_score": 0.2456,
+    "components": {
+      "normalized_cross_edge_count": 0.4119,
+      "profile_similarity": 0.2278,
+      "shared_label_similarity": 0.0,
+      "semantic_similarity": 0.0333
+    },
+    "evidence": [
+      "research_backbone",
+      "cross_edges: 42",
+      "profile_overlap",
+      "semantic_profile_overlap"
+    ]
+  },
+  {
+    "street_id": "ST_R_0002_0008",
+    "city_type": "research",
+    "source_building_id": "B_R_0002",
+    "target_building_id": "B_R_0008",
+    "street_type": "research_backbone",
+    "distance": 766.9253,
+    "street_score": 0.3318,
+    "components": {
+      "normalized_cross_edge_count": 0.6625,
+      "profile_similarity": 0.0978,
+      "shared_label_similarity": 0.0,
+      "semantic_similarity": 0.0926
+    },
+    "evidence": [
+      "research_backbone",
+      "cross_edges: 55",
+      "profile_overlap",
+      "semantic_profile_overlap"
+    ]
+  },
+  {
+    "street_id": "ST_R_0003_0008",
+    "city_type": "research",
+    "source_building_id": "B_R_0003",
+    "target_building_id": "B_R_0008",
+    "street_type": "research_backbone",
+    "distance": 224.9655,
+    "street_score": 0.2162,
+    "components": {
+      "normalized_cross_edge_count": 0.3094,
+      "profile_similarity": 0.1508,
+      "shared_label_similarity": 0.1111,
+      "semantic_similarity": 0.1709
+    },
+    "evidence": [
+      "research_backbone",
+      "cross_edges: 25",
+      "shared_label: Topic Modeling",
+      "profile_overlap",
+      "semantic_profile_overlap"
+    ]
+  },
+  {
+    "street_id": "ST_R_0004_0006",
+    "city_type": "research",
+    "source_building_id": "B_R_0004",
+    "target_building_id": "B_R_0006",
+    "street_type": "research_backbone",
+    "distance": 255.7411,
+    "street_score": 0.3363,
+    "components": {
+      "normalized_cross_edge_count": 0.7314,
+      "profile_similarity": 0.0,
+      "shared_label_similarity": 0.0,
+      "semantic_similarity": 0.0714
+    },
+    "evidence": [
+      "research_backbone",
+      "cross_edges: 69",
+      "semantic_profile_overlap"
+    ]
+  },
+  {
+    "street_id": "ST_R_0004_0010",
+    "city_type": "research",
+    "source_building_id": "B_R_0004",
+    "target_building_id": "B_R_0010",
+    "street_type": "research_backbone",
+    "distance": 880.1577,
+    "street_score": 0.2662,
+    "components": {
+      "normalized_cross_edge_count": 0.5246,
+      "profile_similarity": 0.1,
+      "shared_label_similarity": 0.0,
+      "semantic_similarity": 0.0517
+    },
+    "evidence": [
+      "research_backbone",
+      "cross_edges: 34",
+      "profile_overlap",
+      "semantic_profile_overlap"
+    ]
+  },
+  {
+    "street_id": "ST_R_0005_0011",
+    "city_type": "research",
+    "source_building_id": "B_R_0005",
+    "target_building_id": "B_R_0011",
+    "street_type": "research_backbone",
+    "distance": 657.4039,
+    "street_score": 0.2953,
+    "components": {
+      "normalized_cross_edge_count": 0.4335,
+      "profile_similarity": 0.3722,
+      "shared_label_similarity": 0.0,
+      "semantic_similarity": 0.0714
+    },
+    "evidence": [
+      "research_backbone",
+      "cross_edges: 22",
+      "profile_overlap",
+      "semantic_profile_overlap"
+    ]
+  },
+  {
+    "street_id": "ST_R_0005_0013",
+    "city_type": "research",
+    "source_building_id": "B_R_0005",
+    "target_building_id": "B_R_0013",
+    "street_type": "research_backbone",
+    "distance": 225.5986,
+    "street_score": 0.198,
+    "components": {
+      "normalized_cross_edge_count": 0.4223,
+      "profile_similarity": 0.0111,
+      "shared_label_similarity": 0.0,
+      "semantic_similarity": 0.0517
+    },
+    "evidence": [
+      "research_backbone",
+      "cross_edges: 19",
+      "profile_overlap",
+      "semantic_profile_overlap"
+    ]
+  },
+  {
+    "street_id": "ST_R_0006_0014",
+    "city_type": "research",
+    "source_building_id": "B_R_0006",
+    "target_building_id": "B_R_0014",
+    "street_type": "research_backbone",
+    "distance": 458.8847,
+    "street_score": 0.2771,
+    "components": {
+      "normalized_cross_edge_count": 0.462,
+      "profile_similarity": 0.1095,
+      "shared_label_similarity": 0.1111,
+      "semantic_similarity": 0.1956
+    },
+    "evidence": [
+      "research_backbone",
+      "cross_edges: 19",
+      "shared_label: Advanced Graph Neural Networks",
+      "profile_overlap",
+      "semantic_profile_overlap"
+    ]
+  },
+  {
+    "street_id": "ST_R_0007_0012",
+    "city_type": "research",
+    "source_building_id": "B_R_0007",
+    "target_building_id": "B_R_0012",
+    "street_type": "research_backbone",
+    "distance": 875.1049,
+    "street_score": 0.3161,
+    "components": {
+      "normalized_cross_edge_count": 0.5902,
+      "profile_similarity": 0.054,
+      "shared_label_similarity": 0.1111,
+      "semantic_similarity": 0.1481
+    },
+    "evidence": [
+      "research_backbone",
+      "cross_edges: 25",
+      "shared_label: Artificial Intelligence in Healthcare and Education",
+      "profile_overlap",
+      "semantic_profile_overlap"
+    ]
+  }
+]

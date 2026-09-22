@@ -1,0 +1,2235 @@
+[
+  {
+    "floor_id": "F_B_R_0001_01",
+    "building_id": "B_R_0001",
+    "floor_index": 1,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000077",
+      "R_000088",
+      "R_000102",
+      "R_000104",
+      "R_000105",
+      "R_000107",
+      "R_000108",
+      "R_000109",
+      "R_000110",
+      "R_000111",
+      "R_000114",
+      "R_000115",
+      "R_000117",
+      "R_000118",
+      "R_000119",
+      "R_000121",
+      "R_000122",
+      "R_000125",
+      "R_000128",
+      "R_000129",
+      "R_000130",
+      "R_000131",
+      "R_000133",
+      "R_000134",
+      "R_000138",
+      "R_000139",
+      "R_000141",
+      "R_000143",
+      "R_000144",
+      "R_000147",
+      "R_000151",
+      "R_000154",
+      "R_000157",
+      "R_000162"
+    ],
+    "node_count": 34,
+    "top_labels": [
+      "Topic Modeling",
+      "Advanced Graph Neural Networks",
+      "Natural Language Processing Techniques"
+    ],
+    "activation_score": 0.9003,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0001_02",
+    "building_id": "B_R_0001",
+    "floor_index": 2,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000165",
+      "R_000169",
+      "R_000171",
+      "R_000172",
+      "R_000174",
+      "R_000175",
+      "R_000176",
+      "R_000177",
+      "R_000178",
+      "R_000179",
+      "R_000182",
+      "R_000185",
+      "R_000186",
+      "R_000187",
+      "R_000189",
+      "R_000191",
+      "R_000193",
+      "R_000195",
+      "R_000199",
+      "R_000200",
+      "R_000314",
+      "R_000400",
+      "R_000401",
+      "R_000404",
+      "R_000405",
+      "R_000407",
+      "R_000409",
+      "R_000411",
+      "R_000415",
+      "R_000422",
+      "R_000424",
+      "R_000426",
+      "R_000427",
+      "R_000429"
+    ],
+    "node_count": 34,
+    "top_labels": [
+      "Topic Modeling",
+      "Advanced Graph Neural Networks",
+      "Natural Language Processing Techniques"
+    ],
+    "activation_score": 1.0,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0001_03",
+    "building_id": "B_R_0001",
+    "floor_index": 3,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000433",
+      "R_000435",
+      "R_000436",
+      "R_000437",
+      "R_000439",
+      "R_000442",
+      "R_000443",
+      "R_000450",
+      "R_000452",
+      "R_000454",
+      "R_000458",
+      "R_000459",
+      "R_000460",
+      "R_000461",
+      "R_000465",
+      "R_000466",
+      "R_000467",
+      "R_000468",
+      "R_000470",
+      "R_000472",
+      "R_000474",
+      "R_000475",
+      "R_000479",
+      "R_000481",
+      "R_000482",
+      "R_000484",
+      "R_000486",
+      "R_000487",
+      "R_000488",
+      "R_000490",
+      "R_000491",
+      "R_000494",
+      "R_000496",
+      "R_000497"
+    ],
+    "node_count": 34,
+    "top_labels": [
+      "Topic Modeling",
+      "Advanced Graph Neural Networks",
+      "Natural Language Processing Techniques"
+    ],
+    "activation_score": 0.5668,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0001_04",
+    "building_id": "B_R_0001",
+    "floor_index": 4,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000498",
+      "R_000552",
+      "R_000659",
+      "R_000703",
+      "R_000704",
+      "R_000705",
+      "R_000707",
+      "R_000709",
+      "R_000710",
+      "R_000711",
+      "R_000712",
+      "R_000715",
+      "R_000716",
+      "R_000717",
+      "R_000718",
+      "R_000719",
+      "R_000720",
+      "R_000721",
+      "R_000722",
+      "R_000724",
+      "R_000725",
+      "R_000726",
+      "R_000727",
+      "R_000728",
+      "R_000730",
+      "R_000732",
+      "R_000733",
+      "R_000734",
+      "R_000735",
+      "R_000737",
+      "R_000738",
+      "R_000739",
+      "R_000741",
+      "R_000742"
+    ],
+    "node_count": 34,
+    "top_labels": [
+      "Topic Modeling",
+      "Advanced Graph Neural Networks",
+      "Natural Language Processing Techniques"
+    ],
+    "activation_score": 1.0,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0001_05",
+    "building_id": "B_R_0001",
+    "floor_index": 5,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000744",
+      "R_000745",
+      "R_000746",
+      "R_000747",
+      "R_000748",
+      "R_000754",
+      "R_000755",
+      "R_000757",
+      "R_000758",
+      "R_000759",
+      "R_000762",
+      "R_000765",
+      "R_000767",
+      "R_000768",
+      "R_000770",
+      "R_000773",
+      "R_000774",
+      "R_000776",
+      "R_000777",
+      "R_000778",
+      "R_000783",
+      "R_000786",
+      "R_000787",
+      "R_000790",
+      "R_000791",
+      "R_000793",
+      "R_000794",
+      "R_000795",
+      "R_000796",
+      "R_000799",
+      "R_000835",
+      "R_000889",
+      "R_001000"
+    ],
+    "node_count": 33,
+    "top_labels": [
+      "Topic Modeling",
+      "Advanced Graph Neural Networks",
+      "Natural Language Processing Techniques"
+    ],
+    "activation_score": 0.8095,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0002_01",
+    "building_id": "B_R_0002",
+    "floor_index": 1,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000002",
+      "R_000004",
+      "R_000009",
+      "R_000012",
+      "R_000014",
+      "R_000015",
+      "R_000017",
+      "R_000018",
+      "R_000020",
+      "R_000022",
+      "R_000025",
+      "R_000029",
+      "R_000032",
+      "R_000035",
+      "R_000039",
+      "R_000040",
+      "R_000041",
+      "R_000042",
+      "R_000043",
+      "R_000048",
+      "R_000051",
+      "R_000052",
+      "R_000056",
+      "R_000057",
+      "R_000066",
+      "R_000071",
+      "R_000072",
+      "R_000075",
+      "R_000078",
+      "R_000086",
+      "R_000089",
+      "R_000092",
+      "R_000095",
+      "R_000099"
+    ],
+    "node_count": 34,
+    "top_labels": [
+      "Genomics and Phylogenetic Studies",
+      "Gene expression and cancer classification",
+      "Bioinformatics and Genomic Networks"
+    ],
+    "activation_score": 0.6523,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0002_02",
+    "building_id": "B_R_0002",
+    "floor_index": 2,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000146",
+      "R_000196",
+      "R_000204",
+      "R_000207",
+      "R_000216",
+      "R_000218",
+      "R_000219",
+      "R_000226",
+      "R_000229",
+      "R_000236",
+      "R_000237",
+      "R_000260",
+      "R_000279",
+      "R_000281",
+      "R_000282",
+      "R_000297",
+      "R_000303",
+      "R_000308",
+      "R_000310",
+      "R_000311",
+      "R_000312",
+      "R_000324",
+      "R_000325",
+      "R_000326",
+      "R_000328",
+      "R_000337",
+      "R_000340",
+      "R_000341",
+      "R_000342",
+      "R_000348",
+      "R_000352",
+      "R_000354",
+      "R_000355"
+    ],
+    "node_count": 33,
+    "top_labels": [
+      "Genomics and Phylogenetic Studies",
+      "Gene expression and cancer classification",
+      "Bioinformatics and Genomic Networks"
+    ],
+    "activation_score": 0.9003,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0002_03",
+    "building_id": "B_R_0002",
+    "floor_index": 3,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000363",
+      "R_000371",
+      "R_000373",
+      "R_000378",
+      "R_000381",
+      "R_000383",
+      "R_000385",
+      "R_000386",
+      "R_000388",
+      "R_000390",
+      "R_000394",
+      "R_000399",
+      "R_000413",
+      "R_000431",
+      "R_000449",
+      "R_000512",
+      "R_000523",
+      "R_000536",
+      "R_000549",
+      "R_000559",
+      "R_000560",
+      "R_000561",
+      "R_000571",
+      "R_000575",
+      "R_000595",
+      "R_000600",
+      "R_000603",
+      "R_000606",
+      "R_000607",
+      "R_000614",
+      "R_000616",
+      "R_000634",
+      "R_000636"
+    ],
+    "node_count": 33,
+    "top_labels": [
+      "Genomics and Phylogenetic Studies",
+      "Gene expression and cancer classification",
+      "Bioinformatics and Genomic Networks"
+    ],
+    "activation_score": 1.0,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0002_04",
+    "building_id": "B_R_0002",
+    "floor_index": 4,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000640",
+      "R_000642",
+      "R_000649",
+      "R_000651",
+      "R_000653",
+      "R_000657",
+      "R_000658",
+      "R_000667",
+      "R_000668",
+      "R_000672",
+      "R_000673",
+      "R_000676",
+      "R_000689",
+      "R_000690",
+      "R_000693",
+      "R_000694",
+      "R_000696",
+      "R_000760",
+      "R_000779",
+      "R_000780",
+      "R_000806",
+      "R_000810",
+      "R_000815",
+      "R_000823",
+      "R_000827",
+      "R_000834",
+      "R_000841",
+      "R_000845",
+      "R_000858",
+      "R_000866",
+      "R_000873",
+      "R_000878",
+      "R_000882"
+    ],
+    "node_count": 33,
+    "top_labels": [
+      "Genomics and Phylogenetic Studies",
+      "Gene expression and cancer classification",
+      "Bioinformatics and Genomic Networks"
+    ],
+    "activation_score": 1.0,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0002_05",
+    "building_id": "B_R_0002",
+    "floor_index": 5,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000884",
+      "R_000887",
+      "R_000902",
+      "R_000905",
+      "R_000908",
+      "R_000909",
+      "R_000910",
+      "R_000912",
+      "R_000914",
+      "R_000917",
+      "R_000936",
+      "R_000938",
+      "R_000943",
+      "R_000945",
+      "R_000956",
+      "R_000959",
+      "R_000960",
+      "R_000962",
+      "R_000963",
+      "R_000964",
+      "R_000966",
+      "R_000968",
+      "R_000972",
+      "R_000975",
+      "R_000976",
+      "R_000984",
+      "R_000987",
+      "R_000988",
+      "R_000993",
+      "R_000994",
+      "R_000995",
+      "R_000996",
+      "R_000997"
+    ],
+    "node_count": 33,
+    "top_labels": [
+      "Genomics and Phylogenetic Studies",
+      "Gene expression and cancer classification",
+      "Bioinformatics and Genomic Networks"
+    ],
+    "activation_score": 0.7518,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0003_01",
+    "building_id": "B_R_0003",
+    "floor_index": 1,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000003",
+      "R_000005",
+      "R_000007",
+      "R_000008",
+      "R_000011",
+      "R_000028",
+      "R_000037",
+      "R_000047",
+      "R_000059",
+      "R_000060",
+      "R_000064",
+      "R_000065",
+      "R_000068",
+      "R_000070",
+      "R_000076",
+      "R_000083",
+      "R_000084",
+      "R_000093",
+      "R_000100",
+      "R_000145",
+      "R_000150",
+      "R_000203",
+      "R_000209",
+      "R_000227",
+      "R_000230"
+    ],
+    "node_count": 25,
+    "top_labels": [
+      "Fiscal Policy and Economic Growth",
+      "Labor market dynamics and wage inequality",
+      "Genomics and Phylogenetic Studies"
+    ],
+    "activation_score": 1.0,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0003_02",
+    "building_id": "B_R_0003",
+    "floor_index": 2,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000231",
+      "R_000234",
+      "R_000244",
+      "R_000248",
+      "R_000271",
+      "R_000274",
+      "R_000275",
+      "R_000276",
+      "R_000277",
+      "R_000284",
+      "R_000290",
+      "R_000292",
+      "R_000293",
+      "R_000300",
+      "R_000315",
+      "R_000329",
+      "R_000331",
+      "R_000332",
+      "R_000335",
+      "R_000339",
+      "R_000358",
+      "R_000360",
+      "R_000361",
+      "R_000368",
+      "R_000372"
+    ],
+    "node_count": 25,
+    "top_labels": [
+      "Fiscal Policy and Economic Growth",
+      "Labor market dynamics and wage inequality",
+      "Genomics and Phylogenetic Studies"
+    ],
+    "activation_score": 0.7518,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0003_03",
+    "building_id": "B_R_0003",
+    "floor_index": 3,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000382",
+      "R_000384",
+      "R_000445",
+      "R_000477",
+      "R_000503",
+      "R_000505",
+      "R_000506",
+      "R_000510",
+      "R_000511",
+      "R_000520",
+      "R_000521",
+      "R_000534",
+      "R_000541",
+      "R_000545",
+      "R_000553",
+      "R_000556",
+      "R_000567",
+      "R_000568",
+      "R_000572",
+      "R_000573",
+      "R_000581",
+      "R_000584",
+      "R_000587",
+      "R_000591",
+      "R_000594"
+    ],
+    "node_count": 25,
+    "top_labels": [
+      "Fiscal Policy and Economic Growth",
+      "Labor market dynamics and wage inequality",
+      "Genomics and Phylogenetic Studies"
+    ],
+    "activation_score": 1.0,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0003_04",
+    "building_id": "B_R_0003",
+    "floor_index": 4,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000599",
+      "R_000605",
+      "R_000613",
+      "R_000622",
+      "R_000623",
+      "R_000639",
+      "R_000645",
+      "R_000647",
+      "R_000650",
+      "R_000661",
+      "R_000808",
+      "R_000811",
+      "R_000817",
+      "R_000820",
+      "R_000825",
+      "R_000832",
+      "R_000836",
+      "R_000837",
+      "R_000839",
+      "R_000852",
+      "R_000854",
+      "R_000855",
+      "R_000856",
+      "R_000865",
+      "R_000872"
+    ],
+    "node_count": 25,
+    "top_labels": [
+      "Fiscal Policy and Economic Growth",
+      "Labor market dynamics and wage inequality",
+      "Genomics and Phylogenetic Studies"
+    ],
+    "activation_score": 0.7518,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0003_05",
+    "building_id": "B_R_0003",
+    "floor_index": 5,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000876",
+      "R_000877",
+      "R_000890",
+      "R_000892",
+      "R_000906",
+      "R_000911",
+      "R_000915",
+      "R_000916",
+      "R_000919",
+      "R_000921",
+      "R_000922",
+      "R_000923",
+      "R_000930",
+      "R_000934",
+      "R_000941",
+      "R_000944",
+      "R_000946",
+      "R_000947",
+      "R_000958",
+      "R_000973",
+      "R_000977",
+      "R_000978",
+      "R_000979",
+      "R_000983",
+      "R_000992"
+    ],
+    "node_count": 25,
+    "top_labels": [
+      "Fiscal Policy and Economic Growth",
+      "Labor market dynamics and wage inequality",
+      "Genomics and Phylogenetic Studies"
+    ],
+    "activation_score": 0.6523,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0004_01",
+    "building_id": "B_R_0004",
+    "floor_index": 1,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000001",
+      "R_000164",
+      "R_000211",
+      "R_000220",
+      "R_000222",
+      "R_000223",
+      "R_000238",
+      "R_000241",
+      "R_000242",
+      "R_000243",
+      "R_000245",
+      "R_000252",
+      "R_000255",
+      "R_000259",
+      "R_000261",
+      "R_000262"
+    ],
+    "node_count": 16,
+    "top_labels": [
+      "Health disparities and outcomes",
+      "Gender, Labor, and Family Dynamics",
+      "Social Media and Politics"
+    ],
+    "activation_score": 0.8187,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0004_02",
+    "building_id": "B_R_0004",
+    "floor_index": 2,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000263",
+      "R_000272",
+      "R_000285",
+      "R_000287",
+      "R_000299",
+      "R_000307",
+      "R_000309",
+      "R_000359",
+      "R_000362",
+      "R_000402",
+      "R_000446",
+      "R_000500",
+      "R_000508",
+      "R_000509",
+      "R_000515",
+      "R_000516"
+    ],
+    "node_count": 16,
+    "top_labels": [
+      "Health disparities and outcomes",
+      "Gender, Labor, and Family Dynamics",
+      "Social Media and Politics"
+    ],
+    "activation_score": 1.0,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0004_03",
+    "building_id": "B_R_0004",
+    "floor_index": 3,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000517",
+      "R_000526",
+      "R_000531",
+      "R_000535",
+      "R_000548",
+      "R_000554",
+      "R_000557",
+      "R_000564",
+      "R_000569",
+      "R_000574",
+      "R_000580",
+      "R_000582",
+      "R_000588",
+      "R_000589",
+      "R_000625"
+    ],
+    "node_count": 15,
+    "top_labels": [
+      "Health disparities and outcomes",
+      "Gender, Labor, and Family Dynamics",
+      "Social Media and Politics"
+    ],
+    "activation_score": 0.6157,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0004_04",
+    "building_id": "B_R_0004",
+    "floor_index": 4,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000740",
+      "R_000801",
+      "R_000804",
+      "R_000812",
+      "R_000818",
+      "R_000824",
+      "R_000829",
+      "R_000830",
+      "R_000833",
+      "R_000843",
+      "R_000844",
+      "R_000853",
+      "R_000857",
+      "R_000859",
+      "R_000862"
+    ],
+    "node_count": 15,
+    "top_labels": [
+      "Health disparities and outcomes",
+      "Gender, Labor, and Family Dynamics",
+      "Social Media and Politics"
+    ],
+    "activation_score": 0.9003,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0004_05",
+    "building_id": "B_R_0004",
+    "floor_index": 5,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000863",
+      "R_000868",
+      "R_000879",
+      "R_000881",
+      "R_000883",
+      "R_000885",
+      "R_000894",
+      "R_000899",
+      "R_000918",
+      "R_000924",
+      "R_000927",
+      "R_000929",
+      "R_000967",
+      "R_000974",
+      "R_000982"
+    ],
+    "node_count": 15,
+    "top_labels": [
+      "Health disparities and outcomes",
+      "Gender, Labor, and Family Dynamics",
+      "Social Media and Politics"
+    ],
+    "activation_score": 0.6157,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0005_01",
+    "building_id": "B_R_0005",
+    "floor_index": 1,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000016",
+      "R_000019",
+      "R_000030",
+      "R_000036",
+      "R_000038",
+      "R_000049",
+      "R_000050",
+      "R_000067",
+      "R_000079",
+      "R_000080",
+      "R_000081",
+      "R_000091",
+      "R_000094",
+      "R_000156"
+    ],
+    "node_count": 14,
+    "top_labels": [
+      "Complex Network Analysis Techniques",
+      "Functional Brain Connectivity Studies",
+      "Bioinformatics and Genomic Networks"
+    ],
+    "activation_score": 0.9003,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0005_02",
+    "building_id": "B_R_0005",
+    "floor_index": 2,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000181",
+      "R_000249",
+      "R_000301",
+      "R_000305",
+      "R_000306",
+      "R_000313",
+      "R_000317",
+      "R_000323",
+      "R_000330",
+      "R_000333",
+      "R_000345",
+      "R_000350",
+      "R_000351",
+      "R_000365"
+    ],
+    "node_count": 14,
+    "top_labels": [
+      "Complex Network Analysis Techniques",
+      "Functional Brain Connectivity Studies",
+      "Bioinformatics and Genomic Networks"
+    ],
+    "activation_score": 0.9003,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0005_03",
+    "building_id": "B_R_0005",
+    "floor_index": 3,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000369",
+      "R_000375",
+      "R_000379",
+      "R_000389",
+      "R_000391",
+      "R_000392",
+      "R_000397",
+      "R_000416",
+      "R_000485",
+      "R_000533",
+      "R_000563",
+      "R_000586",
+      "R_000601",
+      "R_000604"
+    ],
+    "node_count": 14,
+    "top_labels": [
+      "Complex Network Analysis Techniques",
+      "Functional Brain Connectivity Studies",
+      "Bioinformatics and Genomic Networks"
+    ],
+    "activation_score": 0.8187,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0005_04",
+    "building_id": "B_R_0005",
+    "floor_index": 4,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000609",
+      "R_000612",
+      "R_000617",
+      "R_000618",
+      "R_000621",
+      "R_000626",
+      "R_000629",
+      "R_000632",
+      "R_000652",
+      "R_000663",
+      "R_000681",
+      "R_000683",
+      "R_000695"
+    ],
+    "node_count": 13,
+    "top_labels": [
+      "Complex Network Analysis Techniques",
+      "Functional Brain Connectivity Studies",
+      "Bioinformatics and Genomic Networks"
+    ],
+    "activation_score": 0.6157,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0005_05",
+    "building_id": "B_R_0005",
+    "floor_index": 5,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000698",
+      "R_000699",
+      "R_000838",
+      "R_000897",
+      "R_000900",
+      "R_000913",
+      "R_000931",
+      "R_000933",
+      "R_000937",
+      "R_000940",
+      "R_000971",
+      "R_000986",
+      "R_000990"
+    ],
+    "node_count": 13,
+    "top_labels": [
+      "Complex Network Analysis Techniques",
+      "Functional Brain Connectivity Studies",
+      "Bioinformatics and Genomic Networks"
+    ],
+    "activation_score": 0.6971,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0006_01",
+    "building_id": "B_R_0006",
+    "floor_index": 1,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000112",
+      "R_000126",
+      "R_000206",
+      "R_000213",
+      "R_000217",
+      "R_000225",
+      "R_000235",
+      "R_000239",
+      "R_000247",
+      "R_000264",
+      "R_000265",
+      "R_000266",
+      "R_000268"
+    ],
+    "node_count": 13,
+    "top_labels": [
+      "Health disparities and outcomes",
+      "Obesity, Physical Activity, Diet",
+      "Health Systems, Economic Evaluations, Quality of Life"
+    ],
+    "activation_score": 0.9003,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0006_02",
+    "building_id": "B_R_0006",
+    "floor_index": 2,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000269",
+      "R_000278",
+      "R_000283",
+      "R_000288",
+      "R_000289",
+      "R_000294",
+      "R_000296",
+      "R_000298",
+      "R_000366",
+      "R_000387",
+      "R_000419",
+      "R_000501",
+      "R_000502"
+    ],
+    "node_count": 13,
+    "top_labels": [
+      "Health disparities and outcomes",
+      "Obesity, Physical Activity, Diet",
+      "Health Systems, Economic Evaluations, Quality of Life"
+    ],
+    "activation_score": 0.9003,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0006_03",
+    "building_id": "B_R_0006",
+    "floor_index": 3,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000507",
+      "R_000513",
+      "R_000522",
+      "R_000527",
+      "R_000532",
+      "R_000543",
+      "R_000547",
+      "R_000550",
+      "R_000551",
+      "R_000555",
+      "R_000558",
+      "R_000562",
+      "R_000565"
+    ],
+    "node_count": 13,
+    "top_labels": [
+      "Health disparities and outcomes",
+      "Obesity, Physical Activity, Diet",
+      "Health Systems, Economic Evaluations, Quality of Life"
+    ],
+    "activation_score": 0.6157,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0006_04",
+    "building_id": "B_R_0006",
+    "floor_index": 4,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000570",
+      "R_000578",
+      "R_000579",
+      "R_000592",
+      "R_000597",
+      "R_000598",
+      "R_000608",
+      "R_000761",
+      "R_000803",
+      "R_000807",
+      "R_000813",
+      "R_000819",
+      "R_000822"
+    ],
+    "node_count": 13,
+    "top_labels": [
+      "Health disparities and outcomes",
+      "Obesity, Physical Activity, Diet",
+      "Health Systems, Economic Evaluations, Quality of Life"
+    ],
+    "activation_score": 0.8187,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0006_05",
+    "building_id": "B_R_0006",
+    "floor_index": 5,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000828",
+      "R_000840",
+      "R_000846",
+      "R_000849",
+      "R_000850",
+      "R_000860",
+      "R_000864",
+      "R_000880",
+      "R_000891",
+      "R_000893",
+      "R_000896",
+      "R_000942",
+      "R_000965"
+    ],
+    "node_count": 13,
+    "top_labels": [
+      "Health disparities and outcomes",
+      "Obesity, Physical Activity, Diet",
+      "Health Systems, Economic Evaluations, Quality of Life"
+    ],
+    "activation_score": 0.6971,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0007_01",
+    "building_id": "B_R_0007",
+    "floor_index": 1,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000021",
+      "R_000044",
+      "R_000046",
+      "R_000101",
+      "R_000103",
+      "R_000106",
+      "R_000116",
+      "R_000124",
+      "R_000132",
+      "R_000135",
+      "R_000137",
+      "R_000140",
+      "R_000152"
+    ],
+    "node_count": 13,
+    "top_labels": [
+      "Topic Modeling",
+      "Artificial Intelligence in Healthcare and Education",
+      "Natural Language Processing Techniques"
+    ],
+    "activation_score": 0.9003,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0007_02",
+    "building_id": "B_R_0007",
+    "floor_index": 2,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000153",
+      "R_000158",
+      "R_000159",
+      "R_000160",
+      "R_000163",
+      "R_000167",
+      "R_000173",
+      "R_000197",
+      "R_000198",
+      "R_000221",
+      "R_000256",
+      "R_000270",
+      "R_000406"
+    ],
+    "node_count": 13,
+    "top_labels": [
+      "Topic Modeling",
+      "Artificial Intelligence in Healthcare and Education",
+      "Natural Language Processing Techniques"
+    ],
+    "activation_score": 1.0,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0007_03",
+    "building_id": "B_R_0007",
+    "floor_index": 3,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000420",
+      "R_000423",
+      "R_000425",
+      "R_000440",
+      "R_000447",
+      "R_000451",
+      "R_000455",
+      "R_000457",
+      "R_000463",
+      "R_000476",
+      "R_000480",
+      "R_000493"
+    ],
+    "node_count": 12,
+    "top_labels": [
+      "Topic Modeling",
+      "Artificial Intelligence in Healthcare and Education",
+      "Natural Language Processing Techniques"
+    ],
+    "activation_score": 0.5684,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0007_04",
+    "building_id": "B_R_0007",
+    "floor_index": 4,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000495",
+      "R_000499",
+      "R_000537",
+      "R_000627",
+      "R_000631",
+      "R_000633",
+      "R_000678",
+      "R_000692",
+      "R_000700",
+      "R_000701",
+      "R_000706",
+      "R_000708"
+    ],
+    "node_count": 12,
+    "top_labels": [
+      "Topic Modeling",
+      "Artificial Intelligence in Healthcare and Education",
+      "Natural Language Processing Techniques"
+    ],
+    "activation_score": 0.9003,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0007_05",
+    "building_id": "B_R_0007",
+    "floor_index": 5,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000714",
+      "R_000723",
+      "R_000753",
+      "R_000764",
+      "R_000766",
+      "R_000784",
+      "R_000785",
+      "R_000789",
+      "R_000792",
+      "R_000797",
+      "R_000888",
+      "R_000980"
+    ],
+    "node_count": 12,
+    "top_labels": [
+      "Topic Modeling",
+      "Artificial Intelligence in Healthcare and Education",
+      "Natural Language Processing Techniques"
+    ],
+    "activation_score": 0.9003,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0008_01",
+    "building_id": "B_R_0008",
+    "floor_index": 1,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000096",
+      "R_000113",
+      "R_000120",
+      "R_000123",
+      "R_000127",
+      "R_000136",
+      "R_000148",
+      "R_000149",
+      "R_000161",
+      "R_000166",
+      "R_000168",
+      "R_000170"
+    ],
+    "node_count": 12,
+    "top_labels": [
+      "Topic Modeling",
+      "Advanced Graph Neural Networks",
+      "Semantic Web and Ontologies"
+    ],
+    "activation_score": 0.9003,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0008_02",
+    "building_id": "B_R_0008",
+    "floor_index": 2,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000180",
+      "R_000183",
+      "R_000184",
+      "R_000188",
+      "R_000192",
+      "R_000194",
+      "R_000398",
+      "R_000403",
+      "R_000408",
+      "R_000412",
+      "R_000414",
+      "R_000417"
+    ],
+    "node_count": 12,
+    "top_labels": [
+      "Topic Modeling",
+      "Advanced Graph Neural Networks",
+      "Semantic Web and Ontologies"
+    ],
+    "activation_score": 1.0,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0008_03",
+    "building_id": "B_R_0008",
+    "floor_index": 3,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000418",
+      "R_000421",
+      "R_000428",
+      "R_000430",
+      "R_000432",
+      "R_000434",
+      "R_000438",
+      "R_000441",
+      "R_000448",
+      "R_000453",
+      "R_000462",
+      "R_000464"
+    ],
+    "node_count": 12,
+    "top_labels": [
+      "Topic Modeling",
+      "Advanced Graph Neural Networks",
+      "Semantic Web and Ontologies"
+    ],
+    "activation_score": 0.4717,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0008_04",
+    "building_id": "B_R_0008",
+    "floor_index": 4,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000469",
+      "R_000471",
+      "R_000483",
+      "R_000489",
+      "R_000492",
+      "R_000619",
+      "R_000687",
+      "R_000702",
+      "R_000713",
+      "R_000731",
+      "R_000743",
+      "R_000749"
+    ],
+    "node_count": 12,
+    "top_labels": [
+      "Topic Modeling",
+      "Advanced Graph Neural Networks",
+      "Semantic Web and Ontologies"
+    ],
+    "activation_score": 1.0,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0008_05",
+    "building_id": "B_R_0008",
+    "floor_index": 5,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000750",
+      "R_000751",
+      "R_000752",
+      "R_000756",
+      "R_000763",
+      "R_000769",
+      "R_000771",
+      "R_000772",
+      "R_000775",
+      "R_000782",
+      "R_000798",
+      "R_000985"
+    ],
+    "node_count": 12,
+    "top_labels": [
+      "Topic Modeling",
+      "Advanced Graph Neural Networks",
+      "Semantic Web and Ontologies"
+    ],
+    "activation_score": 0.9003,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0009_01",
+    "building_id": "B_R_0009",
+    "floor_index": 1,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000023",
+      "R_000024",
+      "R_000026",
+      "R_000033",
+      "R_000034",
+      "R_000045",
+      "R_000053",
+      "R_000054",
+      "R_000058",
+      "R_000069",
+      "R_000074",
+      "R_000082"
+    ],
+    "node_count": 12,
+    "top_labels": [
+      "Bioinformatics and Genomic Networks",
+      "Gene expression and cancer classification",
+      "Genomics and Phylogenetic Studies"
+    ],
+    "activation_score": 0.5856,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0009_02",
+    "building_id": "B_R_0009",
+    "floor_index": 2,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000087",
+      "R_000090",
+      "R_000097",
+      "R_000142",
+      "R_000316",
+      "R_000318",
+      "R_000321",
+      "R_000334",
+      "R_000336",
+      "R_000344",
+      "R_000346"
+    ],
+    "node_count": 11,
+    "top_labels": [
+      "Bioinformatics and Genomic Networks",
+      "Gene expression and cancer classification",
+      "Genomics and Phylogenetic Studies"
+    ],
+    "activation_score": 0.9003,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0009_03",
+    "building_id": "B_R_0009",
+    "floor_index": 3,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000357",
+      "R_000367",
+      "R_000370",
+      "R_000374",
+      "R_000376",
+      "R_000396",
+      "R_000615",
+      "R_000620",
+      "R_000635",
+      "R_000638",
+      "R_000646"
+    ],
+    "node_count": 11,
+    "top_labels": [
+      "Bioinformatics and Genomic Networks",
+      "Gene expression and cancer classification",
+      "Genomics and Phylogenetic Studies"
+    ],
+    "activation_score": 0.7518,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0009_04",
+    "building_id": "B_R_0009",
+    "floor_index": 4,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000654",
+      "R_000655",
+      "R_000662",
+      "R_000666",
+      "R_000669",
+      "R_000670",
+      "R_000675",
+      "R_000677",
+      "R_000682",
+      "R_000684",
+      "R_000686"
+    ],
+    "node_count": 11,
+    "top_labels": [
+      "Bioinformatics and Genomic Networks",
+      "Gene expression and cancer classification",
+      "Genomics and Phylogenetic Studies"
+    ],
+    "activation_score": 0.561,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0009_05",
+    "building_id": "B_R_0009",
+    "floor_index": 5,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000688",
+      "R_000697",
+      "R_000901",
+      "R_000903",
+      "R_000928",
+      "R_000939",
+      "R_000950",
+      "R_000951",
+      "R_000957",
+      "R_000991",
+      "R_000999"
+    ],
+    "node_count": 11,
+    "top_labels": [
+      "Bioinformatics and Genomic Networks",
+      "Gene expression and cancer classification",
+      "Genomics and Phylogenetic Studies"
+    ],
+    "activation_score": 0.6523,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0010_01",
+    "building_id": "B_R_0010",
+    "floor_index": 1,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000006",
+      "R_000027",
+      "R_000055",
+      "R_000061",
+      "R_000063",
+      "R_000073",
+      "R_000155",
+      "R_000251",
+      "R_000253",
+      "R_000302"
+    ],
+    "node_count": 10,
+    "top_labels": [
+      "Machine Learning in Materials Science",
+      "Model Reduction and Neural Networks",
+      "Neural Networks and Applications"
+    ],
+    "activation_score": 0.9003,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0010_02",
+    "building_id": "B_R_0010",
+    "floor_index": 2,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000304",
+      "R_000319",
+      "R_000349",
+      "R_000364",
+      "R_000380",
+      "R_000410",
+      "R_000444",
+      "R_000456",
+      "R_000524",
+      "R_000528"
+    ],
+    "node_count": 10,
+    "top_labels": [
+      "Machine Learning in Materials Science",
+      "Model Reduction and Neural Networks",
+      "Neural Networks and Applications"
+    ],
+    "activation_score": 1.0,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0010_03",
+    "building_id": "B_R_0010",
+    "floor_index": 3,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000538",
+      "R_000544",
+      "R_000593",
+      "R_000628",
+      "R_000630",
+      "R_000637",
+      "R_000641",
+      "R_000643",
+      "R_000644",
+      "R_000648"
+    ],
+    "node_count": 10,
+    "top_labels": [
+      "Machine Learning in Materials Science",
+      "Model Reduction and Neural Networks",
+      "Neural Networks and Applications"
+    ],
+    "activation_score": 0.7518,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0010_04",
+    "building_id": "B_R_0010",
+    "floor_index": 4,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000664",
+      "R_000665",
+      "R_000671",
+      "R_000680",
+      "R_000691",
+      "R_000736",
+      "R_000788",
+      "R_000874",
+      "R_000920",
+      "R_000925"
+    ],
+    "node_count": 10,
+    "top_labels": [
+      "Machine Learning in Materials Science",
+      "Model Reduction and Neural Networks",
+      "Neural Networks and Applications"
+    ],
+    "activation_score": 1.0,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0010_05",
+    "building_id": "B_R_0010",
+    "floor_index": 5,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000926",
+      "R_000932",
+      "R_000935",
+      "R_000948",
+      "R_000949",
+      "R_000954",
+      "R_000955",
+      "R_000981",
+      "R_000998"
+    ],
+    "node_count": 9,
+    "top_labels": [
+      "Machine Learning in Materials Science",
+      "Model Reduction and Neural Networks",
+      "Neural Networks and Applications"
+    ],
+    "activation_score": 0.6523,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0011_01",
+    "building_id": "B_R_0011",
+    "floor_index": 1,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000010",
+      "R_000013",
+      "R_000062",
+      "R_000098",
+      "R_000205",
+      "R_000212",
+      "R_000214",
+      "R_000254"
+    ],
+    "node_count": 8,
+    "top_labels": [
+      "Physical Activity and Health",
+      "Obesity, Physical Activity, Diet",
+      "Gender, Labor, and Family Dynamics"
+    ],
+    "activation_score": 0.6157,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0011_02",
+    "building_id": "B_R_0011",
+    "floor_index": 2,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000273",
+      "R_000295",
+      "R_000322",
+      "R_000356",
+      "R_000395",
+      "R_000514",
+      "R_000518"
+    ],
+    "node_count": 7,
+    "top_labels": [
+      "Physical Activity and Health",
+      "Obesity, Physical Activity, Diet",
+      "Gender, Labor, and Family Dynamics"
+    ],
+    "activation_score": 0.5856,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0011_03",
+    "building_id": "B_R_0011",
+    "floor_index": 3,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000525",
+      "R_000566",
+      "R_000577",
+      "R_000610",
+      "R_000611",
+      "R_000624",
+      "R_000660"
+    ],
+    "node_count": 7,
+    "top_labels": [
+      "Physical Activity and Health",
+      "Obesity, Physical Activity, Diet",
+      "Gender, Labor, and Family Dynamics"
+    ],
+    "activation_score": 0.5409,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0011_04",
+    "building_id": "B_R_0011",
+    "floor_index": 4,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000679",
+      "R_000685",
+      "R_000800",
+      "R_000814",
+      "R_000848",
+      "R_000851",
+      "R_000861"
+    ],
+    "node_count": 7,
+    "top_labels": [
+      "Physical Activity and Health",
+      "Obesity, Physical Activity, Diet",
+      "Gender, Labor, and Family Dynamics"
+    ],
+    "activation_score": 0.6157,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0011_05",
+    "building_id": "B_R_0011",
+    "floor_index": 5,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000867",
+      "R_000869",
+      "R_000875",
+      "R_000886",
+      "R_000898",
+      "R_000904",
+      "R_000970"
+    ],
+    "node_count": 7,
+    "top_labels": [
+      "Physical Activity and Health",
+      "Obesity, Physical Activity, Diet",
+      "Gender, Labor, and Family Dynamics"
+    ],
+    "activation_score": 0.5856,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0012_01",
+    "building_id": "B_R_0012",
+    "floor_index": 1,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000031",
+      "R_000085",
+      "R_000202",
+      "R_000208",
+      "R_000215",
+      "R_000228",
+      "R_000232"
+    ],
+    "node_count": 7,
+    "top_labels": [
+      "Health Systems, Economic Evaluations, Quality of Life",
+      "COVID-19 epidemiological studies",
+      "Musculoskeletal pain and rehabilitation"
+    ],
+    "activation_score": 0.561,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0012_02",
+    "building_id": "B_R_0012",
+    "floor_index": 2,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000240",
+      "R_000250",
+      "R_000257",
+      "R_000258",
+      "R_000267",
+      "R_000280",
+      "R_000286"
+    ],
+    "node_count": 7,
+    "top_labels": [
+      "Health Systems, Economic Evaluations, Quality of Life",
+      "COVID-19 epidemiological studies",
+      "Musculoskeletal pain and rehabilitation"
+    ],
+    "activation_score": 0.7518,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0012_03",
+    "building_id": "B_R_0012",
+    "floor_index": 3,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000291",
+      "R_000327",
+      "R_000338",
+      "R_000343",
+      "R_000347",
+      "R_000530",
+      "R_000542"
+    ],
+    "node_count": 7,
+    "top_labels": [
+      "Health Systems, Economic Evaluations, Quality of Life",
+      "COVID-19 epidemiological studies",
+      "Musculoskeletal pain and rehabilitation"
+    ],
+    "activation_score": 0.7518,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0012_04",
+    "building_id": "B_R_0012",
+    "floor_index": 4,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000576",
+      "R_000583",
+      "R_000585",
+      "R_000602",
+      "R_000656",
+      "R_000805",
+      "R_000821"
+    ],
+    "node_count": 7,
+    "top_labels": [
+      "Health Systems, Economic Evaluations, Quality of Life",
+      "COVID-19 epidemiological studies",
+      "Musculoskeletal pain and rehabilitation"
+    ],
+    "activation_score": 0.8187,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0012_05",
+    "building_id": "B_R_0012",
+    "floor_index": 5,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000826",
+      "R_000842",
+      "R_000847",
+      "R_000895",
+      "R_000952",
+      "R_000961",
+      "R_000969"
+    ],
+    "node_count": 7,
+    "top_labels": [
+      "Health Systems, Economic Evaluations, Quality of Life",
+      "COVID-19 epidemiological studies",
+      "Musculoskeletal pain and rehabilitation"
+    ],
+    "activation_score": 0.6523,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0013_01",
+    "building_id": "B_R_0013",
+    "floor_index": 1,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000190",
+      "R_000201",
+      "R_000210",
+      "R_000224",
+      "R_000233",
+      "R_000246"
+    ],
+    "node_count": 6,
+    "top_labels": [
+      "Health Systems, Economic Evaluations, Quality of Life",
+      "Frailty in Older Adults",
+      "Nutrition and Health in Aging"
+    ],
+    "activation_score": 0.9003,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0013_02",
+    "building_id": "B_R_0013",
+    "floor_index": 2,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000320",
+      "R_000353",
+      "R_000377",
+      "R_000393",
+      "R_000473",
+      "R_000478"
+    ],
+    "node_count": 6,
+    "top_labels": [
+      "Health Systems, Economic Evaluations, Quality of Life",
+      "Frailty in Older Adults",
+      "Nutrition and Health in Aging"
+    ],
+    "activation_score": 1.0,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0013_03",
+    "building_id": "B_R_0013",
+    "floor_index": 3,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000504",
+      "R_000519",
+      "R_000529",
+      "R_000539",
+      "R_000540",
+      "R_000546"
+    ],
+    "node_count": 6,
+    "top_labels": [
+      "Health Systems, Economic Evaluations, Quality of Life",
+      "Frailty in Older Adults",
+      "Nutrition and Health in Aging"
+    ],
+    "activation_score": 0.6971,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0013_04",
+    "building_id": "B_R_0013",
+    "floor_index": 4,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000590",
+      "R_000596",
+      "R_000674",
+      "R_000729",
+      "R_000781",
+      "R_000809"
+    ],
+    "node_count": 6,
+    "top_labels": [
+      "Health Systems, Economic Evaluations, Quality of Life",
+      "Frailty in Older Adults",
+      "Nutrition and Health in Aging"
+    ],
+    "activation_score": 1.0,
+    "summary": null
+  },
+  {
+    "floor_id": "F_B_R_0013_05",
+    "building_id": "B_R_0013",
+    "floor_index": 5,
+    "core_range": [
+      8,
+      8
+    ],
+    "vertex_ids": [
+      "R_000816",
+      "R_000831",
+      "R_000870",
+      "R_000871",
+      "R_000953",
+      "R_000989"
+    ],
+    "node_count": 6,
+    "top_labels": [
+      "Health Systems, Economic Evaluations, Quality of Life",
+      "Frailty in Older Adults",
+      "Nutrition and Health in Aging"
+    ],
+    "activation_score": 0.8187,
+    "summary": null
+  }
+]
