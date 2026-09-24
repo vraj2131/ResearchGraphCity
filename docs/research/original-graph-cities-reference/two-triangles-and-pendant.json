@@ -1,0 +1,30 @@
+{
+  "purpose": "Original executable output for fidelity investigation; not yet an application parity test.",
+  "upstream_commit": "483c6cbf426511abc86aa950c30b3e8693b6cf6d",
+  "binaries": {
+    "preproc": "c0d3532f4e6598a9907ea03bd191d58f5359b03993613ee118911a4b6955146e",
+    "buffkcore": "0ab361abf169a34013d4188106235a4e43fadead7c3d9f1a915fc9e3dc38889d",
+    "ewave_next": "0a0e47add8905d2b7b9f3777f962e1fab14504952bf3fc9c18f076dda4453472"
+  },
+  "platform": "Original Linux x86-64 programs executed through Docker Desktop on Apple Silicon; pgvector/pgvector:pg16 container, network disabled, no database connection.",
+  "commands": [
+    "preproc fixture/fixture.txt 8 true 16 100000",
+    "buffkcore fixture/fixture.bin 16 7 fixture/fixture.cc 6 100000",
+    "ewave_next fixture/fixture_layers fixture/fixture_layers/layer-1-2.csv 2 14 6 6 100000"
+  ],
+  "outputs": {
+    "fixture.txt": "0\t1\n1\t2\n0\t2\n2\t3\n3\t4\n4\t5\n3\t5\n5\t6\n",
+    "fixture-layer-info.json": "{\n\"2\": {\n\t\"vertices\":6,\n\t\"edges\":7,\n\t\"file_suffix\":2\n},\n\"1\": {\n\t\"vertices\":2,\n\t\"edges\":1,\n\t\"file_suffix\":2\n},\n\"0\":{}\n}",
+    "fixture_layers/layer-1-2.csv": "0,1,2\n0,2,2\n1,0,2\n1,2,2\n2,0,2\n2,1,2\n2,3,2\n3,2,2\n3,4,2\n3,5,2\n4,3,2\n4,5,2\n5,3,2\n5,4,2\n5,6,1\n6,5,1\n",
+    "fixture_waves/layer-2-waves.csv": "0,1,1,0,0\n0,2,1,0,0\n1,0,1,0,0\n1,2,1,0,0\n2,0,1,0,0\n2,1,1,0,0\n2,3,1,0,1\n3,4,1,0,0\n3,5,1,0,0\n3,2,1,0,1\n4,3,1,0,0\n4,5,1,0,0\n5,3,1,0,0\n5,4,1,0,0\n",
+    "fixture_waves/layer-2-waves-info.csv": "1,1,0,6,7,0,0,4_6_6_2_2_1\n",
+    "fixture_waves/layer-2-waves-size-info.csv": "1,6,7\n",
+    "fixture_waves/layer-2-wave-sources.csv": "0,1,0\n1,1,0\n2,1,1\n3,1,1\n4,1,0\n5,1,0\n"
+  },
+  "observations": [
+    "Two triangles linked by an edge are one connected fixed point at peel 2, including the linking edge.",
+    "The pendant edge belongs to peel 1; its attachment vertex therefore belongs to both fixed-point buildings.",
+    "The peel-2 wave output assigns wave 1 and levels 0/1 to the edges. Preserve original row semantics rather than inferring floors from k-core bands.",
+    "Maximum vertex ID is 6. The Makefile derives this value from the final source ID in fixture.cc, not the connected-component count."
+  ]
+}
