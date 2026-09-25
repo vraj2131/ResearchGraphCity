@@ -1,0 +1,12 @@
+{
+  "repository": "https://github.com/fredhohman/atlas-algorithm",
+  "commit": "9b805eff7a2d160f366117ee2a754ba1479bb600",
+  "purpose": "Preserved original fixed-point algorithm source reference; the application runs its local Python/igraph port.",
+  "sha256": {
+    "LICENSE.md": "5646200fb0e6786c1a0e251a882cc6d4f1a700b210062b59bada869a4ea06bc2",
+    "parallelkcore.cpp": "f63b0fed3f846920b4e5fc8bcb3973dc465f7ed42ed95ae7b9041aa1632625b4",
+    "README.md": "0784a6969a2527e77923f6ccf05f301b701d8a9bd1b9b1d2cc158203d4e463ab",
+    "kcore.cpp": "ea0b700969c855808178a24b2466c156dde1807d5887b46d543e6863e9b1e5f8",
+    "properties.h": "1d7c9d9c211090f76cee78aa83447391c1b734019c506884d2510b7582e78b91"
+  }
+}

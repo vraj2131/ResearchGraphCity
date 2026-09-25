@@ -11,6 +11,7 @@ from sqlalchemy import (
     DateTime,
     Float,
     ForeignKey,
+    ForeignKeyConstraint,
     Index,
     Integer,
     SmallInteger,
@@ -202,7 +203,10 @@ class DistrictRecord(TimestampMixin, Base):
 
 class BuildingRecord(TimestampMixin, Base):
     __tablename__ = "buildings"
-    __table_args__ = (UniqueConstraint("city_id", "external_id", name="uq_buildings_external_id"),)
+    __table_args__ = (
+        UniqueConstraint("city_id", "external_id", name="uq_buildings_external_id"),
+        UniqueConstraint("city_id", "id", name="uq_buildings_city_id"),
+    )
 
     id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=new_uuid)
     city_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("cities.id", ondelete="CASCADE"), nullable=False)
@@ -232,7 +236,10 @@ class BuildingRecord(TimestampMixin, Base):
 
 class FloorRecord(Base):
     __tablename__ = "floors"
-    __table_args__ = (UniqueConstraint("building_id", "floor_index", name="uq_floors_building_index"),)
+    __table_args__ = (
+        UniqueConstraint("building_id", "floor_index", name="uq_floors_building_index"),
+        UniqueConstraint("city_id", "building_id", "id", name="uq_floors_city_building_id"),
+    )
 
     id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=new_uuid)
     city_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("cities.id", ondelete="CASCADE"), nullable=False)
@@ -247,6 +254,55 @@ class FloorRecord(Base):
     year_min: Mapped[int | None] = mapped_column(SmallInteger)
     year_max: Mapped[int | None] = mapped_column(SmallInteger)
     summary: Mapped[dict | None] = mapped_column(JSONB)
+
+
+class BuildingPaperRecord(Base):
+    """A paper can be a vertex of several connected edge fixed points."""
+    __tablename__ = "building_papers"
+    __table_args__ = (
+        ForeignKeyConstraint(["city_id", "openalex_id"], ["city_papers.city_id", "city_papers.openalex_id"], ondelete="CASCADE"),
+        ForeignKeyConstraint(["city_id", "building_id"], ["buildings.city_id", "buildings.id"], ondelete="CASCADE"),
+        ForeignKeyConstraint(["city_id", "building_id", "floor_id"], ["floors.city_id", "floors.building_id", "floors.id"], ondelete="CASCADE"),
+        Index("ix_building_papers_paper", "city_id", "openalex_id"),
+    )
+    city_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True)
+    building_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True)
+    openalex_id: Mapped[str] = mapped_column(Text, primary_key=True)
+    floor_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True))
+
+
+class FloorPaperRecord(Base):
+    """All floor appearances, including endpoints shared across fragments."""
+    __tablename__ = "floor_papers"
+    __table_args__ = (
+        ForeignKeyConstraint(["city_id", "building_id", "openalex_id"], ["building_papers.city_id", "building_papers.building_id", "building_papers.openalex_id"], ondelete="CASCADE"),
+        ForeignKeyConstraint(["city_id", "building_id", "floor_id"], ["floors.city_id", "floors.building_id", "floors.id"], ondelete="CASCADE"),
+        Index("ix_floor_papers_membership", "city_id", "building_id", "openalex_id"),
+    )
+    city_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True)
+    floor_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True)
+    openalex_id: Mapped[str] = mapped_column(Text, primary_key=True)
+    building_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), nullable=False)
+
+
+class DecompositionEdgeRecord(Base):
+    """Canonical undirected edge ownership, independent of research edge types."""
+    __tablename__ = "decomposition_edges"
+    __table_args__ = (
+        ForeignKeyConstraint(["city_id", "building_id", "source_openalex_id"], ["building_papers.city_id", "building_papers.building_id", "building_papers.openalex_id"], ondelete="CASCADE"),
+        ForeignKeyConstraint(["city_id", "building_id", "target_openalex_id"], ["building_papers.city_id", "building_papers.building_id", "building_papers.openalex_id"], ondelete="CASCADE"),
+        ForeignKeyConstraint(["city_id", "building_id", "floor_id"], ["floors.city_id", "floors.building_id", "floors.id"], ondelete="CASCADE"),
+        Index("ix_decomposition_edges_building", "city_id", "building_id", "floor_id"),
+    )
+    city_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True)
+    source_openalex_id: Mapped[str] = mapped_column(Text, primary_key=True)
+    target_openalex_id: Mapped[str] = mapped_column(Text, primary_key=True)
+    building_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), nullable=False)
+    floor_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), nullable=False)
+    peel: Mapped[int] = mapped_column(Integer, nullable=False)
+    wave: Mapped[int] = mapped_column(Integer, nullable=False)
+    fragment: Mapped[int] = mapped_column(Integer, nullable=False)
+    wave_component: Mapped[int] = mapped_column(Integer, nullable=False)
 
 
 class BuildingRelationshipRecord(Base):

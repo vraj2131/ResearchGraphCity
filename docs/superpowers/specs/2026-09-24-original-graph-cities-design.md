@@ -57,7 +57,7 @@ Keep Docker's PostgreSQL volume, pgvector extension, existing embeddings and ind
 
 Keep city switching, seed entry and target selection, progress/cancellation, layers, building/bridge/street inspectors, paper selection, floor filtering, interiors, assistant evidence navigation, timeline, comparison, and Markdown export. Extend those interactions for wave/fragment metadata and multiple building memberships. Identify original streets as geometry and semantic bridges as evidence-backed overlays.
 
-The current frontend normalizes layout coordinates: update it so original bucket/spiral geometry is preserved rather than replaced. Use aggregate/instanced rendering and bounded focused data access where necessary. A visual grouping cannot erase original building identity. Keep responsive behavior and selected-object highlighting.
+The current frontend translates and uniformly scales layout coordinates but does not scale footprints. Preserve original bucket/spiral relative geometry and verify that camera fitting and footprint sizing do not cause overlap. Use aggregate/instanced rendering and bounded focused data access where necessary. A visual grouping cannot erase original building identity. Keep responsive behavior and selected-object highlighting.
 
 ## Verification and completion gates
 
@@ -75,3 +75,5 @@ The current frontend normalizes layout coordinates: update it so original bucket
 ## Current status
 
 Source discovery and compatibility analysis completed. No product implementation or development-database migration has been performed for this integration. Written design review and a task-by-task implementation plan precede implementation.
+
+See `docs/research/original-graph-cities-reference/compatibility-baseline.md` for the executed baseline and specific membership, assistant, street, and rendering compatibility risks.

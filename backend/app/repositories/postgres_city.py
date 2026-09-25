@@ -6,19 +6,22 @@ from typing import Any
 import uuid
 
 from sqlalchemy import Integer, Select, and_, func, or_, select
-from sqlalchemy.orm import Session, sessionmaker
+from sqlalchemy.orm import Session, aliased, sessionmaker
 
 from ..models import (
     AnswerCitationRecord,
     AssistantConversationRecord,
     AssistantMessageRecord,
     BuildingRecord,
+    BuildingPaperRecord,
     BuildingRelationshipRecord,
     CityPaperRecord,
     CityRecord,
     CitySeedRecord,
     DistrictRecord,
     FloorRecord,
+    FloorPaperRecord,
+    DecompositionEdgeRecord,
     PaperEdgeRecord,
     PaperEmbeddingRecord,
     PaperRecord,
@@ -195,19 +198,28 @@ class PostgresCityRepository:
             query = (
                 select(CityPaperRecord, PaperRecord)
                 .join(PaperRecord, PaperRecord.openalex_id == CityPaperRecord.openalex_id)
-                .where(CityPaperRecord.city_id == city.id, CityPaperRecord.building_id == building.id)
+                .where(CityPaperRecord.city_id == city.id)
             )
+            if city.algorithm_version.startswith("graph-cities"):
+                query = query.where(CityPaperRecord.openalex_id.in_(self._member_ids(city, building.id)))
+            else:
+                query = query.where(CityPaperRecord.building_id == building.id)
             if floor_id:
                 floor = session.scalar(
                     select(FloorRecord).where(FloorRecord.building_id == building.id, FloorRecord.external_id == floor_id)
                 )
                 if floor is None:
                     raise KeyError(floor_id)
-                query = query.where(CityPaperRecord.floor_id == floor.id)
+                if city.algorithm_version.startswith("graph-cities"):
+                    query = query.where(CityPaperRecord.openalex_id.in_(self._member_ids(city, building.id, floor.id)))
+                else:
+                    query = query.where(CityPaperRecord.floor_id == floor.id)
             if cursor:
                 query = query.where(CityPaperRecord.external_paper_id > cursor)
             rows = session.execute(query.order_by(CityPaperRecord.external_paper_id).limit(self._limit(limit))).all()
-            return [self._serialize_paper(membership, paper) for membership, paper in rows]
+            result = [self._serialize_paper(membership, paper) for membership, paper in rows]
+            self._attach_locations(session, city, result, building_id)
+            return result
 
     def get_building_edges(
         self, city_id: str, building_id: str, floor_id: str | None = None, limit: int = 200, cursor: str | None = None
@@ -215,6 +227,31 @@ class PostgresCityRepository:
         with self.session_factory() as session:
             city = self._city(session, city_id)
             building = self._building(session, city.id, building_id)
+            if city.algorithm_version.startswith("graph-cities"):
+                owned = select(DecompositionEdgeRecord).where(
+                    DecompositionEdgeRecord.city_id == city.id,
+                    DecompositionEdgeRecord.building_id == building.id,
+                )
+                if floor_id:
+                    floor = session.scalar(select(FloorRecord).where(FloorRecord.building_id == building.id, FloorRecord.external_id == floor_id))
+                    if floor is None:
+                        raise KeyError(floor_id)
+                    owned = owned.where(DecompositionEdgeRecord.floor_id == floor.id)
+                ownership = owned.subquery()
+                query = select(PaperEdgeRecord).where(
+                    PaperEdgeRecord.city_id == city.id,
+                    select(ownership.c.city_id).where(or_(
+                        and_(ownership.c.source_openalex_id == PaperEdgeRecord.source_openalex_id,
+                             ownership.c.target_openalex_id == PaperEdgeRecord.target_openalex_id),
+                        and_(ownership.c.target_openalex_id == PaperEdgeRecord.source_openalex_id,
+                             ownership.c.source_openalex_id == PaperEdgeRecord.target_openalex_id),
+                    )).exists(),
+                )
+                # A citation baseline retains citation evidence only; similarity
+                # remains a separate overlay, even for the same endpoint pair.
+                if city.configuration.get("graph_input", "citation") == "citation":
+                    query = query.where(PaperEdgeRecord.edge_type == "citation")
+                return self._serialize_edges(session, city.id, query, limit, cursor)
             member_query = select(CityPaperRecord.openalex_id).where(
                 CityPaperRecord.city_id == city.id, CityPaperRecord.building_id == building.id
             )
@@ -244,14 +281,8 @@ class PostgresCityRepository:
             )
             if relationship is None:
                 raise KeyError(bridge_id)
-            source_ids = select(CityPaperRecord.openalex_id).where(
-                CityPaperRecord.city_id == city.id,
-                CityPaperRecord.building_id == relationship.source_building_id,
-            )
-            target_ids = select(CityPaperRecord.openalex_id).where(
-                CityPaperRecord.city_id == city.id,
-                CityPaperRecord.building_id == relationship.target_building_id,
-            )
+            source_ids = self._member_ids(city, relationship.source_building_id)
+            target_ids = self._member_ids(city, relationship.target_building_id)
             query = select(PaperEdgeRecord).where(
                 PaperEdgeRecord.city_id == city.id,
                 or_(
@@ -298,7 +329,24 @@ class PostgresCityRepository:
                 .outerjoin(DistrictRecord, DistrictRecord.id == BuildingRecord.district_id)
                 .where(CityPaperRecord.city_id == city.id)
             )
-            base = self._apply_paper_filters(base, filters)
+            effective_filters = dict(filters)
+            if city.algorithm_version.startswith("graph-cities"):
+                member_building = aliased(BuildingRecord)
+                member_district = aliased(DistrictRecord)
+                locations = (select(BuildingPaperRecord.openalex_id)
+                    .join(member_building, member_building.id == BuildingPaperRecord.building_id)
+                    .outerjoin(member_district, member_district.id == member_building.district_id)
+                    .where(BuildingPaperRecord.city_id == city.id,
+                           BuildingPaperRecord.openalex_id == CityPaperRecord.openalex_id)
+                    .correlate(CityPaperRecord))
+                scoped = False
+                for key, column in (("building_id", member_building.external_id), ("district_id", member_district.external_id), ("domain", member_building.semantic_domain)):
+                    if effective_filters.get(key):
+                        locations = locations.where(column == str(effective_filters.pop(key)))
+                        scoped = True
+                if scoped:
+                    base = base.where(locations.exists())
+            base = self._apply_paper_filters(base, effective_filters)
             lexical_rows = session.execute(
                 base.add_columns(lexical_rank)
                 .where(
@@ -353,10 +401,12 @@ class PostgresCityRepository:
                     + 0.10 * quality,
                     4,
                 )
-            return sorted(
+            result = sorted(
                 candidates.values(),
                 key=lambda item: (-item["score"], -item["citation_count"], item["openalex_id"]),
             )[:result_limit]
+            self._attach_locations(session, city, result, filters.get("building_id"))
+            return result
 
     def get_paper(self, city_id: str, paper_id: str) -> dict | None:
         with self.session_factory() as session:
@@ -377,7 +427,9 @@ class PostgresCityRepository:
             ).first()
             if row is None:
                 return None
-            return self._search_result(*row)
+            result = self._search_result(*row)
+            self._attach_locations(session, city, [result])
+            return result
 
     def relationships_for_buildings(self, city_id: str, building_ids: list[str], limit: int = 12) -> list[dict]:
         if len(building_ids) < 2:
@@ -443,6 +495,15 @@ class PostgresCityRepository:
                 }
                 for year, paper_count, citation_count, open_access_count, building_count in rows
             ]
+            if city.algorithm_version.startswith("graph-cities"):
+                building_counts = dict(session.execute(
+                    select(PaperRecord.publication_year, func.count(func.distinct(BuildingPaperRecord.building_id)))
+                    .join(BuildingPaperRecord, BuildingPaperRecord.openalex_id == PaperRecord.openalex_id)
+                    .where(BuildingPaperRecord.city_id == city.id, PaperRecord.publication_year.is_not(None))
+                    .group_by(PaperRecord.publication_year)
+                ).all())
+                for year in years:
+                    year["building_count"] = int(building_counts.get(year["year"], 0))
             return {
                 "city_id": city.external_id,
                 "year_min": years[0]["year"] if years else None,
@@ -557,6 +618,65 @@ class PostgresCityRepository:
         with self.session_factory() as session:
             city = self._city(session, city_id)
             return self._serialize_edges(session, city.id, select(PaperEdgeRecord).where(PaperEdgeRecord.city_id == city.id), 200, None)
+
+    @staticmethod
+    def _member_ids(city, building_id, floor_id=None):
+        if city.algorithm_version.startswith("graph-cities"):
+            if floor_id is not None:
+                return select(FloorPaperRecord.openalex_id).where(
+                    FloorPaperRecord.city_id == city.id, FloorPaperRecord.building_id == building_id,
+                    FloorPaperRecord.floor_id == floor_id,
+                )
+            return select(BuildingPaperRecord.openalex_id).where(
+                BuildingPaperRecord.city_id == city.id, BuildingPaperRecord.building_id == building_id,
+            )
+        query = select(CityPaperRecord.openalex_id).where(
+            CityPaperRecord.city_id == city.id, CityPaperRecord.building_id == building_id,
+        )
+        return query.where(CityPaperRecord.floor_id == floor_id) if floor_id is not None else query
+
+    @staticmethod
+    def _attach_locations(session, city, results, preferred_building=None):
+        if not results or not city.algorithm_version.startswith("graph-cities"):
+            return
+        ids = [item["openalex_id"] for item in results]
+        rows = session.execute(
+            select(BuildingPaperRecord, BuildingRecord, DistrictRecord, FloorRecord)
+            .join(BuildingRecord, BuildingRecord.id == BuildingPaperRecord.building_id)
+            .outerjoin(DistrictRecord, DistrictRecord.id == BuildingRecord.district_id)
+            .outerjoin(FloorRecord, FloorRecord.id == BuildingPaperRecord.floor_id)
+            .where(BuildingPaperRecord.city_id == city.id, BuildingPaperRecord.openalex_id.in_(ids))
+            .order_by(BuildingRecord.external_id)
+        ).all()
+        floor_rows = session.execute(
+            select(FloorPaperRecord.openalex_id, FloorPaperRecord.building_id, FloorRecord)
+            .join(FloorRecord, FloorRecord.id == FloorPaperRecord.floor_id)
+            .where(FloorPaperRecord.city_id == city.id, FloorPaperRecord.openalex_id.in_(ids))
+            .order_by(FloorRecord.floor_index)
+        ).all()
+        floors = defaultdict(list)
+        for paper_id, building_id, floor in floor_rows:
+            floors[(paper_id, building_id)].append({"floor_id": floor.external_id, "floor_index": floor.floor_index, "summary": floor.summary})
+        locations = defaultdict(list)
+        for membership, building, district, primary_floor in rows:
+            locations[membership.openalex_id].append({
+                "building_id": building.external_id,
+                "building_label": building.top_labels[0] if building.top_labels else building.external_id,
+                "district_id": district.external_id if district else None,
+                "district_name": district.name if district else None,
+                "domain_name": building.semantic_domain_name,
+                "floor_id": primary_floor.external_id if primary_floor else None,
+                "floors": floors[(membership.openalex_id, building.id)],
+            })
+        for item in results:
+            item["locations"] = locations[item["openalex_id"]]
+            preferred = preferred_building or item.get("building_id")
+            chosen = next((location for location in item["locations"] if location["building_id"] == preferred), None)
+            if chosen is None and item["locations"]:
+                chosen = item["locations"][0]
+            if chosen:
+                item.update({key: value for key, value in chosen.items() if key != "floors"})
+                item["floor_ids"] = [floor["floor_id"] for floor in chosen["floors"]]
 
     @staticmethod
     def _apply_paper_filters(query: Select[Any], filters: dict[str, Any]) -> Select[Any]:
