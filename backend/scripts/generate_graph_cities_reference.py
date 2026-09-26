@@ -6,6 +6,7 @@ checkout, Docker execution, or access to upstream repositories.
 from __future__ import annotations
 
 import argparse
+import ast
 import hashlib
 import itertools
 import json
@@ -42,6 +43,11 @@ def main():
     args = parser.parse_args()
     binaries = ("preproc", "buffkcore", "ewave_next")
     checksums = {name: hashlib.sha256((args.reference_root / name).read_bytes()).hexdigest() for name in binaries}
+    wave_map_source = args.reference_root / 'scripts/freqUsed/bucket_loop_int.py'
+    module = ast.parse(wave_map_source.read_text())
+    function = next(node for node in module.body if isinstance(node, ast.FunctionDef) and node.name == 'getWaveMap')
+    formula = next(node for node in function.body if isinstance(node, ast.For) and ast.unparse(node.iter) == 'wsizes.items()')
+    formula_code = compile(ast.Module(body=[formula], type_ignores=[]), str(wave_map_source), 'exec')
     results = []
     with tempfile.TemporaryDirectory(prefix="graph-city-oracle-") as directory:
         root = Path(directory)
@@ -70,6 +76,8 @@ def main():
             layers = json.loads((path / f"{name}-layer-info.json").read_text())
             labels = {}
             wave_labels = {}
+            profiles = []
+            source_levels = {}
             for file in sorted((path / f"{name}_layers").glob("*.csv")):
                 for row in file.read_text().splitlines():
                     u, v, peel = map(int, row.split(","))
@@ -89,11 +97,48 @@ def main():
                     u, v, wave, component, fragment = map(int, row.split(","))
                     if u < v:
                         wave_labels[(u, v)] = [wave, component, fragment]
+                source_levels[int(peel)] = {v: (w, f) for v, w, f in
+                    (map(int, row.split(',')) for row in (path / f'{name}_waves' / f'layer-{peel}-wave-sources.csv').read_text().splitlines())}
+            # Inputs come from original executable edge/source labels. Evaluate
+            # the original numerical loop; never import the application port.
+            for peel in sorted(set(labels.values())):
+                adj = {}
+                for (u, v), layer in labels.items():
+                    if layer == peel:
+                        adj.setdefault(u, set()).add(v)
+                        adj.setdefault(v, set()).add(u)
+                unseen = set(adj)
+                while unseen:
+                    members = {min(unseen)}
+                    pending = list(members)
+                    unseen.difference_update(members)
+                    while pending:
+                        vertex = pending.pop()
+                        neighbors = adj[vertex] & unseen
+                        unseen.difference_update(neighbors)
+                        members.update(neighbors)
+                        pending.extend(neighbors)
+                    owned = [(u,v) for (u,v), layer in labels.items() if layer == peel and u in members]
+                    wsizes = {}
+                    counts = {}
+                    levels = source_levels[peel]
+                    for wave in sorted({wave_labels[edge][0] for edge in owned}):
+                        wave_edges = [edge for edge in owned if wave_labels[edge][0] == wave]
+                        vertices = {v for edge in wave_edges for v in edge}
+                        wsizes[wave] = {'s': sum(levels[v] == (wave,0) for v in members),
+                                        'ss': sum(levels[v][0] == wave for v in members),
+                                        'v': len(vertices), 'e': len(wave_edges)}
+                    for u,v in owned:
+                        key = tuple(sorted((levels[u][0], levels[v][0])))
+                        counts[key] = counts.get(key,0) + 2
+                    namespace = {'wsizes': wsizes, 'counts': counts, 'data': {}}
+                    exec(formula_code, namespace)
+                    profiles.append({'peel': peel, 'vertices': sorted(members), 'waves': namespace['data']})
             results.append({"name": name, "vertex_count": n, "edges": edges,
-                            "labels": [[u, v, labels[(u, v)], *wave_labels[(u, v)]] for u, v in edges]})
+                            "labels": [[u, v, labels[(u, v)], *wave_labels[(u, v)]] for u, v in edges], 'wave_profiles': profiles})
             print(f"{name}: {n} vertices, {len(edges)} edges", flush=True)
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps({"binary_sha256": checksums, "cases": results}, indent=2) + "\n")
+    args.output.write_text(json.dumps({"binary_sha256": checksums, 'wave_map_sha256': hashlib.sha256(wave_map_source.read_bytes()).hexdigest(), "cases": results}, indent=2) + "\n")
 
 
 if __name__ == "__main__":

@@ -163,6 +163,10 @@ def test_api_serves_building_papers_and_internal_edges(tmp_path: Path):
     assert edges[0]["target_paper"]["title"] == "Paper Two"
     assert [paper["paper_id"] for paper in floor_papers] == ["R_000001"]
     assert floor_edges == []
+    assert client.get("/api/cities/research/building/B_R_0001/edges?cursor=R_000001:R_000002").json() == []
+    later = client.get("/api/cities/research/building/B_R_0001/papers?limit=1&cursor=R_000001").json()
+    assert [paper["paper_id"] for paper in later] == ["R_000002"]
+    assert client.get("/api/cities/research/building/B_R_0001/papers?cursor=R_000002").json() == []
 
 
 def test_api_serves_bridge_cross_edges(tmp_path: Path):

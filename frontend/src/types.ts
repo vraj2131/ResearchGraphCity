@@ -34,6 +34,9 @@ export interface Building {
   activation: Record<string, number>;
   activation_score: number;
   floors: Floor[];
+  floor_count?: number;
+  floors_truncated?: boolean;
+  quality_metrics?: Record<string, unknown>;
   summary: unknown | null;
   community_id: string | null;
 }
@@ -74,6 +77,16 @@ export interface ResearchPaper {
   topics?: string[];
   keywords?: string[];
   citation_count?: number;
+  building_id?: string | null;
+  floor_id?: string | null;
+  floor_ids?: string[];
+  locations?: {
+    building_id: string;
+    building_label?: string;
+    district_id?: string | null;
+    floor_id?: string | null;
+    floors: Floor[];
+  }[];
 }
 
 export interface EdgePaperRef {

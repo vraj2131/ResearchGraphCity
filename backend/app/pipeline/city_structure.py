@@ -337,14 +337,15 @@ def _persist_structure(city_id, repository, prepared, assignments, edge_rows, se
     }
 
 
-def _persist_relationships(session, city_id, prepared, assignments, building_by_group, edge_rows):
+def _persist_relationships(session, city_id, prepared, assignments, building_by_group, edge_rows, *, memberships=None):
     cross: dict[tuple[int, int], list] = defaultdict(list)
     for source, target, weight, edge_type, evidence in edge_rows:
-        left = assignments.get(source)
-        right = assignments.get(target)
-        if left is None or right is None or left == right:
-            continue
-        cross[tuple(sorted((left, right)))].append((source, target, float(weight), edge_type, evidence))
+        left_ids = memberships.get(source, []) if memberships is not None else [assignments.get(source)]
+        right_ids = memberships.get(target, []) if memberships is not None else [assignments.get(target)]
+        pairs = {tuple(sorted((left, right))) for left in left_ids for right in right_ids
+                 if left is not None and right is not None and left != right}
+        for pair in pairs:
+            cross[pair].append((source, target, float(weight), edge_type, evidence))
     item_by_group = {item["group_id"]: item for item in prepared}
     candidates = []
     for (left_id, right_id), connecting in cross.items():

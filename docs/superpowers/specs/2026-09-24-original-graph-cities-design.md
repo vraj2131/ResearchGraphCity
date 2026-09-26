@@ -74,6 +74,6 @@ The current frontend translates and uniformly scales layout coordinates but does
 
 ## Current status
 
-Source discovery and compatibility analysis completed. No product implementation or development-database migration has been performed for this integration. Written design review and a task-by-task implementation plan precede implementation.
+Implementation and verification are recorded in `docs/research/original-graph-cities-reference/verification.md`. Original decomposition, persistence, worker, geometry and UI integration are implemented; development migrations are applied and legacy cities preserved. This section supersedes the initial pre-implementation status.
 
 See `docs/research/original-graph-cities-reference/compatibility-baseline.md` for the executed baseline and specific membership, assistant, street, and rendering compatibility risks.

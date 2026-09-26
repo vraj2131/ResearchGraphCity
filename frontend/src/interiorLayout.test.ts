@@ -15,6 +15,22 @@ const papers: ResearchPaper[] = [
 ];
 
 describe('interiorLayout', () => {
+  it('uses database memberships and keeps distant wave indices within the focused view', () => {
+    const located = [
+      { paper_id: 'A', title: 'Shared', building_id: 'B2', floor_id: 'F50000', locations: [
+        { building_id: 'B1', floor_id: 'F1', floors: [{ floor_id: 'F1', floor_index: 1 }] },
+        { building_id: 'B2', floor_id: 'F50000', floors: [{ floor_id: 'F50000', floor_index: 50000 }] },
+      ] },
+      { paper_id: 'B', title: 'Earlier', building_id: 'B2', floor_id: 'F49900', locations: [
+        { building_id: 'B2', floor_id: 'F49900', floors: [{ floor_id: 'F49900', floor_index: 49900 }] },
+      ] },
+    ];
+    const positions = layoutInteriorNodes(located, []);
+    expect(positions.find(p => p.paperId === 'A')?.floorIndex).toBe(50000);
+    expect(positions.find(p => p.paperId === 'B')?.floorIndex).toBe(49900);
+    expect(Math.max(...positions.map(p => p.y))).toBeLessThan(100);
+  });
+
   it('places papers on floor rings with distinct coordinates', () => {
     const positions = layoutInteriorNodes(papers, floors);
     expect(positions).toHaveLength(3);

@@ -623,6 +623,7 @@ export default function App() {
         onEnterInterior={() => void enterBuildingInterior()}
         onExitInterior={exitBuildingInterior}
         onSelectPaper={selectPaper}
+        onSelectBuilding={selectBuilding}
       />
     </main>
   );

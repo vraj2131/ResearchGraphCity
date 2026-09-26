@@ -2,7 +2,7 @@
 
 ## Build behavior
 
-A user submits 1–30 paper titles, DOIs, or OpenAlex IDs and chooses a target up to 100,000. The API only creates and queues the city. The worker performs seed resolution, seed preview, balanced collection, embeddings, sparse edges, Leiden communities, and city persistence.
+A user submits 1–30 paper titles, DOIs, or OpenAlex IDs and chooses a target up to 100,000. The API only creates and queues the city. The worker performs seed resolution, seed preview, balanced collection, embeddings, sparse edges, original Graph Cities fixed-point/wave decomposition, and city persistence. Semantic districts and evidence bridges remain application overlays.
 
 Run the worker separately from the API:
 
@@ -24,6 +24,16 @@ DATABASE_URL=postgresql+psycopg://research_graph_city:research_graph_city@127.0.
 ```
 
 The report includes stage durations, peak process memory, database size, retained edge count, aggregate counts, and serialized scene size. Run it against a disposable or development database, never the automated test database while tests are active.
+
+### Current original Graph Cities result
+
+The default benchmark algorithm is now `original` (`graph-cities-v1`). On 2026-09-26, 100,000 synthetic papers completed local processing in **102.979 seconds**, preserving one fixed-point building with **50,000 waves**. Peak RSS was 2.68 GB, scene gzip 4,806 bytes, building-paper retrieval p95 55.090 ms, search p95 86.517 ms and assistant retrieval p95 148.663 ms. Collection and remote LLM time are excluded.
+
+See [full evidence and limitations](research/original-graph-cities-reference/verification.md) and [raw results](research/original-graph-cities-reference/benchmark-100k-final.json). Use `--algorithm leiden` only to reproduce the legacy comparison. Original fixed points are never split to meet a mesh or page limit; full memberships and waves remain in PostgreSQL, with sampled overview geometry and paginated details.
+
+### Historical Leiden measurements
+
+The following 2026-09-17/18 measurements and oversized-community optimizations describe the previous Leiden pipeline, not the default original Graph Cities decomposition.
 
 ### Verified 100,000-paper run
 

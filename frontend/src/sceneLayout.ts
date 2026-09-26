@@ -1,4 +1,5 @@
 import type { Building } from './types';
+import { floorGeometry } from './waveGeometry';
 
 const TARGET_RADIUS = 260;
 
@@ -13,9 +14,25 @@ export function normalizeCityLayout(buildings: Building[]): Building[] {
   const maxDistance = Math.max(...buildings.map((building) => Math.sqrt((building.x - centerX) ** 2 + (building.z - centerZ) ** 2)));
   const maxFootprintRadius = Math.max(...buildings.map((building) => building.footprint / 2));
   const availableRadius = Math.max(1, TARGET_RADIUS - maxFootprintRadius);
-  const scale = maxDistance > availableRadius ? availableRadius / maxDistance : 1;
+  const original = buildings.every(building => String(building.quality_metrics?.algorithm ?? '').startsWith('graph-cities'));
+  const maxHeight = Math.max(...buildings.map(building => building.height));
+  const scale = original
+    ? TARGET_RADIUS / Math.max(1, maxDistance + maxFootprintRadius, maxHeight)
+    : maxDistance > availableRadius ? availableRadius / maxDistance : 1;
   return buildings.map((building) => ({
     ...building,
+    ...(String(building.quality_metrics?.algorithm ?? '').startsWith('graph-cities') ? {
+      footprint: building.footprint * scale,
+      height: building.height * scale,
+      floors: building.floors.map(floor => {
+        const geometry = floorGeometry(floor);
+        if (!geometry) return floor;
+        return { ...floor, summary: { ...(floor.summary as object), geometry: {
+          bottom: geometry.bottom * scale, height: geometry.height * scale,
+          lower_radius: geometry.lower_radius * scale, upper_radius: geometry.upper_radius * scale,
+        } } };
+      }),
+    } : {}),
     x: Number(((building.x - centerX) * scale).toFixed(3)),
     z: Number(((building.z - centerZ) * scale).toFixed(3)),
   }));

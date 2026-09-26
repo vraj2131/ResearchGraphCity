@@ -62,7 +62,7 @@ interface CityState {
   selectBuilding: (id: string | null) => void;
   selectBridge: (id: string | null) => void;
   selectStreet: (id: string | null) => void;
-  selectPaper: (id: string | null) => void;
+  selectPaper: (id: string | null, paper?: ResearchPaper) => void;
   enterBuildingInterior: (buildingId?: string | null) => Promise<void>;
   exitBuildingInterior: () => void;
   toggleLayer: (layer: keyof LayerState) => void;
@@ -306,7 +306,11 @@ export const useCityStore = create<CityState>((set, get) => ({
       interiorEdges: [],
       interiorError: null,
     }),
-  selectPaper: (id) => set({ selectedPaperId: id }),
+  selectPaper: (id, paper) => set(state => ({
+    selectedPaperId: id,
+    ...(paper && paper.paper_id === id && !state.interiorPapers.some(item => item.paper_id === id)
+      ? {interiorPapers: [...state.interiorPapers.slice(0, 199), paper]} : {}),
+  })),
   enterBuildingInterior: async (buildingId) => {
     const id = buildingId ?? get().selectedBuildingId;
     if (!id) return;

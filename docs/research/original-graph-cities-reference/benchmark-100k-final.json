@@ -1,0 +1,40 @@
+{
+  "algorithm": "graph-cities-v1",
+  "collection_mode": "synthetic_local",
+  "collection_seconds": null,
+  "database_bytes": 1648925719,
+  "edge_components": {
+    "citation": 99999,
+    "neighbor_cache_hit_sources": 0,
+    "neighbor_computed_sources": 100000,
+    "semantic_candidates": 2000000,
+    "similarity": 1236852
+  },
+  "edges": 1336851,
+  "embedded": 100000,
+  "latency_ms": {
+    "assistant_retrieval_p95": 148.663,
+    "building_papers_p95": 55.09,
+    "paper_search_p95": 86.517
+  },
+  "max_similarity_degree": 40,
+  "papers": 100000,
+  "peak_rss_bytes": 2683813888,
+  "scene_bytes": 44730,
+  "scene_gzip_bytes": 4806,
+  "structure": {
+    "bridges": 0,
+    "buildings": 1,
+    "districts": 1,
+    "floors": 50000,
+    "streets": 0
+  },
+  "timings": {
+    "city_seconds": 33.351,
+    "edges_seconds": 42.969,
+    "embed_seconds": 17.555,
+    "persist_seconds": 9.104
+  },
+  "total_seconds": 102.979,
+  "warm_cache": null
+}

@@ -88,7 +88,9 @@ def create_app(
     def city_navigation_index(city_id: str) -> dict:
         buildings = sorted(read_city_json(city_id, "buildings", []), key=lambda item: item.get("node_count", 0), reverse=True)
         bridges = sorted(read_city_json(city_id, "bridges", []), key=lambda item: item.get("bridge_strength", 0), reverse=True)
-        streets = sorted(read_city_json(city_id, "streets", []), key=lambda item: item.get("street_score", 0), reverse=True)
+        streets = sorted((item for item in read_city_json(city_id, "streets", [])
+                          if item.get("street_type") != "graph_city_geometry"),
+                         key=lambda item: item.get("street_score", 0), reverse=True)
         communities = read_city_json(city_id, "communities", [])
         return {
             "city_type": city_id,
@@ -393,12 +395,25 @@ def create_app(
         return enriched
 
     @app.get("/api/cities/research/building/{building_id}/papers")
-    def building_papers(building_id: str, floor_id: str | None = None):
-        return city_building_papers("research", building_id, floor_id)
+    def building_papers(building_id: str, floor_id: str | None = None, limit: int = 200, cursor: str | None = None):
+        return city_building_papers("research", building_id, floor_id, limit, cursor)
 
     @app.get("/api/cities/research/building/{building_id}/edges")
-    def building_edges(building_id: str, floor_id: str | None = None):
-        return city_building_edges("research", building_id, floor_id)
+    def building_edges(building_id: str, floor_id: str | None = None, limit: int = 200, cursor: str | None = None):
+        return city_building_edges("research", building_id, floor_id, limit, cursor)
+
+    @app.get("/api/cities/{city_id}/building/{building_id}/floors")
+    def city_building_floors(city_id: str, building_id: str, limit: int = 100, cursor: int = 0):
+        if isinstance(city_repository, PostgresCityRepository):
+            try:
+                return city_repository.get_building_floors(city_prefix(city_id), building_id, limit, cursor)
+            except KeyError as exc:
+                raise HTTPException(status_code=404, detail="Building not found") from exc
+        building = next((item for item in read_city_json(city_id, 'buildings', []) if item['building_id'] == building_id), None)
+        if building is None:
+            raise HTTPException(status_code=404, detail="Building not found")
+        return sorted((floor for floor in building.get('floors', []) if floor.get('floor_index', 0) > cursor),
+                      key=lambda floor: floor.get('floor_index', 0))[:max(1, min(limit, 500))]
 
     @app.get("/api/cities/{city_id}/building/{building_id}/papers")
     def city_building_papers(city_id: str, building_id: str, floor_id: str | None = None, limit: int = 200, cursor: str | None = None):
@@ -408,7 +423,11 @@ def create_app(
             except KeyError as exc:
                 raise HTTPException(status_code=404, detail="Building or floor not found") from exc
         vertex_ids = building_vertex_ids(city_id, building_id, floor_id)
-        return [item for item in read_city_json(city_id, "vertices", []) if item.get("paper_id") in vertex_ids][: max(1, min(limit, 200))]
+        return sorted(
+            (item for item in read_city_json(city_id, "vertices", [])
+             if item.get("paper_id") in vertex_ids and (not cursor or item["paper_id"] > cursor)),
+            key=lambda item: item["paper_id"],
+        )[: max(1, min(limit, 200))]
 
     @app.get("/api/cities/{city_id}/building/{building_id}/edges")
     def city_building_edges(city_id: str, building_id: str, floor_id: str | None = None, limit: int = 200, cursor: str | None = None):
@@ -418,11 +437,14 @@ def create_app(
             except KeyError as exc:
                 raise HTTPException(status_code=404, detail="Building or floor not found") from exc
         vertex_ids = building_vertex_ids(city_id, building_id, floor_id)
-        return enrich_edges(city_id, [
-            item
-            for item in read_city_json(city_id, "edges", [])
-            if item.get("source") in vertex_ids and item.get("target") in vertex_ids
-        ])[: max(1, min(limit, 200))]
+        after = tuple(cursor.split(":", 2)) if cursor else None
+        rows = sorted(
+            (item for item in read_city_json(city_id, "edges", [])
+             if item.get("source") in vertex_ids and item.get("target") in vertex_ids
+             and (after is None or (item["source"], item["target"], item.get("edge_type", ""))[:len(after)] > after)),
+            key=lambda item: (item["source"], item["target"], item.get("edge_type", "")),
+        )
+        return enrich_edges(city_id, rows[: max(1, min(limit, 200))])
 
     @app.get("/api/cities/research/bridge/{bridge_id}")
     def bridge(bridge_id: str):

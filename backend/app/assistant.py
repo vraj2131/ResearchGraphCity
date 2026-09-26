@@ -212,28 +212,38 @@ def build_evidence_packet(
     )
     buildings_by_id: dict[str, dict[str, Any]] = {}
     districts_by_id: dict[str, dict[str, Any]] = {}
+    papers = [dict(paper) for paper in papers]
     for paper in papers:
-        if paper.get("building_id"):
-            buildings_by_id.setdefault(
-                paper["building_id"],
-                {
-                    "evidence_id": f'building:{paper["building_id"]}',
-                    "building_id": paper["building_id"],
-                    "label": paper.get("building_label") or paper["building_id"],
-                    "district_id": paper.get("district_id"),
-                    "domain_name": paper.get("domain_name"),
-                },
-            )
-        if paper.get("district_id"):
-            districts_by_id.setdefault(
-                paper["district_id"],
-                {
-                    "evidence_id": f'district:{paper["district_id"]}',
-                    "district_id": paper["district_id"],
-                    "name": paper.get("district_name") or paper["district_id"],
-                    "domain_name": paper.get("domain_name"),
-                },
-            )
+        if paper.get('locations'):
+            all_locations = paper['locations']
+            ordered = sorted(all_locations, key=lambda location: location.get('building_id') != paper.get('building_id'))
+            paper['location_count'] = len(all_locations)
+            paper['locations_truncated'] = len(all_locations) > 16
+            paper['locations'] = [{key: value for key, value in location.items() if key != 'floors'} for location in ordered[:16]]
+            paper['floor_ids'] = paper.get('floor_ids', [])[:16]
+        locations = paper.get("locations") or [paper]
+        for location in locations:
+            if location.get("building_id") and len(buildings_by_id) < 60:
+                buildings_by_id.setdefault(
+                    location["building_id"],
+                    {
+                        "evidence_id": f'building:{location["building_id"]}',
+                        "building_id": location["building_id"],
+                        "label": location.get("building_label") or location["building_id"],
+                        "district_id": location.get("district_id"),
+                        "domain_name": location.get("domain_name"),
+                    },
+                )
+            if location.get("district_id"):
+                districts_by_id.setdefault(
+                    location["district_id"],
+                    {
+                        "evidence_id": f'district:{location["district_id"]}',
+                        "district_id": location["district_id"],
+                        "name": location.get("district_name") or location["district_id"],
+                        "domain_name": location.get("domain_name"),
+                    },
+                )
         # Keep prompts bounded while preserving fields needed for paper questions.
         paper["abstract"] = paper.get("abstract", "")[:800]
         paper["authors"] = paper.get("authors", [])[:8]

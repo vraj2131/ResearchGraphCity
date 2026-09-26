@@ -1,0 +1,104 @@
+{
+  "source_sha256": {
+    "spiral_min.py": "9ca388d37b570682f4791f933e365fcd9502cbabc691cf107fa0b13d1ebf8dd8",
+    "bucketingWithFP2_ve.py": "f540530fcb6aa3376ad80733634ef0a97db3c819ce62bc0572d157fb5546f348",
+    "building.py": "e8462d552d42a49b784f0bf8f84b6508d50c0b6a47a6c61023168bef33463831"
+  },
+  "vertex_count": 100,
+  "inputs": [
+    {
+      "id": "B1",
+      "peel": 4,
+      "node_count": 12,
+      "edge_count": 32,
+      "max_wave_vertices": 10,
+      "first_wave_sources": 4,
+      "wave_count": 3
+    },
+    {
+      "id": "B2",
+      "peel": 2,
+      "node_count": 9,
+      "edge_count": 13,
+      "max_wave_vertices": 8,
+      "first_wave_sources": 3,
+      "wave_count": 2
+    },
+    {
+      "id": "B3",
+      "peel": 1,
+      "node_count": 3,
+      "edge_count": 2,
+      "max_wave_vertices": 3,
+      "first_wave_sources": 2,
+      "wave_count": 1
+    },
+    {
+      "id": "B4",
+      "peel": 2,
+      "node_count": 6,
+      "edge_count": 9,
+      "max_wave_vertices": 6,
+      "first_wave_sources": 4,
+      "wave_count": 1
+    }
+  ],
+  "thresholds": [
+    0,
+    2,
+    5,
+    12,
+    28,
+    64
+  ],
+  "spiral": [
+    {
+      "id": "B1",
+      "x": 3.321928094887362,
+      "z": 0.0,
+      "rotation_degrees": 90.0,
+      "radius": 3.2653117015067483
+    },
+    {
+      "id": "B2",
+      "x": -10.787144670136035,
+      "z": 7.465216575248673,
+      "rotation_degrees": 225.0,
+      "radius": 3.179828523688624
+    },
+    {
+      "id": "B4",
+      "x": -15.160722491018053,
+      "z": -3.4610792779523862,
+      "rotation_degrees": 286.2963151599803,
+      "radius": 3.055525529801046
+    },
+    {
+      "id": "B3",
+      "x": -8.340900942778715,
+      "z": -12.914294631686918,
+      "rotation_degrees": 338.76203133230786,
+      "radius": 2.3785980739281736
+    }
+  ],
+  "frustums": [
+    {
+      "volume": 3,
+      "upper": 0,
+      "lower": 2.321928094887362,
+      "height": 0.531367641555312
+    },
+    {
+      "volume": 4,
+      "upper": 2,
+      "lower": 1,
+      "height": 0.545674090600784
+    },
+    {
+      "volume": 1,
+      "upper": 0,
+      "lower": 1.584962500721156,
+      "height": 0.38013109702832676
+    }
+  ]
+}

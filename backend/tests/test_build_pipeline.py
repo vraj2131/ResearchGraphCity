@@ -79,8 +79,15 @@ def test_worker_runs_real_restart_safe_pipeline_with_fake_openalex():
         assert "Built" in completed.message
         assert ready_city.status == "ready"
         assert ready_city.paper_count == 10
+        assert ready_city.algorithm_version == 'graph-cities-v1'
+        assert ready_city.configuration['graph_input'] == 'citation'
         with factory() as session:
-            assert session.scalars(select(BuildingRecord).where(BuildingRecord.city_id == city.id)).all()
+            buildings = session.scalars(select(BuildingRecord).where(BuildingRecord.city_id == city.id)).all()
+            # This fixture has no citations. Similarity links must not silently
+            # become the graph used for original fixed-point decomposition.
+            assert len(buildings) == 1
+            assert buildings[0].node_count == 10
+            assert buildings[0].quality_metrics['representation'] == 'isolates'
     finally:
         Base.metadata.drop_all(engine)
         engine.dispose()
@@ -137,7 +144,7 @@ def test_build_overlaps_embedding_with_collection_batches(monkeypatch):
     monkeypatch.setattr("app.pipeline.build.embed_city_papers", fake_embed)
     monkeypatch.setattr("app.pipeline.build.build_sparse_edges", lambda *args, **kwargs: {})
     monkeypatch.setattr(
-        "app.pipeline.build.build_city_structure",
+        "app.pipeline.build.build_original_city",
         lambda *args, **kwargs: {"buildings": 1, "bridges": 0, "streets": 0},
     )
     try:

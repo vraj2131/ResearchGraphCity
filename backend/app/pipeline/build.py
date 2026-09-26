@@ -9,7 +9,7 @@ from ..models import BuildJobRecord
 from ..openalex_client import OpenAlexCancelled, OpenAlexClient, PostgresOpenAlexCache, RequestRateLimiter
 from ..openalex_snapshot import OpenAlexSnapshot
 from ..repositories.postgres_city import PostgresCityRepository
-from .city_structure import build_city_structure
+from .original_city import build_original_city
 from .edges import build_sparse_edges
 from .embeddings import EMBEDDING_MODEL, embed_city_papers
 from .expansion import expand_city
@@ -119,9 +119,9 @@ def build_city_job(
             stage="city",
             current=expansion.total_paper_count,
             total=target,
-            message="Detecting communities and constructing the graph city",
+            message="Decomposing fixed points and constructing Graph Cities waves",
         )
-        counts = build_city_structure(job.city_id, repository)
+        counts = build_original_city(job.city_id, repository, cancel_check=cancelled)
         warning = " Source corpus exhausted before target." if expansion.exhausted else ""
         jobs.update_progress(
             job.id,

@@ -13,9 +13,13 @@ const RING_RADIUS = 28;
 /** Rotate each floor so papers do not stack in vertical columns (that broke picking). */
 const FLOOR_ANGLE_OFFSET = 0.55;
 
-function paperFloorIndex(paperId: string, floors: Floor[]): number {
+function paperFloorIndex(paper: ResearchPaper, floors: Floor[]): number {
+  const location = paper.locations?.find(item => item.building_id === paper.building_id);
+  const floorId = paper.floor_id ?? location?.floor_id;
+  const knownFloor = [...floors, ...(location?.floors ?? [])].find(floor => floor.floor_id === floorId);
+  if (knownFloor) return knownFloor.floor_index ?? 0;
   for (const floor of floors) {
-    if (floor.vertex_ids?.includes(paperId)) {
+    if (floor.vertex_ids?.includes(paper.paper_id)) {
       return floor.floor_index ?? 0;
     }
   }
@@ -26,7 +30,7 @@ function paperFloorIndex(paperId: string, floors: Floor[]): number {
 export function layoutInteriorNodes(papers: ResearchPaper[], floors: Floor[]): InteriorNodePosition[] {
   const byFloor = new Map<number, ResearchPaper[]>();
   for (const paper of papers) {
-    const floorIndex = paperFloorIndex(paper.paper_id, floors);
+    const floorIndex = paperFloorIndex(paper, floors);
     const bucket = byFloor.get(floorIndex) ?? [];
     bucket.push(paper);
     byFloor.set(floorIndex, bucket);
@@ -35,19 +39,20 @@ export function layoutInteriorNodes(papers: ResearchPaper[], floors: Floor[]): I
   const positions: InteriorNodePosition[] = [];
   const sortedFloors = [...byFloor.keys()].sort((a, b) => a - b);
 
-  for (const floorIndex of sortedFloors) {
+  for (const [rank, floorIndex] of sortedFloors.entries()) {
     const floorPapers = byFloor.get(floorIndex) ?? [];
     const count = floorPapers.length;
     // Slightly different radius per floor keeps rings from lining up in the camera view.
-    const radius = Math.max(14, RING_RADIUS * Math.sqrt(Math.max(1, count) / 12) + floorIndex * 1.8);
-    const angleOffset = floorIndex * FLOOR_ANGLE_OFFSET;
+    const displayLevel = rank + 1;
+    const radius = Math.max(14, RING_RADIUS * Math.sqrt(Math.max(1, count) / 12) + displayLevel * 1.8);
+    const angleOffset = displayLevel * FLOOR_ANGLE_OFFSET;
     floorPapers.forEach((paper, index) => {
       const angle = angleOffset + (Math.PI * 2 * index) / Math.max(1, count);
       const jitter = ((index % 5) - 2) * 0.55;
       positions.push({
         paperId: paper.paper_id,
         x: Math.cos(angle) * radius + jitter,
-        y: floorIndex * FLOOR_SPACING + 8,
+        y: displayLevel * FLOOR_SPACING + 8,
         z: Math.sin(angle) * radius + jitter * 0.6,
         floorIndex,
       });

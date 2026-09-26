@@ -153,6 +153,8 @@ Index("ix_city_papers_building", CityPaperRecord.city_id, CityPaperRecord.buildi
 Index("ix_city_papers_external_id", CityPaperRecord.city_id, CityPaperRecord.external_paper_id)
 Index("ix_city_papers_seed_relevance", CityPaperRecord.city_id, CityPaperRecord.seed_relevance.desc())
 Index("ix_city_papers_openalex_id", CityPaperRecord.openalex_id)
+Index("ix_city_papers_floor_fk", CityPaperRecord.floor_id)
+Index("ix_city_papers_building_fk", CityPaperRecord.building_id)
 
 
 class PaperReferenceRecord(Base):
@@ -245,7 +247,7 @@ class FloorRecord(Base):
     city_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("cities.id", ondelete="CASCADE"), nullable=False)
     building_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("buildings.id", ondelete="CASCADE"), nullable=False)
     external_id: Mapped[str] = mapped_column(String(140), nullable=False)
-    floor_index: Mapped[int] = mapped_column(SmallInteger, nullable=False)
+    floor_index: Mapped[int] = mapped_column(Integer, nullable=False)
     core_min: Mapped[int] = mapped_column(Integer, nullable=False)
     core_max: Mapped[int] = mapped_column(Integer, nullable=False)
     node_count: Mapped[int] = mapped_column(Integer, nullable=False)
@@ -264,6 +266,7 @@ class BuildingPaperRecord(Base):
         ForeignKeyConstraint(["city_id", "building_id"], ["buildings.city_id", "buildings.id"], ondelete="CASCADE"),
         ForeignKeyConstraint(["city_id", "building_id", "floor_id"], ["floors.city_id", "floors.building_id", "floors.id"], ondelete="CASCADE"),
         Index("ix_building_papers_paper", "city_id", "openalex_id"),
+        Index("ix_building_papers_floor_fk", "city_id", "building_id", "floor_id"),
     )
     city_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True)
     building_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True)
@@ -293,6 +296,7 @@ class DecompositionEdgeRecord(Base):
         ForeignKeyConstraint(["city_id", "building_id", "target_openalex_id"], ["building_papers.city_id", "building_papers.building_id", "building_papers.openalex_id"], ondelete="CASCADE"),
         ForeignKeyConstraint(["city_id", "building_id", "floor_id"], ["floors.city_id", "floors.building_id", "floors.id"], ondelete="CASCADE"),
         Index("ix_decomposition_edges_building", "city_id", "building_id", "floor_id"),
+        Index("ix_decomposition_edges_target_fk", "city_id", "building_id", "target_openalex_id"),
     )
     city_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True)
     source_openalex_id: Mapped[str] = mapped_column(Text, primary_key=True)

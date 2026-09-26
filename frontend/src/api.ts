@@ -2,6 +2,7 @@ import type {
   Bridge,
   BuildJobResponse,
   Building,
+  Floor,
   CityLifecycleResponse,
   CityComparisonResponse,
   CitySummary,
@@ -138,13 +139,24 @@ export const exportEvidenceReport = async (cityType: CityType, question: string,
   return response.text();
 };
 
-const floorQuery = (floorId: string | null) => (floorId ? `?floor_id=${encodeURIComponent(floorId)}` : '');
+const floorQuery = (floorId: string | null, page?: {limit: number; cursor: string | null}) => {
+  const params = new URLSearchParams();
+  if (floorId) params.set('floor_id', floorId);
+  if (page) {
+    params.set('limit', String(page.limit));
+    if (page.cursor) params.set('cursor', page.cursor);
+  }
+  return `?${params}`;
+};
 
-export const fetchBuildingPapers = async (cityType: CityType, buildingId: string, floorId: string | null = null) =>
-  json<ResearchPaper[]>(`/api/cities/${cityType}/building/${buildingId}/papers${floorQuery(floorId)}`);
+export const fetchBuildingFloors = (cityType: CityType, buildingId: string, cursor = 0) =>
+  json<Floor[]>(`/api/cities/${encodeURIComponent(cityType)}/building/${encodeURIComponent(buildingId)}/floors?limit=100&cursor=${cursor}`);
 
-export const fetchBuildingEdges = async (cityType: CityType, buildingId: string, floorId: string | null = null) =>
-  json<ResearchEdgeDetail[]>(`/api/cities/${cityType}/building/${buildingId}/edges${floorQuery(floorId)}`);
+export const fetchBuildingPapers = async (cityType: CityType, buildingId: string, floorId: string | null = null, page?: {limit: number; cursor: string | null}) =>
+  json<ResearchPaper[]>(`/api/cities/${encodeURIComponent(cityType)}/building/${encodeURIComponent(buildingId)}/papers${floorQuery(floorId, page)}`);
+
+export const fetchBuildingEdges = async (cityType: CityType, buildingId: string, floorId: string | null = null, page?: {limit: number; cursor: string | null}) =>
+  json<ResearchEdgeDetail[]>(`/api/cities/${encodeURIComponent(cityType)}/building/${encodeURIComponent(buildingId)}/edges${floorQuery(floorId, page)}`);
 
 export const fetchBridgeCrossEdges = async (cityType: CityType, bridgeId: string) =>
   json<ResearchEdgeDetail[]>(`/api/cities/${cityType}/bridge/${bridgeId}/edges`);

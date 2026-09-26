@@ -17,6 +17,7 @@ from app.assistant import build_evidence_packet
 from app.db import create_engine_from_settings, create_session_factory
 from app.models import CityPaperRecord, CityRecord, PaperEdgeRecord, PaperRecord, PaperReferenceRecord
 from app.pipeline.city_structure import build_city_structure
+from app.pipeline.original_city import build_original_city
 from app.pipeline.bulk_io import copy_rows, upsert_paper_rows
 from app.pipeline.edges import build_sparse_edges
 from app.pipeline.embeddings import embed_city_papers, hash_documents
@@ -43,6 +44,7 @@ def main() -> None:
     parser.add_argument("--keep", action="store_true")
     parser.add_argument("--semantic-k", type=int, default=20)
     parser.add_argument("--measure-warm-cache", action="store_true")
+    parser.add_argument("--algorithm", choices=['original', 'leiden'], default='original')
     args = parser.parse_args()
     if args.papers < 10 or args.papers > 100_000:
         raise SystemExit("--papers must be between 10 and 100000")
@@ -94,7 +96,8 @@ def main() -> None:
             }
 
         started = perf_counter()
-        structure_counts = build_city_structure(city.id, repository)
+        structure_builder = build_original_city if args.algorithm == 'original' else build_city_structure
+        structure_counts = structure_builder(city.id, repository)
         timings["city_seconds"] = perf_counter() - started
 
         scene = repository.get_scene(repository.get_city_record(str(city.id)).external_id)
@@ -150,6 +153,7 @@ def main() -> None:
         raw_peak_rss = int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss)
         peak_rss_bytes = raw_peak_rss if sys.platform == "darwin" else raw_peak_rss * 1_024
         report = {
+            "algorithm": repository.get_city_record(str(city.id)).algorithm_version,
             "papers": args.papers,
             "collection_mode": "synthetic_local",
             "collection_seconds": None,

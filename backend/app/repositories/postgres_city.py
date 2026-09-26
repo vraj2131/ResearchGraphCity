@@ -125,9 +125,19 @@ class PostgresCityRepository:
             buildings = session.scalars(
                 select(BuildingRecord).where(BuildingRecord.city_id == city.id).order_by(BuildingRecord.external_id)
             ).all()
-            floors = session.scalars(
-                select(FloorRecord).where(FloorRecord.city_id == city.id).order_by(FloorRecord.building_id, FloorRecord.floor_index)
-            ).all()
+            floor_query = select(FloorRecord).where(FloorRecord.city_id == city.id)
+            if city.algorithm_version.startswith('graph-cities'):
+                ranked = select(
+                    FloorRecord.id,
+                    func.row_number().over(partition_by=FloorRecord.building_id, order_by=FloorRecord.floor_index).label('position'),
+                    func.count().over(partition_by=FloorRecord.building_id).label('total'),
+                ).where(FloorRecord.city_id == city.id).subquery()
+                step = func.cast(func.greatest(1, func.ceil((ranked.c.total - 1) / 63.0)), Integer)
+                floor_query = floor_query.join(ranked, ranked.c.id == FloorRecord.id).where(or_(
+                    ranked.c.position == ranked.c.total,
+                    (ranked.c.position - 1) % step == 0,
+                ))
+            floors = session.scalars(floor_query.order_by(FloorRecord.building_id, FloorRecord.floor_index)).all()
             districts = session.scalars(
                 select(DistrictRecord).where(DistrictRecord.city_id == city.id).order_by(DistrictRecord.external_id)
             ).all()
@@ -182,6 +192,19 @@ class PostgresCityRepository:
 
     def get_building(self, city_id: str, building_id: str) -> dict | None:
         return next((item for item in self.get_scene(city_id)["buildings"] if item["building_id"] == building_id), None)
+
+    def get_building_floors(self, city_id: str, building_id: str, limit: int = 100, cursor: int = 0) -> list[dict]:
+        with self.session_factory() as session:
+            city = self._city(session, city_id)
+            building = session.scalar(select(BuildingRecord).where(
+                BuildingRecord.city_id == city.id, BuildingRecord.external_id == building_id))
+            if building is None:
+                raise KeyError(building_id)
+            floors = session.scalars(select(FloorRecord).where(
+                FloorRecord.city_id == city.id, FloorRecord.building_id == building.id,
+                FloorRecord.floor_index > max(0, cursor),
+            ).order_by(FloorRecord.floor_index).limit(max(1, min(limit, 500)))).all()
+            return [{**self._serialize_floor(floor, []), 'building_id': building.external_id} for floor in floors]
 
     def get_bridge(self, city_id: str, bridge_id: str) -> dict | None:
         return next((item for item in self.get_scene(city_id)["bridges"] if item["bridge_id"] == bridge_id), None)
@@ -450,6 +473,7 @@ class PostgresCityRepository:
                     BuildingRelationshipRecord.city_id == city.id,
                     BuildingRelationshipRecord.source_building_id.in_(ids),
                     BuildingRelationshipRecord.target_building_id.in_(ids),
+                    BuildingRelationshipRecord.relationship_type != "graph_city_geometry",
                 )
                 .order_by(BuildingRelationshipRecord.score.desc())
                 .limit(max(1, min(limit, 30)))
@@ -729,7 +753,8 @@ class PostgresCityRepository:
         self, session: Session, city_id: uuid.UUID, query: Select[Any], limit: int, cursor: str | None
     ) -> list[dict]:
         if cursor:
-            source_cursor, _, target_cursor = cursor.partition(":")
+            source_cursor, _, remaining_cursor = cursor.partition(":")
+            target_cursor, type_separator, type_cursor = remaining_cursor.partition(":")
             cursor_memberships = session.scalars(
                 select(CityPaperRecord).where(
                     CityPaperRecord.city_id == city_id,
@@ -743,10 +768,13 @@ class PostgresCityRepository:
                 or_(
                     PaperEdgeRecord.source_openalex_id > source_openalex,
                     and_(PaperEdgeRecord.source_openalex_id == source_openalex, PaperEdgeRecord.target_openalex_id > target_openalex),
+                    and_(PaperEdgeRecord.source_openalex_id == source_openalex,
+                         PaperEdgeRecord.target_openalex_id == target_openalex,
+                         PaperEdgeRecord.edge_type > type_cursor) if type_separator else False,
                 )
             )
         edges = session.scalars(
-            query.order_by(PaperEdgeRecord.source_openalex_id, PaperEdgeRecord.target_openalex_id).limit(self._limit(limit))
+            query.order_by(PaperEdgeRecord.source_openalex_id, PaperEdgeRecord.target_openalex_id, PaperEdgeRecord.edge_type).limit(self._limit(limit))
         ).all()
         endpoint_ids = {item for edge in edges for item in (edge.source_openalex_id, edge.target_openalex_id)}
         memberships = session.scalars(
@@ -863,6 +891,8 @@ class PostgresCityRepository:
             "activation": building.activation,
             "activation_score": building.activation_score,
             "floors": floors,
+            "floor_count": building.quality_metrics.get('floor_count', len(floors)),
+            "floors_truncated": building.quality_metrics.get('floor_count', len(floors)) > len(floors),
             "summary": building.summary,
             "community_id": community_id,
             "quality_metrics": building.quality_metrics,

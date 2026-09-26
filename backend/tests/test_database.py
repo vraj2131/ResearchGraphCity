@@ -87,6 +87,18 @@ def test_city_target_accepts_100000(database_engine):
         assert city.target_paper_count == 100_000
 
 
+def test_wave_deletion_foreign_keys_are_indexed(database_engine):
+    expected = {
+        'city_papers': {('floor_id',), ('building_id',)},
+        'building_papers': {('city_id', 'building_id', 'floor_id')},
+        'decomposition_edges': {('city_id', 'building_id', 'target_openalex_id')},
+    }
+    inspector = inspect(database_engine)
+    for table, columns in expected.items():
+        actual = {tuple(index['column_names']) for index in inspector.get_indexes(table)}
+        assert columns <= actual, f'Missing cascade indexes on {table}: {columns - actual}'
+
+
 def test_alembic_upgrade_creates_required_platform_tables(monkeypatch):
     database_url = os.getenv("TEST_DATABASE_URL", DEFAULT_DATABASE_URL)
     settings = database_settings()

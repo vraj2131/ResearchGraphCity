@@ -1,10 +1,11 @@
 import { BookOpen, DoorOpen, FileText, LogOut, Network, Route, Tags } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 
-import { fetchBridgeCrossEdges, fetchBuildingEdges, fetchBuildingPapers } from './api';
+import { fetchBridgeCrossEdges, fetchBuildingEdges, fetchBuildingPapers, fetchBuildingFloors } from './api';
 import type {
   Bridge,
   Building,
+  Floor,
   CityType,
   ResearchEdgeDetail,
   ResearchPaper,
@@ -23,7 +24,8 @@ interface InspectorProps {
   interiorError?: string | null;
   onEnterInterior?: () => void;
   onExitInterior?: () => void;
-  onSelectPaper?: (id: string | null) => void;
+  onSelectPaper?: (id: string | null, paper?: ResearchPaper) => void;
+  onSelectBuilding?: (id: string) => void;
 }
 
 export function Inspector({
@@ -39,6 +41,7 @@ export function Inspector({
   onEnterInterior,
   onExitInterior,
   onSelectPaper,
+  onSelectBuilding,
 }: InspectorProps) {
   if (bridge) {
     return <BridgeInspector cityType={cityType} bridge={bridge} />;
@@ -69,11 +72,22 @@ export function Inspector({
       onEnterInterior={onEnterInterior}
       onExitInterior={onExitInterior}
       onSelectPaper={onSelectPaper}
+      onSelectBuilding={onSelectBuilding}
     />
   );
 }
 
 function StreetInspector({ street }: { street: Street }) {
+  if (street.street_type === 'graph_city_geometry') return (
+    <aside className="h-full w-96 overflow-auto border-l border-slate-200 bg-white p-5 text-slate-900 shadow-xl max-md:h-auto max-md:w-full">
+      <Header icon={<Route size={18} />} title={street.street_id} subtitle="Graph Cities geometric street" />
+      <Section title="Geometric adjacency">
+        <p className="text-sm">{street.source_building_id} → {street.target_building_id}</p>
+        <p className="mt-2 text-sm text-slate-600">This street connects neighboring building positions in the original layout. It does not establish citation or semantic evidence between them.</p>
+      </Section>
+      <MetricGrid items={[["Distance", street.distance.toFixed(1)]]} />
+    </aside>
+  );
   return (
     <aside className="h-full w-96 overflow-auto border-l border-slate-200 bg-white p-5 text-slate-900 shadow-xl max-md:h-auto max-md:w-full max-md:border-l-0 max-md:border-t">
       <Header icon={<Route size={18} />} title={street.street_id} subtitle="Street inspector" />
@@ -167,7 +181,7 @@ function BridgeInspector({ cityType, bridge }: { cityType: CityType; bridge: Bri
         {status !== 'loading' && crossEdges.length === 0 && <p className="text-sm text-slate-500">No cross edges found for this bridge.</p>}
         <div className="space-y-2">
           {crossEdges.slice(0, 80).map((edge) => (
-            <div key={`${edge.source}-${edge.target}-${edge.edge_weight}`} className="rounded border border-slate-200 p-3 text-sm">
+            <div key={`${edge.source}-${edge.target}-${edge.edge_type}-${edge.edge_weight}`} className="rounded border border-slate-200 p-3 text-sm">
               <EdgeHeader edge={edge} />
               <div className="mt-1 text-slate-600">weight {edge.edge_weight.toFixed(2)}</div>
               <div className="mt-2">
@@ -221,6 +235,7 @@ function BuildingInspector({
   onEnterInterior,
   onExitInterior,
   onSelectPaper,
+  onSelectBuilding,
 }: {
   cityType: CityType;
   building: Building;
@@ -231,11 +246,30 @@ function BuildingInspector({
   interiorError: string | null;
   onEnterInterior?: () => void;
   onExitInterior?: () => void;
-  onSelectPaper?: (id: string | null) => void;
+  onSelectPaper?: (id: string | null, paper?: ResearchPaper) => void;
+  onSelectBuilding?: (id: string) => void;
 }) {
   const [selectedTerm, setSelectedTerm] = useState<string | null>(null);
+  const [floorPage, setFloorPage] = useState(0);
+  const [floorRows, setFloorRows] = useState<Floor[]>([]);
+  const [floorStatus, setFloorStatus] = useState<'idle' | 'loading' | 'error'>('idle');
+  const browsedFloors = building.floors_truncated ? floorRows : building.floors;
+  const floorPageCount = Math.max(1, Math.ceil((building.floor_count ?? building.floors.length) / 100));
+  useEffect(() => { setFloorPage(0); setFloorRows([]); }, [cityType, building.building_id]);
+  useEffect(() => {
+    if (!building.floors_truncated) return;
+    let stale = false;
+    setFloorStatus('loading');
+    fetchBuildingFloors(cityType, building.building_id, floorPage * 100).then(rows => {
+      if (!stale) { setFloorRows(rows); setFloorStatus('idle'); }
+    }).catch(() => { if (!stale) setFloorStatus('error'); });
+    return () => { stale = true; };
+  }, [cityType, building.building_id, building.floors_truncated, floorPage]);
   const [activeTab, setActiveTab] = useState<'overview' | 'papers' | 'edges'>('overview');
   const [selectedFloorId, setSelectedFloorId] = useState<string | null>(null);
+  const [paperCursors, setPaperCursors] = useState<(string | null)[]>([null]);
+  const [edgeCursors, setEdgeCursors] = useState<(string | null)[]>([null]);
+  useEffect(() => { setPaperCursors([null]); setEdgeCursors([null]); }, [cityType, building.building_id, selectedFloorId]);
   const [papers, setPapers] = useState<ResearchPaper[]>([]);
   const [edges, setEdges] = useState<ResearchEdgeDetail[]>([]);
   const [detailStatus, setDetailStatus] = useState<'idle' | 'loading' | 'error'>('idle');
@@ -271,10 +305,10 @@ function BuildingInspector({
     setDetailStatus('loading');
     const request =
       activeTab === 'papers'
-        ? fetchBuildingPapers(cityType, building.building_id, selectedFloorId).then((items) => {
+        ? fetchBuildingPapers(cityType, building.building_id, selectedFloorId, {limit: 51, cursor: paperCursors[paperCursors.length - 1]}).then((items) => {
             if (!cancelled) setPapers(items);
           })
-        : fetchBuildingEdges(cityType, building.building_id, selectedFloorId).then((items) => {
+        : fetchBuildingEdges(cityType, building.building_id, selectedFloorId, {limit: 81, cursor: edgeCursors[edgeCursors.length - 1]}).then((items) => {
             if (!cancelled) setEdges(items);
           });
     request
@@ -287,7 +321,7 @@ function BuildingInspector({
     return () => {
       cancelled = true;
     };
-  }, [activeTab, building.building_id, cityType, selectedFloorId, interiorActive, selectedPaper?.paper_id]);
+  }, [activeTab, building.building_id, cityType, selectedFloorId, paperCursors, edgeCursors, interiorActive, selectedPaper?.paper_id]);
 
   return (
     <aside className="h-full w-96 overflow-auto border-l border-slate-200 bg-white p-5 text-slate-900 shadow-xl max-md:h-auto max-md:w-full max-md:border-l-0 max-md:border-t">
@@ -329,7 +363,19 @@ function BuildingInspector({
                 .filter(Boolean)
                 .join(' | ')}
             </div>
-            <div className="mt-2 text-xs text-slate-500">{connectedEdges.length} connected edges in this building</div>
+            <div className="mt-2 text-xs text-slate-500">{connectedEdges.length} connected edges in the loaded preview</div>
+            {(selectedPaper.locations?.length ?? 0) > 0 && (
+              <div className="mt-2 text-xs">
+                <p className="font-semibold">Building memberships</p>
+                {selectedPaper.locations?.map(location => (
+                  <button key={location.building_id} type="button" className="mr-2 mt-1 underline"
+                    disabled={location.building_id === building.building_id}
+                    onClick={() => onSelectBuilding?.(location.building_id)}>
+                    {location.building_label || location.building_id}
+                  </button>
+                ))}
+              </div>
+            )}
             <button
               type="button"
               className="mt-2 text-xs font-medium text-slate-600 underline"
@@ -366,6 +412,20 @@ function BuildingInspector({
           </button>
         ))}
       </div>
+      {building.floors_truncated && (
+        <div className="mt-3 rounded border border-slate-200 p-2 text-sm">
+          <p>{building.floor_count} wave floors. The city shows a sampled overview.</p>
+          <div className="mt-2 flex items-center gap-2">
+            <button type="button" aria-label="Previous floor page" disabled={floorPage === 0 || floorStatus === 'loading'} onClick={() => setFloorPage(page => page - 1)}>Previous</button>
+            <label>Page <input aria-label="Floor page" className="w-16 rounded border px-1" type="number" min={1} max={floorPageCount} value={floorPage + 1}
+              onChange={event => { const page = Number(event.target.value); if (Number.isInteger(page) && page >= 1 && page <= floorPageCount) setFloorPage(page - 1); }} /></label>
+            <span>of {floorPageCount}</span>
+            <button type="button" aria-label="Next floor page" disabled={floorPage + 1 >= floorPageCount || floorStatus === 'loading'} onClick={() => setFloorPage(page => page + 1)}>Next</button>
+          </div>
+          {floorStatus === 'loading' && <p role="status">Loading floors…</p>}
+          {floorStatus === 'error' && <p role="alert">Could not load floors. Select a page to retry.</p>}
+        </div>
+      )}
       {activeTab !== 'overview' && (
         <div className="mt-3">
           <div className="mb-2 text-xs font-semibold uppercase text-slate-500">Floor filter</div>
@@ -377,7 +437,7 @@ function BuildingInspector({
             >
               All floors
             </button>
-            {building.floors.map((floor) => (
+            {browsedFloors.map((floor) => (
               <button
                 key={floor.floor_id}
                 type="button"
@@ -390,6 +450,7 @@ function BuildingInspector({
           </div>
         </div>
       )}
+      <WaveMetadata floor={browsedFloors.find(floor => floor.floor_id === selectedFloorId)} />
       {activeTab === 'overview' && (
         <>
           <Section title="Generated Summary">
@@ -441,7 +502,7 @@ function BuildingInspector({
           </Section>
           <Section title="Floors">
             <div className="space-y-2">
-              {building.floors.map((floor) => (
+              {browsedFloors.map((floor) => (
                 <button
                   key={floor.floor_id}
                   type="button"
@@ -476,7 +537,7 @@ function BuildingInspector({
                   className={`w-full rounded border p-3 text-left text-sm ${
                     selected ? 'border-amber-400 bg-amber-50' : 'border-slate-200 hover:bg-slate-50'
                   }`}
-                  onClick={() => onSelectPaper?.(paper.paper_id)}
+                  onClick={() => onSelectPaper?.(paper.paper_id, paper)}
                 >
                   <div className="font-medium">{paper.title}</div>
                   <div className="mt-1 font-mono text-xs text-slate-500">{paper.paper_id}</div>
@@ -493,7 +554,15 @@ function BuildingInspector({
               );
             })}
           </div>
-          {papers.length > 50 && <p className="mt-2 text-xs text-slate-500">Showing 50 of {papers.length} papers.</p>}
+          <div className="mt-3 flex items-center justify-between gap-2 text-sm">
+            <button type="button" aria-label="Previous paper page" disabled={paperCursors.length === 1 || detailStatus === 'loading'}
+              className="rounded border px-2 py-1 disabled:opacity-40"
+              onClick={() => setPaperCursors(previous => previous.slice(0, -1))}>Previous</button>
+            <span>Page {paperCursors.length}</span>
+            <button type="button" aria-label="Next paper page" disabled={papers.length <= 50 || detailStatus !== 'idle'}
+              className="rounded border px-2 py-1 disabled:opacity-40"
+              onClick={() => setPaperCursors(previous => [...previous, papers[49].paper_id])}>Next</button>
+          </div>
         </Section>
       )}
       {activeTab === 'edges' && (
@@ -504,7 +573,7 @@ function BuildingInspector({
               {connectedEdges.length === 0 && <p className="text-sm text-slate-500">No connected edges for this paper in the loaded interior graph.</p>}
               <div className="space-y-2">
                 {connectedEdges.slice(0, 80).map((edge) => (
-                  <div key={`${edge.source}-${edge.target}-${edge.edge_weight}`} className="rounded border border-slate-200 p-3 text-sm">
+                  <div key={`${edge.source}-${edge.target}-${edge.edge_type}-${edge.edge_weight}`} className="rounded border border-slate-200 p-3 text-sm">
                     <EdgeHeader edge={edge} />
                     <div className="mt-1 text-slate-600">weight {edge.edge_weight.toFixed(2)}</div>
                     <div className="mt-2">
@@ -536,7 +605,7 @@ function BuildingInspector({
               {detailStatus !== 'loading' && edges.length === 0 && <p className="text-sm text-slate-500">No internal edges for this filter.</p>}
               <div className="space-y-2">
                 {edges.slice(0, 80).map((edge) => (
-                  <div key={`${edge.source}-${edge.target}-${edge.edge_weight}`} className="rounded border border-slate-200 p-3 text-sm">
+                  <div key={`${edge.source}-${edge.target}-${edge.edge_type}-${edge.edge_weight}`} className="rounded border border-slate-200 p-3 text-sm">
                     <EdgeHeader edge={edge} />
                     <div className="mt-1 text-slate-600">weight {edge.edge_weight.toFixed(2)}</div>
                     <div className="mt-2">
@@ -559,7 +628,15 @@ function BuildingInspector({
                   </div>
                 ))}
               </div>
-              {edges.length > 80 && <p className="mt-2 text-xs text-slate-500">Showing 80 of {edges.length} edges.</p>}
+              <div className="mt-3 flex items-center justify-between gap-2 text-sm">
+                <button type="button" aria-label="Previous edge page" disabled={edgeCursors.length === 1 || detailStatus === 'loading'}
+                  className="rounded border px-2 py-1 disabled:opacity-40"
+                  onClick={() => setEdgeCursors(previous => previous.slice(0, -1))}>Previous</button>
+                <span>Page {edgeCursors.length}</span>
+                <button type="button" aria-label="Next edge page" disabled={edges.length <= 80 || detailStatus !== 'idle'}
+                  className="rounded border px-2 py-1 disabled:opacity-40"
+                  onClick={() => setEdgeCursors(previous => [...previous, `${edges[79].source}:${edges[79].target}:${edges[79].edge_type ?? ''}`])}>Next</button>
+              </div>
             </>
           )}
         </Section>
@@ -568,8 +645,27 @@ function BuildingInspector({
   );
 }
 
+function WaveMetadata({floor}: {floor?: Floor}) {
+  if (!floor?.summary || typeof floor.summary !== 'object') return null;
+  const summary = floor.summary as Record<string, unknown>;
+  if (summary.algorithm !== 'graph-cities-v1' || typeof summary.wave !== 'number') return null;
+  const fragments = summary.fragments && typeof summary.fragments === 'object'
+    ? Object.entries(summary.fragments).filter(([, count]) => typeof count === 'number') : [];
+  return (
+    <div className="mt-3 rounded border border-slate-200 p-3 text-xs text-slate-600">
+      <p className="font-semibold">Original wave {summary.wave}</p>
+      <p>{Number(summary.internal_edges ?? 0)} internal edges · {Number(summary.external_edges ?? 0)} boundary edges</p>
+      {fragments.map(([fragment, count]) => <p key={fragment}>Fragment {fragment}: {String(count)} vertices</p>)}
+    </div>
+  );
+}
+
 function buildingSummaryText(building: Building) {
   const labels = building.top_labels.slice(0, 3).join(', ');
+  if (String(building.quality_metrics?.algorithm ?? '').startsWith('graph-cities')) {
+    if (building.quality_metrics?.representation === 'isolates') return `${building.node_count} papers have no edges in the selected decomposition graph. They remain searchable here.`;
+    return `${building.building_id} is a connected fixed point containing ${building.node_count} papers and ${building.edge_count} edges. Its ${building.floor_count ?? building.floors.length} floors represent original Graph Cities waves. Semantic district and research labels (${labels}) are application overlays. Papers may also belong to other buildings.`;
+  }
   return `${building.building_id} groups ${building.node_count} papers around ${labels}. Its ${building.floors.length} floors show paper bands within the building, and community ${building.community_id ?? 'unassigned'} links it to related buildings.`;
 }
 

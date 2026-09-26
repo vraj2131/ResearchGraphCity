@@ -2,13 +2,39 @@ from __future__ import annotations
 
 import itertools
 import os
+from pathlib import Path
 
 import pytest
 from sqlalchemy.engine import make_url
+from sqlalchemy import text
 
 from app.config import Settings
 from app.db import Base, create_engine_from_settings, create_session_factory
 from app.repositories.postgres_city import PostgresCityRepository
+
+
+def test_migration_backfills_legacy_primary_memberships_without_changing_city(original_repository, monkeypatch):
+    from alembic import command
+    from alembic.config import Config
+
+    repository = original_repository
+    monkeypatch.setenv('DATABASE_URL', os.environ['TEST_DATABASE_URL'])
+    config = Config(str(Path(__file__).resolve().parents[1] / 'alembic.ini'))
+    command.stamp(config, 'head')
+    command.downgrade(config, '20260919_0008')
+    with repository.session_factory.begin() as session:
+        session.execute(text("UPDATE cities SET algorithm_version = 'leiden-city-v2'"))
+        before = session.execute(text('SELECT city_id, building_id, openalex_id, floor_id FROM city_papers ORDER BY openalex_id')).all()
+        city_before = session.execute(text('SELECT id, external_id, status, paper_count, algorithm_version FROM cities')).all()
+    command.upgrade(config, 'head')
+    with repository.session_factory() as session:
+        assert session.execute(text('SELECT city_id, building_id, openalex_id, floor_id FROM building_papers ORDER BY openalex_id')).all() == before
+        assert session.execute(text('SELECT city_id, building_id, openalex_id, floor_id FROM floor_papers ORDER BY openalex_id')).all() == before
+        assert session.execute(text('SELECT city_id, building_id, openalex_id, floor_id FROM city_papers ORDER BY openalex_id')).all() == before
+        assert session.execute(text('SELECT id, external_id, status, paper_count, algorithm_version FROM cities')).all() == city_before
+        assert session.execute(text('SELECT COUNT(*) FROM decomposition_edges')).scalar_one() == 0
+    assert len(repository.get_building_papers('original', 'high')) == 4
+    assert len(repository.get_building_papers('original', 'low')) == 1
 
 
 @pytest.fixture()
@@ -98,8 +124,76 @@ def test_search_matches_secondary_building_without_duplicate_global_results(orig
     assert {p["paper_id"] for p in result} == {"P1", "P2", "P4"}
     assert all(p["building_id"] == "low" for p in result)
     assert len(original_repository.search_papers("original", "graph")) == 5
-    timeline = original_repository.get_timeline("original")
-    assert sum(year["paper_count"] for year in timeline["years"]) == 5
-    shared_year = next(year for year in timeline["years"] if year["year"] == 2021)
-    assert shared_year["paper_count"] == 1
-    assert shared_year["building_count"] == 2
+    timeline = original_repository.get_timeline('original')
+    assert sum(year['paper_count'] for year in timeline['years']) == 5
+    year = next(y for y in timeline['years'] if y['year'] == 2021)
+    assert year['paper_count'] == 1
+    assert year['building_count'] == 2
+
+
+def test_assistant_retains_secondary_locations_but_excludes_geometric_streets(original_repository):
+    from sqlalchemy import select
+    from app.assistant import build_evidence_packet, build_evidence_report
+    from app.models import BuildingRecord, BuildingRelationshipRecord
+
+    repository = original_repository
+    city = repository.get_city_record('original')
+    with repository.session_factory.begin() as session:
+        buildings = session.scalars(select(BuildingRecord).order_by(BuildingRecord.external_id)).all()
+        for external_id, kind, score in [('GS_1', 'graph_city_geometry', 0), ('BR_1', 'evidence_bridge', 0.7)]:
+            session.add(BuildingRelationshipRecord(city_id=city.id, external_id=external_id,
+                        source_building_id=buildings[0].id, target_building_id=buildings[1].id,
+                        relationship_kind='street' if score == 0 else 'bridge', relationship_type=kind,
+                        score=score, distance=1, components={}, evidence=[]))
+    packet = build_evidence_packet(repository, 'original', 'graph', {'year_min': 2021}, limit=1)
+    assert len(packet['papers']) == 1
+    assert {b['building_id'] for b in packet['buildings']} == {'high', 'low'}
+    assert [r['relationship_id'] for r in packet['relationships']] == ['BR_1']
+    assert 'GS_1' not in build_evidence_report(packet)
+    assert 'BR_1' in build_evidence_report(packet)
+
+
+def test_scene_bounds_wave_geometry_and_floor_endpoint_pages_all_waves(original_repository):
+    from fastapi.testclient import TestClient
+    from sqlalchemy import select
+    from app.main import create_app
+    from app.models import BuildingRecord, FloorRecord
+
+    repository = original_repository
+    with repository.session_factory.begin() as session:
+        building = session.scalar(select(BuildingRecord).where(BuildingRecord.external_id == 'high'))
+        building.quality_metrics = {'algorithm': 'graph-cities-v1', 'floor_count': 151}
+        for index in range(2, 152):
+            session.add(FloorRecord(city_id=building.city_id, building_id=building.id,
+                        external_id=f'high-wave-{index}', floor_index=index, core_min=3, core_max=3, node_count=1))
+    scene = repository.get_scene('original')
+    high = next(b for b in scene['buildings'] if b['building_id'] == 'high')
+    assert len(high['floors']) <= 64
+    assert high['floors'][0]['floor_index'] == 1
+    assert high['floors'][-1]['floor_index'] == 151
+    assert high['floor_count'] == 151
+    assert high['floors_truncated'] is True
+    client = TestClient(create_app(repository=repository))
+    url = '/api/cities/original/building/high/floors'
+    first = client.get(url, params={'limit': 100})
+    assert first.status_code == 200
+    assert [f['floor_index'] for f in first.json()] == list(range(1, 101))
+    second = client.get(url, params={'limit': 100, 'cursor': 100})
+    assert [f['floor_index'] for f in second.json()] == list(range(101, 152))
+
+
+def test_edge_cursor_preserves_distinct_types_for_same_endpoints(original_repository):
+    from sqlalchemy import select
+    from app.models import CityRecord, PaperEdgeRecord
+    repository = original_repository
+    with repository.session_factory.begin() as session:
+        city = session.scalar(select(CityRecord).where(CityRecord.external_id == 'original'))
+        city.configuration = {'graph_input': 'citation-plus-similarity'}
+        session.add(PaperEdgeRecord(city_id=city.id, source_openalex_id='W0', target_openalex_id='W1',
+                                    edge_type='similarity', weight=0.8, directed=False))
+    first = repository.get_building_edges('original', 'high', limit=1)
+    assert first[0]['edge_type'] == 'citation'
+    following = repository.get_building_edges('original', 'high', limit=1, cursor='P0:P1:citation')
+    assert (following[0]['source'], following[0]['target'], following[0]['edge_type']) == ('P0', 'P1', 'similarity')
+    legacy = repository.get_building_edges('original', 'high', limit=1, cursor='P0:P1')
+    assert (legacy[0]['source'], legacy[0]['target']) != ('P0', 'P1')

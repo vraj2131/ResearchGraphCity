@@ -9,6 +9,7 @@ import { layoutInteriorNodes, strongestInteriorEdges } from './interiorLayout';
 import { pickInteriorPaperId } from './interiorPicking';
 import { bridgeOpacity, bridgeWidth, buildingMaterial, floorHeight, floorMaterial, selectedHighlight } from './visualMapping';
 import { normalizeCityLayout } from './sceneLayout';
+import { waveSegments } from './waveGeometry';
 import type {
   Bridge,
   Building,
@@ -55,13 +56,27 @@ export function CityScene(props: CitySceneProps) {
       <directionalLight position={[120, 220, 160]} intensity={1.1} castShadow />
       {!props.interiorActive && <Grid />}
       {props.interiorActive ? <BuildingInterior {...props} /> : <CityContent {...props} />}
-      <CameraRig interior={props.interiorActive} />
+      <CameraRig interior={props.interiorActive} buildings={props.buildings} />
     </Canvas>
   );
 }
 
-function CameraRig({ interior }: { interior: boolean }) {
+function CameraRig({ interior, buildings }: { interior: boolean; buildings: Building[] }) {
   const controlsRef = useRef<any>(null);
+  const camera = useThree(state => state.camera);
+  const size = useThree(state => state.size);
+  useEffect(() => {
+    if (interior || !buildings.length || !controlsRef.current || !(camera instanceof THREE.PerspectiveCamera)) return;
+    if (!buildings.every(building => String(building.quality_metrics?.algorithm ?? '').startsWith('graph-cities'))) return;
+    const points = normalizeCityLayout(buildings).flatMap(building => {
+      const radius = building.footprint / 2;
+      return [
+        {paperId: building.building_id, floorIndex: 0, x: building.x-radius, y: 0, z: building.z-radius},
+        {paperId: building.building_id, floorIndex: 0, x: building.x+radius, y: building.height+15, z: building.z+radius},
+      ];
+    });
+    fitInteriorCamera(camera, controlsRef.current, points, {padding: 20, minDistance: 50, maxDistance: 2400});
+  }, [buildings, camera, interior, size.width, size.height]);
   return (
     <>
       <OrbitControls
@@ -72,7 +87,7 @@ function CameraRig({ interior }: { interior: boolean }) {
         minPolarAngle={Math.PI / 8}
         maxPolarAngle={Math.PI / 2.35}
         minDistance={interior ? INTERIOR_MIN_DISTANCE : MIN_CAMERA_DISTANCE}
-        maxDistance={interior ? INTERIOR_MAX_DISTANCE : MAX_CAMERA_DISTANCE}
+        maxDistance={interior ? INTERIOR_MAX_DISTANCE : buildings.every(building => String(building.quality_metrics?.algorithm ?? '').startsWith('graph-cities')) ? 2400 : MAX_CAMERA_DISTANCE}
         target={interior ? [0, 36, 0] : [0, 0, 0]}
       />
       <ZoomHud controlsRef={controlsRef} interior={interior} />
@@ -83,9 +98,9 @@ function CameraRig({ interior }: { interior: boolean }) {
 function ZoomHud({ controlsRef, interior }: { controlsRef: MutableRefObject<any>; interior: boolean }) {
   const { camera } = useThree();
   const zoom = (factor: number) => {
-    const min = interior ? INTERIOR_MIN_DISTANCE : MIN_CAMERA_DISTANCE;
-    const max = interior ? INTERIOR_MAX_DISTANCE : MAX_CAMERA_DISTANCE;
     const controls = controlsRef.current;
+    const min = controls?.minDistance ?? (interior ? INTERIOR_MIN_DISTANCE : MIN_CAMERA_DISTANCE);
+    const max = controls?.maxDistance ?? (interior ? INTERIOR_MAX_DISTANCE : MAX_CAMERA_DISTANCE);
     const target = controls?.target ?? new THREE.Vector3(0, 0, 0);
     const offset = camera.position.clone().sub(target);
     const nextDistance = Math.min(max, Math.max(min, offset.length() * factor));
@@ -135,10 +150,10 @@ function BuildingInterior({
       <InteriorCameraFit positions={positions} />
       <InteriorScreenPicker positions={positions} onHover={setHoveredPaperId} onSelect={onSelectPaper} />
       {interiorLayers.floors &&
-        floorBands.map((floorIndex) => (
+        floorBands.map((floorIndex, rank) => (
           <mesh
             key={`floor-${floorIndex}`}
-            position={[0, floorIndex * 22 + 0.2, 0]}
+            position={[0, (rank + 1) * 22 + 0.2, 0]}
             rotation={[-Math.PI / 2, 0, 0]}
             raycast={() => null}
           >
@@ -428,15 +443,18 @@ function BuildingMesh({
 }) {
   const [hovered, setHovered] = useState(false);
   const material = buildingMaterial(building, communityColors);
-  const levels = showFloors && building.floors.length > 0 ? building.floors : [{ floor_id: `${building.building_id}_single` }];
+  const originalSegments = waveSegments(building.floors);
+  const levels = (showFloors || originalSegments.length > 0) && building.floors.length > 0 ? building.floors : [{ floor_id: `${building.building_id}_single` }];
   const segmentHeight = floorHeight({ ...building, floors: levels });
   const radius = building.footprint / 2;
   return (
     <group position={[building.x, 0, building.z]}>
       {selected && <SelectionRing radius={radius * 1.15} y={0.85} />}
       {levels.map((floor, index) => {
-        const y = segmentHeight * index + segmentHeight / 2;
-        const levelMaterial = floorMaterial(building, floor, index, levels.length, communityColors);
+        const geometry = originalSegments[index];
+        const height = geometry?.height ?? segmentHeight * 0.96;
+        const y = geometry ? geometry.bottom + height / 2 : segmentHeight * index + segmentHeight / 2;
+        const levelMaterial = showFloors ? floorMaterial(building, floor, index, levels.length, communityColors) : material;
         return (
           <mesh
             key={floor.floor_id}
@@ -453,7 +471,7 @@ function BuildingMesh({
             }}
             onPointerLeave={() => setHovered(false)}
           >
-            <cylinderGeometry args={[radius * 0.82, radius, segmentHeight * 0.96, 24]} />
+            <cylinderGeometry args={[geometry?.upper_radius ?? radius * 0.82, geometry?.lower_radius ?? radius, height, 24]} />
             <meshStandardMaterial
               color={levelMaterial.color}
               emissive={material.emissive}
