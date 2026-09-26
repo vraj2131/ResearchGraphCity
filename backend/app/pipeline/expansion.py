@@ -269,9 +269,12 @@ def _persist_candidate_batch(
             for referenced_id in vertex.referenced_paper_ids
             if referenced_id and referenced_id != vertex.openalex_id
         ]
-        if references:
+        # References fan out independently of the paper batch size. Each row
+        # binds two parameters; keep every insert below psycopg's 65,535 limit.
+        reference_batch_size = 10_000
+        for start in range(0, len(references), reference_batch_size):
             session.execute(
-                insert(PaperReferenceRecord).values(references).on_conflict_do_nothing(
+                insert(PaperReferenceRecord).values(references[start : start + reference_batch_size]).on_conflict_do_nothing(
                     index_elements=[PaperReferenceRecord.source_openalex_id, PaperReferenceRecord.target_openalex_id]
                 )
             )

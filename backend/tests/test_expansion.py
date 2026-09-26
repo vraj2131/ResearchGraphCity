@@ -3,11 +3,12 @@ from __future__ import annotations
 import os
 from threading import Event, Lock
 
+import pytest
 from sqlalchemy import func, select
 
 from app.config import DEFAULT_DATABASE_URL, Settings
 from app.db import Base, create_engine_from_settings, create_session_factory
-from app.models import CityPaperRecord
+from app.models import CityPaperRecord, PaperReferenceRecord
 from app.openalex_client import ResolvedSeed
 from app.pipeline.expansion import (
     ExpansionCandidate,
@@ -107,7 +108,8 @@ def test_parallel_round_robin_fetches_streams_concurrently_but_yields_determinis
     assert values == ["a-1", "b-1", "a-2", "b-2"]
 
 
-def test_expand_city_persists_batches_and_is_restart_safe():
+@pytest.mark.parametrize("reference_count", [0, 12_000])
+def test_expand_city_persists_batches_and_is_restart_safe(reference_count):
     settings = Settings(
         database_url=os.getenv("TEST_DATABASE_URL", DEFAULT_DATABASE_URL),
         storage_backend="postgres",
@@ -133,7 +135,13 @@ def test_expand_city_persists_batches_and_is_restart_safe():
             return iter(())
 
         def iter_works(self, filters, *, limit, per_page=100):
-            return (raw_work(f"W{index}", f"Graph Candidate {index}") for index in range(1, 20))
+            for index in range(1, 20):
+                work = raw_work(f"W{index}", f"Graph Candidate {index}")
+                work["referenced_works"] = [
+                    f"https://openalex.org/W{100_000 + offset}"
+                    for offset in range(reference_count)
+                ]
+                yield work
 
     try:
         run_seed_stage(city.id, repository, Client())
@@ -153,6 +161,9 @@ def test_expand_city_persists_batches_and_is_restart_safe():
         assert second.accepted_count == 0
         with factory() as session:
             assert session.scalar(select(func.count()).select_from(CityPaperRecord)) == 10
+            # Three papers per batch can exceed the driver's 65,535 parameters.
+            # All references must survive batching and a repeated expansion.
+            assert session.scalar(select(func.count()).select_from(PaperReferenceRecord)) == 9 * reference_count
     finally:
         Base.metadata.drop_all(engine)
         engine.dispose()
